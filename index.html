@@ -214,6 +214,19 @@
     color:var(--accent-strong);
     font-weight:700;
   }
+  .chapter-btn.complete{
+    color:var(--green);
+    border-color:var(--green);
+  }
+  .chapter-complete-banner{
+    text-align:center;
+    color:var(--green);
+    font-weight:700;
+    font-size:0.95rem;
+    margin-top:18px;
+    padding-top:18px;
+    border-top:1px dashed var(--border);
+  }
   .chapter-back-btn{
     display:block;
     width:fit-content;
@@ -1427,11 +1440,18 @@ function advanceToNextLineIfComplete(scene, beatIdx){
   if(revealedInBeat < beatData.guessableCount) return; // this line isn't finished yet
 
   const next = findNextLine(scene, beatIdx);
-  const targetLabel = document.getElementById("lineBarTarget");
 
   if(!next){
     clearActiveTarget();
-    if(targetLabel) targetLabel.textContent = "🎉 Chapter complete! Pick another chapter above.";
+    const scenesContainer = document.getElementById("scenes");
+    if(scenesContainer && !document.getElementById("chapterCompleteBanner")){
+      const banner = document.createElement("div");
+      banner.id = "chapterCompleteBanner";
+      banner.className = "chapter-complete-banner";
+      banner.textContent = "🎉 Chapter complete! Pick another chapter above.";
+      scenesContainer.appendChild(banner);
+      banner.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
     return;
   }
 
@@ -1618,9 +1638,24 @@ function applyTheme(theme){
   if(btn) btn.textContent = theme === "dark" ? "☀️" : "🌙";
 }
 
+// Total guessable words vs. words revealed so far for a chapter, computed
+// straight from the data (not the DOM), so it works even for a chapter
+// that hasn't been opened yet this session.
+function chapterProgressStats(chapter){
+  let total = 0, revealed = 0;
+  chapter.scenes.forEach(scene => {
+    scene.beats.forEach(beatDef => {
+      total += beatDef.text.split(" ").filter(hasLetters).length;
+    });
+    revealed += Object.keys(progress[scene.id] || {}).length;
+  });
+  return { total, revealed };
+}
+
 // Chapter list — shown after picking a film. Chapters with lines already
-// written are bolded; empty chapters are still clickable and just show a
-// "not added yet" note when opened.
+// written are bolded; fully-revealed chapters get a green checkmark;
+// empty chapters are still clickable and just show a "not added yet" note
+// when opened.
 function renderChapterList(){
   const container = document.getElementById("chapterList");
   container.innerHTML = "";
@@ -1636,10 +1671,13 @@ function renderChapterList(){
   }
 
   currentFilm.chapters.forEach((chapter, i) => {
+    const { total, revealed } = chapterProgressStats(chapter);
+    const isComplete = total > 0 && revealed >= total;
+
     const btn = document.createElement("button");
     btn.type = "button";
-    btn.className = "chapter-btn" + (chapter.scenes.length ? " has-content" : "");
-    btn.textContent = (i + 1) + ". " + chapter.title;
+    btn.className = "chapter-btn" + (chapter.scenes.length ? " has-content" : "") + (isComplete ? " complete" : "");
+    btn.textContent = (i + 1) + ". " + chapter.title + (isComplete ? "  ✓" : "");
     btn.dataset.chapterId = chapter.id;
     btn.addEventListener("click", () => selectChapter(chapter.id));
     container.appendChild(btn);
