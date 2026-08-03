@@ -1046,7 +1046,7 @@ const HINTS_PREFIX = "lotr_hints_v1_";
 const THEME_KEY = "lotr_theme_v1";
 const ACTIVE_FILM_KEY = "lotr_active_film_v1";
 const STATS_KEY = "lotr_stats_v1";
-const HINT_COST = 3;
+const HINT_COST = 1;
 
 // Some browsers (e.g. opening this file directly via file://) block
 // localStorage entirely and throw. Guard every access so a storage
@@ -1559,11 +1559,12 @@ function advanceToNextLineIfComplete(scene, beatIdx){
   const nextSpeaker = next.scene.beats[next.beatIdx].speaker;
   if(!nextLineEl || !nextBeatData) return;
 
-  // Small delay so the correct-word flash is visible before the page moves.
+  // Delay so there's time to actually read the "Line complete!" feedback
+  // and see the correct-word flash before the page moves on.
   setTimeout(() => {
     setActiveTarget(next.scene, next.beatIdx, nextBeatData, nextLineEl, nextSpeaker);
     nextLineEl.scrollIntoView({ behavior: "smooth", block: "center" });
-  }, 350);
+  }, 900);
 }
 
 // The bottom bar's current target: whichever line was last clicked.
@@ -1679,17 +1680,31 @@ function checkFullLine(scene, beatIdx, beatData, guessText){
   if(attempted === 0){
     return "Nothing new to check — remaining words are already revealed.";
   }
+
+  // How many words are still hidden AFTER this attempt — always report this
+  // explicitly so the message never reads as "done" (e.g. "1 of 1 matched")
+  // when there are actually more hidden words further down the line that
+  // just weren't typed this time.
+  const updatedProgress = progress[scene.id] || {};
+  const stillHiddenCount = beatData.words.filter((t, idx) =>
+    hasLetters(t) && !updatedProgress[beatIdx + "-" + idx]
+  ).length;
+
   if(isPerfectFirstTry){
     const bonus = beatData.guessableCount + Math.ceil(beatData.guessableCount / 2);
     addScore(bonus);
     return "Perfect, first try! +" + bonus + " points.";
   }
+  if(matched > 0 && stillHiddenCount === 0){
+    addScore(matched);
+    return "✓ Line complete! +" + matched + " point" + (matched === 1 ? "" : "s") + ".";
+  }
   if(matched > 0){
     addScore(matched);
-    return matched + " of " + attempted + " remaining word" + (attempted === 1 ? "" : "s") +
-      " matched. +" + matched + " point" + (matched === 1 ? "" : "s") + ".";
+    return matched + " matched. +" + matched + " point" + (matched === 1 ? "" : "s") + ". " +
+      stillHiddenCount + " word" + (stillHiddenCount === 1 ? "" : "s") + " still hidden.";
   }
-  return "0 of " + attempted + " matched. Try again.";
+  return "0 matched. " + stillHiddenCount + " word" + (stillHiddenCount === 1 ? "" : "s") + " still hidden — try again.";
 }
 
 function showFloatingPoints(line, span, text){
