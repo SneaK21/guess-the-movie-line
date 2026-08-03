@@ -1,0 +1,1862 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Movie Script Challenge</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
+<!-- Firebase (compat build — works with plain <script> tags, no bundler needed) -->
+<script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore-compat.js"></script>
+<style>
+  :root{
+    --bg:#ffffff;
+    --text:#1a1a1a;
+    --muted:#767676;
+    --hidden:#a8a8a8;
+    --accent:#6b5330;
+    --accent-strong:#4a3820;
+    --green:#2e7d32;
+    --red:#c62828;
+    --border:#e2e2e2;
+    --highlight-bg:rgba(74,56,32,0.06);
+  }
+  body.dark-mode{
+    --bg:#141414;
+    --text:#e8e6df;
+    --muted:#9a9890;
+    --hidden:#5f5f5a;
+    --accent:#d9b872;
+    --accent-strong:#f0c869;
+    --green:#66bb6a;
+    --red:#ef5350;
+    --border:#333333;
+    --highlight-bg:rgba(240,200,105,0.08);
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Courier Prime', 'Courier New', monospace;
+    min-height:100vh;
+    padding-bottom:100px;
+    transition:background .3s ease, color .3s ease;
+  }
+  header{
+    position:relative;
+    text-align:center;
+    padding:64px 20px 22px;
+    border-bottom:1px solid var(--border);
+    margin-bottom:26px;
+  }
+  header h1{
+    font-family:'Cinzel', serif;
+    font-weight:700;
+    font-size:2.1rem;
+    letter-spacing:2px;
+    margin:0 0 6px;
+    text-transform:uppercase;
+  }
+  header p.sub{
+    color:var(--muted);
+    font-size:0.95rem;
+    letter-spacing:1px;
+    margin:0;
+    text-transform:uppercase;
+  }
+  .theme-toggle{
+    position:absolute;
+    top:18px;
+    right:20px;
+    width:34px;
+    height:34px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:none;
+    border:1px solid transparent;
+    border-radius:50%;
+    color:var(--muted);
+    font-size:1.1rem;
+    line-height:1;
+    cursor:pointer;
+    padding:0;
+  }
+  .theme-toggle:hover{
+    border-color:var(--border);
+  }
+  .profile-btn{
+    position:absolute;
+    top:18px;
+    left:20px;
+    max-width:150px;
+    background:none;
+    border:1px solid var(--border);
+    border-radius:20px;
+    padding:7px 14px;
+    color:var(--muted);
+    font-family:'Courier Prime', monospace;
+    font-size:0.78rem;
+    cursor:pointer;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+  }
+  .profile-btn:hover{
+    border-color:var(--accent);
+    color:var(--text);
+  }
+  .profile-btn.signed-in{
+    border-color:var(--accent-strong);
+    color:var(--accent-strong);
+  }
+  .wrap{
+    max-width:640px;
+    margin:0 auto;
+    padding:0 20px;
+  }
+  .tab-bar{
+    display:flex;
+    justify-content:center;
+    gap:22px;
+    margin-bottom:26px;
+    border-bottom:1px solid var(--border);
+  }
+  .tab-btn{
+    background:none;
+    border:none;
+    border-bottom:2px solid transparent;
+    padding:0 0 10px;
+    font-family:'Cinzel', serif;
+    font-size:0.85rem;
+    letter-spacing:0.5px;
+    color:var(--muted);
+    cursor:pointer;
+  }
+  .tab-btn:hover{
+    color:var(--text);
+  }
+  .tab-btn.active{
+    color:var(--accent-strong);
+    border-bottom-color:var(--accent-strong);
+    font-weight:700;
+  }
+  .instructions{
+    color:var(--muted);
+    font-size:0.85rem;
+    line-height:1.6;
+    padding-bottom:20px;
+    margin-bottom:22px;
+    border-bottom:1px solid var(--border);
+  }
+  .instructions strong{color:var(--text);}
+  .film-selector{
+    display:flex;
+    gap:12px;
+    margin-bottom:22px;
+    flex-wrap:wrap;
+  }
+  .film-btn{
+    flex:1;
+    min-width:150px;
+    background:var(--bg);
+    border:1px solid var(--border);
+    border-radius:8px;
+    padding:16px 14px;
+    font-family:'Cinzel', serif;
+    font-size:0.82rem;
+    letter-spacing:0.5px;
+    color:var(--muted);
+    cursor:pointer;
+    text-align:center;
+    line-height:1.4;
+    transition:border-color .2s ease, color .2s ease;
+  }
+  .film-btn:hover{
+    border-color:var(--accent);
+    color:var(--text);
+  }
+  .film-btn.active{
+    border-color:var(--accent-strong);
+    color:var(--accent-strong);
+    font-weight:700;
+  }
+  .reset-btn{
+    display:block;
+    width:fit-content;
+    margin:0 auto 26px;
+    background:none;
+    border:none;
+    border-bottom:1px solid var(--muted);
+    color:var(--muted);
+    padding:4px 2px;
+    font-family:'Courier Prime', monospace;
+    font-size:0.8rem;
+    cursor:pointer;
+  }
+  .reset-btn:hover{
+    border-bottom-color:var(--red);
+    color:var(--red);
+  }
+  .top-bar{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    gap:12px;
+    flex-wrap:wrap;
+    font-size:0.85rem;
+  }
+  .progress-label{color:var(--muted);}
+  .score-display{
+    font-family:'Cinzel', serif;
+    letter-spacing:0.5px;
+    color:var(--accent-strong);
+  }
+  .progress-outer{
+    background:var(--border);
+    border-radius:20px;
+    height:6px;
+    overflow:hidden;
+    margin:10px 0 30px;
+  }
+  .progress-inner{
+    height:100%;
+    background:var(--accent-strong);
+    width:0%;
+    transition:width .4s ease;
+  }
+  .empty-note{
+    color:var(--muted);
+    font-size:0.9rem;
+    font-style:italic;
+    text-align:center;
+    padding:40px 0;
+  }
+  .scene{
+    padding-bottom:26px;
+    margin-bottom:26px;
+    border-bottom:1px solid var(--border);
+    position:relative;
+  }
+  .scene:last-child{
+    border-bottom:none;
+  }
+  .scene-bracket{
+    font-style:normal;
+    text-transform:uppercase;
+    letter-spacing:0.5px;
+    color:var(--muted);
+    font-size:0.82rem;
+    font-weight:700;
+    margin-bottom:20px;
+  }
+  .beat-followup{
+    margin-top:26px;
+  }
+  .speaker{
+    text-align:center;
+    text-transform:uppercase;
+    letter-spacing:1.5px;
+    font-weight:700;
+    font-size:0.88rem;
+    color:var(--text);
+    margin-bottom:6px;
+  }
+  .line{
+    font-size:1.05rem;
+    line-height:1.9;
+    position:relative;
+    max-width:480px;
+    margin:0 auto;
+    cursor:text;
+    padding-bottom:3px;
+    box-shadow:inset 0 -2px 0 0 transparent;
+    transition:box-shadow .2s ease;
+  }
+  .line.targeted{
+    box-shadow:inset 0 -2px 0 0 var(--accent-strong);
+  }
+  .float-points{
+    position:absolute;
+    font-family:'Cinzel', serif;
+    font-size:0.75rem;
+    color:var(--accent-strong);
+    pointer-events:none;
+    animation:floatUp .9s ease forwards;
+  }
+  @keyframes floatUp{
+    0%{opacity:1; transform:translateY(0);}
+    100%{opacity:0; transform:translateY(-22px);}
+  }
+  .word{
+    display:inline-block;
+    margin-right:6px;
+    cursor:pointer;
+    color:var(--hidden);
+    border-bottom:1px dashed transparent;
+    transition:color .2s;
+  }
+  .word.hidden:hover{
+    border-bottom-color:var(--accent);
+    color:var(--accent-strong);
+  }
+  .word.revealed{
+    cursor:default;
+    color:var(--text);
+  }
+  .word.punct-only{
+    cursor:default;
+    color:var(--text);
+  }
+  .word.correct-flash{
+    animation:flashGreen 0.7s ease;
+  }
+  .word.wrong-flash{
+    animation:flashRed 0.4s ease;
+  }
+  @keyframes flashGreen{
+    0%{color:var(--green); text-shadow:0 0 8px rgba(46,125,50,0.3);}
+    100%{color:var(--text); text-shadow:none;}
+  }
+  @keyframes flashRed{
+    0%,100%{transform:translateX(0);}
+    20%{transform:translateX(-3px); color:var(--red);}
+    40%{transform:translateX(3px);}
+    60%{transform:translateX(-3px);}
+    80%{transform:translateX(3px);}
+  }
+  .guess-box{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    border-bottom:1px solid var(--accent);
+    margin-right:6px;
+  }
+  .guess-box input{
+    background:transparent;
+    border:none;
+    outline:none;
+    color:var(--accent-strong);
+    font-family:'Courier Prime', monospace;
+    font-size:1rem;
+    width:70px;
+  }
+  .hint-btn{
+    background:none;
+    border:1px solid var(--accent);
+    border-radius:4px;
+    color:var(--accent-strong);
+    font-family:'Courier Prime', monospace;
+    font-size:0.68rem;
+    padding:2px 6px;
+    cursor:pointer;
+    white-space:nowrap;
+  }
+  .hint-btn:disabled{
+    border-color:var(--border);
+    color:var(--muted);
+    cursor:default;
+  }
+  .hint-btn:not(:disabled):hover{
+    background:var(--accent);
+    color:var(--bg);
+  }
+  .line-bar{
+    position:fixed;
+    left:0;
+    right:0;
+    bottom:0;
+    z-index:50;
+    background:var(--bg);
+    border-top:1px solid var(--border);
+    box-shadow:0 -2px 10px rgba(0,0,0,0.06);
+    padding:12px 20px;
+  }
+  .line-bar-inner{
+    max-width:640px;
+    margin:0 auto;
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+  .line-bar-target{
+    flex-shrink:0;
+    font-size:0.75rem;
+    color:var(--muted);
+    max-width:120px;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+  }
+  .line-bar input{
+    flex:1;
+    min-width:0;
+    background:var(--bg);
+    border:1px solid var(--border);
+    border-radius:5px;
+    padding:9px 10px;
+    color:var(--text);
+    font-family:'Courier Prime', monospace;
+    font-size:0.9rem;
+    outline:none;
+  }
+  .line-bar input:disabled{
+    color:var(--muted);
+  }
+  .line-bar input:focus{
+    border-color:var(--accent);
+  }
+  .line-bar button{
+    background:var(--accent-strong);
+    border:none;
+    color:var(--bg);
+    padding:9px 16px;
+    border-radius:5px;
+    font-family:'Courier Prime', monospace;
+    font-weight:700;
+    font-size:0.8rem;
+    letter-spacing:0.5px;
+    cursor:pointer;
+    white-space:nowrap;
+  }
+  .line-bar button:disabled{
+    background:var(--border);
+    color:var(--muted);
+    cursor:default;
+  }
+  .line-bar button:not(:disabled):hover{
+    opacity:0.85;
+  }
+  .line-feedback{
+    font-size:0.78rem;
+    color:var(--muted);
+    margin-top:8px;
+    text-align:center;
+    min-height:1.1em;
+  }
+  .scene-progress{
+    margin-top:18px;
+    font-size:0.75rem;
+    color:var(--muted);
+    text-align:center;
+  }
+  .scoreboard-filter{
+    display:flex;
+    gap:8px;
+    margin-bottom:20px;
+    flex-wrap:wrap;
+  }
+  .scoreboard-filter button{
+    background:none;
+    border:1px solid var(--border);
+    border-radius:16px;
+    padding:6px 14px;
+    font-family:'Courier Prime', monospace;
+    font-size:0.78rem;
+    color:var(--muted);
+    cursor:pointer;
+  }
+  .scoreboard-filter button:hover{
+    border-color:var(--accent);
+    color:var(--text);
+  }
+  .scoreboard-filter button.active{
+    border-color:var(--accent-strong);
+    color:var(--accent-strong);
+    font-weight:700;
+  }
+  .scoreboard-note{
+    color:var(--muted);
+    font-size:0.85rem;
+    line-height:1.6;
+    text-align:center;
+    padding:30px 10px;
+  }
+  .leaderboard-row{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:11px 6px;
+    border-bottom:1px solid var(--border);
+    font-size:0.92rem;
+  }
+  .leaderboard-row.me{
+    background:var(--highlight-bg);
+    border-radius:6px;
+  }
+  .leaderboard-rank{
+    width:30px;
+    flex-shrink:0;
+    font-family:'Cinzel', serif;
+    color:var(--muted);
+    font-size:0.85rem;
+  }
+  .leaderboard-name{
+    flex:1;
+    color:var(--text);
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+  }
+  .leaderboard-score{
+    font-family:'Cinzel', serif;
+    color:var(--accent-strong);
+    font-weight:700;
+    font-size:0.85rem;
+  }
+  .modal-overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0.45);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    z-index:100;
+    padding:20px;
+  }
+  .modal{
+    background:var(--bg);
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:28px 24px;
+    width:100%;
+    max-width:340px;
+    max-height:88vh;
+    overflow-y:auto;
+    position:relative;
+  }
+  .modal-close{
+    position:absolute;
+    top:8px;
+    right:12px;
+    background:none;
+    border:none;
+    font-size:1.4rem;
+    color:var(--muted);
+    cursor:pointer;
+    line-height:1;
+  }
+  .modal-tabs{
+    display:flex;
+    gap:18px;
+    margin-bottom:18px;
+  }
+  .modal-tab{
+    background:none;
+    border:none;
+    border-bottom:2px solid transparent;
+    padding:0 0 6px;
+    font-family:'Cinzel', serif;
+    font-size:0.8rem;
+    color:var(--muted);
+    cursor:pointer;
+  }
+  .modal-tab.active{
+    color:var(--accent-strong);
+    border-bottom-color:var(--accent-strong);
+  }
+  .modal input{
+    display:block;
+    width:100%;
+    background:var(--bg);
+    border:1px solid var(--border);
+    border-radius:5px;
+    padding:10px;
+    margin-bottom:10px;
+    color:var(--text);
+    font-family:'Courier Prime', monospace;
+    font-size:0.9rem;
+    outline:none;
+  }
+  .modal input:focus{
+    border-color:var(--accent);
+  }
+  .modal-submit{
+    width:100%;
+    background:var(--accent-strong);
+    border:none;
+    color:var(--bg);
+    padding:11px;
+    border-radius:5px;
+    font-family:'Courier Prime', monospace;
+    font-weight:700;
+    font-size:0.85rem;
+    cursor:pointer;
+  }
+  .modal-submit:hover{
+    opacity:0.85;
+  }
+  .modal-submit:disabled{
+    background:var(--border);
+    color:var(--muted);
+    cursor:default;
+  }
+  .auth-error{
+    color:var(--red);
+    font-size:0.78rem;
+    margin-bottom:10px;
+    min-height:1.1em;
+  }
+  .cloud-disabled-note{
+    color:var(--muted);
+    font-size:0.78rem;
+    margin-top:14px;
+    line-height:1.5;
+    text-align:center;
+  }
+  .account-name{
+    font-family:'Cinzel', serif;
+    font-size:1rem;
+    color:var(--accent-strong);
+    margin-bottom:14px;
+    text-align:center;
+  }
+  .stats-block{
+    margin-top:22px;
+    padding-top:16px;
+    border-top:1px solid var(--border);
+  }
+  .stats-heading{
+    font-family:'Cinzel', serif;
+    font-size:0.78rem;
+    letter-spacing:0.5px;
+    color:var(--muted);
+    text-transform:uppercase;
+    margin-bottom:10px;
+  }
+  .stat-row{
+    display:flex;
+    justify-content:space-between;
+    font-size:0.85rem;
+    padding:5px 0;
+  }
+  .stat-label{color:var(--muted);}
+  .stat-value{color:var(--text); font-weight:700;}
+</style>
+</head>
+<body>
+
+<header>
+  <button class="profile-btn" id="profileBtn">Sign in</button>
+  <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">🌙</button>
+  <h1>Movie Script Challenge</h1>
+  <p class="sub">Guess the line, word by word</p>
+</header>
+
+<div class="wrap">
+
+  <div class="tab-bar">
+    <button class="tab-btn active" data-tab="game" type="button">Game</button>
+    <button class="tab-btn" data-tab="scoreboard" type="button">Scoreboard</button>
+  </div>
+
+  <div class="tab-panel" id="gamePanel">
+
+    <div class="film-selector" id="filmSelector"></div>
+
+    <div class="instructions">
+      <strong>How to play:</strong> Pick a film above. Each passage shows a moment from the film in brackets — that
+      part is always visible. Below it, the actual line is hidden behind asterisks. Click any hidden word to guess
+      just that word (you can also spend a few points on a letter hint if you're stuck), or click anywhere else on
+      the line to target it, then type the words that are still hidden — in order — in the bar at the bottom of the
+      page and press <strong>Enter</strong> to check. You only need to type what's still hidden, not retype words
+      already revealed. Correct words lock in and stay revealed forever; incorrect or unmatched words stay hidden —
+      no peeking — so you can keep chipping away word by word afterward. Punctuation is shown as-is;
+      only letters are masked. Each correct word is worth <strong>+1 point</strong>; nail an entire line correctly on
+      your very first attempt for a bonus worth more than the words individually. Some passages have more than one
+      character speaking — each line is targeted and guessed separately.
+    </div>
+
+    <button class="reset-btn" id="resetBtn">Reset progress for this film</button>
+
+    <div class="top-bar">
+      <div class="progress-label" id="overallLabel">0 / 0 words revealed</div>
+      <div class="score-display" id="scoreDisplay">Score: 0 pts</div>
+    </div>
+    <div class="progress-outer"><div class="progress-inner" id="overallBar"></div></div>
+
+    <div id="scenes"></div>
+
+  </div>
+
+  <div class="tab-panel" id="scoreboardPanel" style="display:none;">
+    <div class="scoreboard-filter" id="scoreboardFilter"></div>
+    <div class="scoreboard-note" id="scoreboardNote"></div>
+    <div id="scoreboardList"></div>
+  </div>
+
+</div>
+
+<div class="line-bar">
+  <div class="line-bar-inner">
+    <span class="line-bar-target" id="lineBarTarget">Click a line to select it</span>
+    <input type="text" id="lineBarInput" placeholder="Type the whole line…" autocomplete="off" spellcheck="false" disabled>
+    <button type="button" id="lineBarBtn" disabled>Check</button>
+  </div>
+</div>
+
+<div class="modal-overlay" id="authOverlay">
+  <div class="modal">
+    <button class="modal-close" id="authClose" aria-label="Close">&times;</button>
+
+    <div id="accountSection" style="display:none;">
+      <div class="account-name" id="accountName"></div>
+      <button class="modal-submit" id="signOutBtn" type="button">Sign Out</button>
+    </div>
+
+    <div id="authFormSection">
+      <div class="modal-tabs">
+        <button class="modal-tab active" data-mode="login" type="button">Sign In</button>
+        <button class="modal-tab" data-mode="signup" type="button">Create Account</button>
+      </div>
+      <div class="auth-error" id="authError"></div>
+      <input type="text" id="authDisplayName" placeholder="Display name" style="display:none;">
+      <input type="email" id="authEmail" placeholder="Email" autocomplete="email">
+      <input type="password" id="authPassword" placeholder="Password" autocomplete="current-password">
+      <button class="modal-submit" id="authSubmit" type="button">Sign In</button>
+      <div class="cloud-disabled-note" id="cloudDisabledNote" style="display:none;">
+        Cloud features aren't configured yet — see the setup comment near the top of the page's script for how to
+        connect a free Firebase project.
+      </div>
+    </div>
+
+    <div class="stats-block">
+      <div class="stats-heading">Your Stats</div>
+      <div id="statsSection"></div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+// ============================================================
+// CLOUD SETUP (optional — the game works fine without this, just
+// without a shared global leaderboard or cross-device accounts).
+//
+// 1. Go to https://console.firebase.google.com and create a free
+//    project (the free "Spark" plan is enough, no card required).
+// 2. Build > Authentication > Get started > enable "Email/Password".
+// 3. Build > Firestore Database > Create database (any region,
+//    start in production mode).
+// 4. In Firestore > Rules, paste this and click Publish:
+//
+//    rules_version = '2';
+//    service cloud.firestore {
+//      match /databases/{database}/documents {
+//        match /users/{userId} {
+//          allow read: if true;
+//          allow write: if request.auth != null && request.auth.uid == userId;
+//        }
+//      }
+//    }
+//
+// 5. Project settings (gear icon) > General > "Your apps" > Add
+//    app > Web (</>) > register it > copy the firebaseConfig
+//    object shown there and paste it below, replacing the
+//    placeholder values.
+// ============================================================
+const firebaseConfig = {
+  apiKey: "YOUR_API_KEY",
+  authDomain: "YOUR_PROJECT.firebaseapp.com",
+  projectId: "YOUR_PROJECT",
+  storageBucket: "YOUR_PROJECT.appspot.com",
+  messagingSenderId: "YOUR_SENDER_ID",
+  appId: "YOUR_APP_ID"
+};
+
+const CLOUD_ENABLED = firebaseConfig.apiKey !== "YOUR_API_KEY" && typeof firebase !== "undefined";
+
+let auth = null;
+let db = null;
+if(CLOUD_ENABLED){
+  try{
+    firebase.initializeApp(firebaseConfig);
+    auth = firebase.auth();
+    db = firebase.firestore();
+  }catch(e){
+    console.warn("Firebase failed to initialize:", e);
+  }
+}
+
+// ---------------------------------------------------------------
+// FILMS holds one entry per movie. Each film has a title (shown on
+// its selector button) and a `scenes` array in the same format as
+// before: { id, bracket, beats: [{ speaker, text }, ...] }.
+//
+// The Fellowship of the Ring is pre-loaded with a small handful of
+// short, individually well-known lines to demonstrate the engine.
+// The Two Towers and The Return of the King are left empty on
+// purpose — add scenes to their arrays the same way to fill them in.
+// ---------------------------------------------------------------
+const FILMS = [
+  {
+    id: "fotr",
+    title: "The Fellowship of the Ring",
+    short: "FotR",
+    scenes: [
+      {
+        id: "s1",
+        bracket: "[Prologue — the history of the One Ring is told over images of ancient wars]",
+        beats: [
+          { speaker: "Galadriel (V.O.)", text: "The world is changed. I feel it in the water. I feel it in the earth. I smell it in the air." }
+        ]
+      },
+      {
+        id: "s2",
+        bracket: "[Bag End, The Shire — Gandalf arrives late to Bilbo's birthday party]",
+        beats: [
+          { speaker: "Gandalf", text: "A wizard is never late, Frodo Baggins, nor is he early. He arrives precisely when he means to." }
+        ]
+      },
+      {
+        id: "s3",
+        bracket: "[The Mines of Moria — Frodo confides in Gandalf about the weight of carrying the Ring]",
+        beats: [
+          { speaker: "Frodo", text: "I wish the Ring had never come to me. I wish none of this had happened." },
+          { speaker: "Gandalf", text: "So do all who live to see such times, but that is not for them to decide. All we have to decide is what to do with the time that is given us." }
+        ]
+      },
+      {
+        id: "s4",
+        bracket: "[Council of Elrond, Rivendell — the Fellowship's quest is decided]",
+        beats: [
+          { speaker: "Frodo", text: "I will take it. I will take the Ring to Mordor, though I do not know the way." }
+        ]
+      },
+      {
+        id: "s5",
+        bracket: "[Council of Elrond — Aragorn, Legolas, and Gimli each pledge themselves to Frodo's quest]",
+        beats: [
+          { speaker: "Aragorn", text: "You have my sword." },
+          { speaker: "Legolas", text: "And you have my bow." },
+          { speaker: "Gimli", text: "And my axe!" }
+        ]
+      },
+      {
+        id: "s6",
+        bracket: "[Council of Elrond — Boromir doubts the wisdom of walking into the enemy's land]",
+        beats: [
+          { speaker: "Boromir", text: "One does not simply walk into Mordor." }
+        ]
+      },
+      {
+        id: "s7",
+        bracket: "[The Mines of Moria — the Fellowship reaches the Bridge of Khazad-dûm and a Balrog appears]",
+        beats: [
+          { speaker: "Gandalf", text: "You cannot pass! I am a servant of the Secret Fire, wielder of the flame of Anor. The dark fire will not avail you, flame of Udûn! You shall not pass!" }
+        ]
+      },
+      {
+        id: "s8",
+        bracket: "[The Bridge of Khazad-dûm — as Gandalf falls, he calls out to the fleeing Fellowship]",
+        beats: [
+          { speaker: "Gandalf", text: "Fly, you fools!" }
+        ]
+      }
+    ]
+  },
+  {
+    id: "ttt",
+    title: "The Two Towers",
+    short: "TTT",
+    scenes: []
+  },
+  {
+    id: "rotk",
+    title: "The Return of the King",
+    short: "RotK",
+    scenes: []
+  }
+];
+
+const STORAGE_PREFIX = "lotr_progress_v3_";
+const SCORE_PREFIX = "lotr_score_v3_";
+const HINTS_PREFIX = "lotr_hints_v1_";
+const THEME_KEY = "lotr_theme_v1";
+const ACTIVE_FILM_KEY = "lotr_active_film_v1";
+const STATS_KEY = "lotr_stats_v1";
+const HINT_COST = 3;
+
+// Some browsers (e.g. opening this file directly via file://) block
+// localStorage entirely and throw. Guard every access so a storage
+// failure never breaks the game itself — it just won't persist
+// between visits in that case.
+let storageAvailable = true;
+
+function loadProgress(filmId){
+  try{
+    const raw = localStorage.getItem(STORAGE_PREFIX + filmId);
+    return raw ? JSON.parse(raw) : {};
+  }catch(e){
+    storageAvailable = false;
+    return {};
+  }
+}
+function saveProgress(filmId, state){
+  if(!storageAvailable) return;
+  try{
+    localStorage.setItem(STORAGE_PREFIX + filmId, JSON.stringify(state));
+  }catch(e){
+    storageAvailable = false;
+  }
+}
+function loadScore(filmId){
+  try{
+    const raw = localStorage.getItem(SCORE_PREFIX + filmId);
+    const n = raw ? parseInt(raw, 10) : 0;
+    return Number.isFinite(n) ? n : 0;
+  }catch(e){
+    storageAvailable = false;
+    return 0;
+  }
+}
+function saveScore(filmId, value){
+  if(!storageAvailable) return;
+  try{
+    localStorage.setItem(SCORE_PREFIX + filmId, String(value));
+  }catch(e){
+    storageAvailable = false;
+  }
+}
+function loadHints(filmId){
+  try{
+    const raw = localStorage.getItem(HINTS_PREFIX + filmId);
+    return raw ? JSON.parse(raw) : {};
+  }catch(e){
+    return {};
+  }
+}
+function saveHints(filmId, state){
+  if(!storageAvailable) return;
+  try{
+    localStorage.setItem(HINTS_PREFIX + filmId, JSON.stringify(state));
+  }catch(e){
+    // ignore — hints just won't persist
+  }
+}
+function loadTheme(){
+  try{
+    return localStorage.getItem(THEME_KEY) || "light";
+  }catch(e){
+    return "light";
+  }
+}
+function saveTheme(theme){
+  try{
+    localStorage.setItem(THEME_KEY, theme);
+  }catch(e){
+    // ignore — theme just won't persist
+  }
+}
+function loadActiveFilm(){
+  try{
+    return localStorage.getItem(ACTIVE_FILM_KEY);
+  }catch(e){
+    return null;
+  }
+}
+function saveActiveFilm(filmId){
+  try{
+    localStorage.setItem(ACTIVE_FILM_KEY, filmId);
+  }catch(e){
+    // ignore — selection just won't persist
+  }
+}
+function loadStats(){
+  const empty = { attempts: 0, correct: 0, currentStreak: 0, longestStreak: 0, wordAttemptCounts: {} };
+  try{
+    const raw = localStorage.getItem(STATS_KEY);
+    return raw ? Object.assign(empty, JSON.parse(raw)) : empty;
+  }catch(e){
+    return empty;
+  }
+}
+function saveStats(){
+  try{
+    localStorage.setItem(STATS_KEY, JSON.stringify(stats));
+  }catch(e){
+    // ignore — stats just won't persist
+  }
+}
+
+let currentFilm = null;      // the FILMS entry currently on screen
+let progress = {};           // { sceneId: { "beatIdx-wordIdx": true, ... } } for currentFilm
+let score = 0;                // score for currentFilm
+let hints = {};               // { sceneId: { "beatIdx-wordIdx": lettersRevealedCount, ... } } for currentFilm
+let stats = loadStats();      // cumulative, across all films
+
+// Session-level fallback so switching films never loses progress, even
+// if localStorage is blocked (in that case nothing survives a page
+// reload, but nothing is lost just from clicking between films).
+const memoryCache = {}; // filmId -> { progress, score, hints }
+
+function computeScoresByFilm(){
+  const result = {};
+  FILMS.forEach(film => {
+    if(currentFilm && film.id === currentFilm.id){
+      result[film.id] = score;
+    }else if(memoryCache[film.id]){
+      result[film.id] = memoryCache[film.id].score;
+    }else{
+      result[film.id] = loadScore(film.id);
+    }
+  });
+  return result;
+}
+function computeTotalScoreAcrossFilms(){
+  const byFilm = computeScoresByFilm();
+  return Object.values(byFilm).reduce((a, b) => a + b, 0);
+}
+
+function addScore(n){
+  if(!n) return;
+  score += n;
+  saveScore(currentFilm.id, score);
+  updateScoreDisplay();
+  syncScoreToCloud();
+}
+function updateScoreDisplay(){
+  const el = document.getElementById("scoreDisplay");
+  if(el) el.textContent = "Score: " + score + " pts";
+}
+
+function maskWord(token){
+  // Replace letters (unicode-aware) with '*', leave punctuation/spacing chars as-is
+  return token.replace(/[A-Za-zÀ-ɏ]/g, "*");
+}
+function maskWordWithHint(token, hintCount){
+  // Reveal the first `hintCount` letters, mask the rest, keep punctuation as-is
+  let lettersShown = 0;
+  return token.split("").map(ch => {
+    if(/[A-Za-zÀ-ɏ]/.test(ch)){
+      lettersShown++;
+      return lettersShown <= hintCount ? ch : "*";
+    }
+    return ch;
+  }).join("");
+}
+function hasLetters(token){
+  return /[A-Za-zÀ-ɏ]/.test(token);
+}
+function normalize(str){
+  // Strip accents/diacritics generically (û -> u, é -> e, ñ -> n, etc.)
+  // so a guess can be typed with plain letters and still match.
+  return str
+    .normalize("NFD")
+    .replace(/[̀-ͯ]/g, "")
+    .toLowerCase()
+    .replace(/[^a-z]/g, "");
+}
+
+function markRevealed(scene, beatIdx, idx){
+  if(!progress[scene.id]) progress[scene.id] = {};
+  progress[scene.id][beatIdx + "-" + idx] = true;
+  saveProgress(currentFilm.id, progress);
+}
+function getHintCount(scene, beatIdx, idx){
+  const sceneHints = hints[scene.id];
+  if(!sceneHints) return 0;
+  return sceneHints[beatIdx + "-" + idx] || 0;
+}
+function setHintCount(scene, beatIdx, idx, n){
+  if(!hints[scene.id]) hints[scene.id] = {};
+  hints[scene.id][beatIdx + "-" + idx] = n;
+  saveHints(currentFilm.id, hints);
+}
+function clearHintCount(scene, beatIdx, idx){
+  if(hints[scene.id]) delete hints[scene.id][beatIdx + "-" + idx];
+  saveHints(currentFilm.id, hints);
+}
+
+function recordAttempt(scene, beatIdx, idx, wasCorrect){
+  stats.attempts++;
+  const wordKey = currentFilm.id + ":" + scene.id + ":" + beatIdx + "-" + idx;
+  stats.wordAttemptCounts[wordKey] = (stats.wordAttemptCounts[wordKey] || 0) + 1;
+  if(wasCorrect){
+    stats.correct++;
+    stats.currentStreak++;
+    if(stats.currentStreak > stats.longestStreak) stats.longestStreak = stats.currentStreak;
+  }else{
+    stats.currentStreak = 0;
+  }
+  saveStats();
+}
+
+function computeAvgAttemptsPerWord(){
+  // Only counts words that were actually guessed at least once (hint-completed
+  // words never call recordAttempt, so they're naturally excluded).
+  let totalAttempts = 0, solvedCount = 0;
+  FILMS.forEach(film => {
+    const filmProgress = (currentFilm && film.id === currentFilm.id)
+      ? progress
+      : (memoryCache[film.id] ? memoryCache[film.id].progress : loadProgress(film.id));
+    Object.keys(filmProgress).forEach(sceneId => {
+      Object.keys(filmProgress[sceneId]).forEach(key => {
+        const wordKey = film.id + ":" + sceneId + ":" + key;
+        if(stats.wordAttemptCounts[wordKey]){
+          totalAttempts += stats.wordAttemptCounts[wordKey];
+          solvedCount++;
+        }
+      });
+    });
+  });
+  return solvedCount ? (totalAttempts / solvedCount) : 0;
+}
+
+// Renders (or re-renders) the word spans for one beat's line, based on
+// current progress. Used both on first build and after a full-line guess.
+function renderLine(scene, beatIdx, beatData, line){
+  line.innerHTML = "";
+  const sceneProgress = progress[scene.id] || {};
+
+  beatData.words.forEach((token, idx) => {
+    const span = document.createElement("span");
+    const key = beatIdx + "-" + idx;
+    span.dataset.key = key;
+
+    if(!hasLetters(token)){
+      span.className = "word punct-only";
+      span.textContent = token;
+      line.appendChild(span);
+      line.appendChild(document.createTextNode(" "));
+      return;
+    }
+
+    const isRevealed = !!sceneProgress[key];
+    span.className = "word " + (isRevealed ? "revealed" : "hidden");
+    span.textContent = isRevealed ? token : maskWordWithHint(token, getHintCount(scene, beatIdx, idx));
+
+    if(!isRevealed){
+      span.addEventListener("click", (e) => {
+        e.stopPropagation(); // don't also trigger the whole-line click handler
+        startGuess(scene, beatIdx, idx, token, span, line);
+      });
+    }
+
+    line.appendChild(span);
+    line.appendChild(document.createTextNode(" "));
+  });
+}
+
+function buildScene(scene){
+  const card = document.createElement("div");
+  card.className = "scene";
+  card.id = "card-" + scene.id;
+
+  const bracket = document.createElement("div");
+  bracket.className = "scene-bracket";
+  bracket.textContent = scene.bracket;
+  card.appendChild(bracket);
+
+  scene._beats = [];
+  let totalGuessable = 0;
+
+  scene.beats.forEach((beatDef, beatIdx) => {
+    const beatWrap = document.createElement("div");
+    beatWrap.className = "beat" + (beatIdx > 0 ? " beat-followup" : "");
+
+    const speakerEl = document.createElement("div");
+    speakerEl.className = "speaker";
+    speakerEl.textContent = beatDef.speaker;
+    beatWrap.appendChild(speakerEl);
+
+    const line = document.createElement("div");
+    line.className = "line";
+
+    const words = beatDef.text.split(" ");
+    const guessableCount = words.filter(hasLetters).length;
+    const beatData = { words: words, guessableCount: guessableCount, fullLineAttempted: false };
+    scene._beats[beatIdx] = beatData;
+    totalGuessable += guessableCount;
+
+    renderLine(scene, beatIdx, beatData, line);
+
+    // Clicking anywhere on the line that isn't a still-hidden word (which
+    // stops propagation itself) targets this line in the bottom bar, so
+    // you can type the whole thing while the asterisks stay visible.
+    line.addEventListener("click", () => {
+      const sceneProgress = progress[scene.id] || {};
+      const hasHidden = beatData.words.some((t, idx) => hasLetters(t) && !sceneProgress[beatIdx + "-" + idx]);
+      if(!hasHidden) return;
+      setActiveTarget(scene, beatIdx, beatData, line, beatDef.speaker);
+    });
+
+    beatWrap.appendChild(line);
+
+    const feedback = document.createElement("div");
+    feedback.className = "line-feedback";
+    feedback.id = "feedback-" + scene.id + "-" + beatIdx;
+    beatWrap.appendChild(feedback);
+
+    card.appendChild(beatWrap);
+  });
+
+  scene._guessableCount = totalGuessable;
+
+  const sceneProgLabel = document.createElement("div");
+  sceneProgLabel.className = "scene-progress";
+  sceneProgLabel.id = "prog-" + scene.id;
+  card.appendChild(sceneProgLabel);
+
+  updateSceneProgress(scene);
+
+  return card;
+}
+
+function startGuess(scene, beatIdx, idx, correctToken, span, line){
+  // Avoid opening multiple guess boxes at once
+  if(span.querySelector("input")) return;
+
+  const original = span.textContent;
+  span.innerHTML = "";
+  span.classList.remove("hidden");
+
+  const box = document.createElement("span");
+  box.className = "guess-box";
+  const input = document.createElement("input");
+  input.type = "text";
+  input.autocomplete = "off";
+  input.spellcheck = false;
+
+  const existingHint = getHintCount(scene, beatIdx, idx);
+  input.placeholder = existingHint > 0
+    ? maskWordWithHint(correctToken, existingHint)
+    : "?".repeat(Math.max(1, normalize(correctToken).length));
+
+  const hintBtn = document.createElement("button");
+  hintBtn.type = "button";
+  hintBtn.className = "hint-btn";
+  hintBtn.textContent = "Hint (-" + HINT_COST + ")";
+  hintBtn.disabled = score < HINT_COST;
+
+  box.appendChild(input);
+  box.appendChild(hintBtn);
+  span.appendChild(box);
+  input.focus();
+
+  function cancel(){
+    span.innerHTML = "";
+    span.textContent = getHintCount(scene, beatIdx, idx) > 0
+      ? maskWordWithHint(correctToken, getHintCount(scene, beatIdx, idx))
+      : original;
+    span.classList.add("hidden");
+  }
+
+  hintBtn.addEventListener("click", () => {
+    if(score < HINT_COST) return;
+    const current = getHintCount(scene, beatIdx, idx);
+    const next = current + 1;
+    const letterCount = normalize(correctToken).length;
+
+    addScore(-HINT_COST);
+
+    if(next >= letterCount){
+      // Fully hinted out — just reveal it outright, no extra guess point.
+      clearHintCount(scene, beatIdx, idx);
+      revealWord(scene, beatIdx, idx, correctToken, span);
+      return;
+    }
+
+    setHintCount(scene, beatIdx, idx, next);
+    input.placeholder = maskWordWithHint(correctToken, next);
+    hintBtn.disabled = score < HINT_COST;
+  });
+
+  input.addEventListener("keydown", (e) => {
+    if(e.key === "Enter"){
+      e.preventDefault();
+      const guess = normalize(input.value);
+      const answer = normalize(correctToken);
+      const isCorrect = guess.length > 0 && guess === answer;
+      recordAttempt(scene, beatIdx, idx, isCorrect);
+      if(isCorrect){
+        revealWord(scene, beatIdx, idx, correctToken, span);
+        addScore(1);
+        showFloatingPoints(line, span, "+1");
+        scene._beats[beatIdx].fullLineAttempted = true; // manual reveals count against the "first try" bonus
+      }else{
+        span.classList.add("wrong-flash");
+        input.value = "";
+        setTimeout(() => span.classList.remove("wrong-flash"), 400);
+      }
+    }else if(e.key === "Escape"){
+      cancel();
+    }
+  });
+
+  input.addEventListener("blur", () => {
+    // small delay so a click that triggered blur doesn't fight the cancel
+    setTimeout(() => {
+      if(span.contains(input)) cancel();
+    }, 100);
+  });
+}
+
+function revealWord(scene, beatIdx, idx, token, span){
+  span.innerHTML = "";
+  span.textContent = token;
+  span.className = "word revealed correct-flash";
+  setTimeout(() => span.classList.remove("correct-flash"), 700);
+
+  clearHintCount(scene, beatIdx, idx);
+  markRevealed(scene, beatIdx, idx);
+  updateSceneProgress(scene);
+  updateOverallProgress();
+}
+
+// The bottom bar's current target: whichever line was last clicked.
+let activeTarget = null;
+
+function setActiveTarget(scene, beatIdx, beatData, line, speakerName){
+  if(activeTarget && activeTarget.line){
+    activeTarget.line.classList.remove("targeted");
+  }
+  activeTarget = { scene, beatIdx, beatData, line };
+  line.classList.add("targeted");
+
+  const targetLabel = document.getElementById("lineBarTarget");
+  const barInput = document.getElementById("lineBarInput");
+  const barBtn = document.getElementById("lineBarBtn");
+  if(targetLabel) targetLabel.textContent = speakerName;
+  if(barInput){
+    const sceneProgress = progress[scene.id] || {};
+    const anyRevealedYet = beatData.words.some((t, idx) => hasLetters(t) && sceneProgress[beatIdx + "-" + idx]);
+    barInput.disabled = false;
+    barInput.value = "";
+    barInput.placeholder = anyRevealedYet
+      ? "Type the words still hidden…"
+      : "Type " + speakerName + "'s whole line…";
+    barInput.focus();
+  }
+  if(barBtn) barBtn.disabled = false;
+}
+
+function clearActiveTarget(){
+  if(activeTarget && activeTarget.line){
+    activeTarget.line.classList.remove("targeted");
+  }
+  activeTarget = null;
+  const targetLabel = document.getElementById("lineBarTarget");
+  const barInput = document.getElementById("lineBarInput");
+  const barBtn = document.getElementById("lineBarBtn");
+  if(targetLabel) targetLabel.textContent = "Click a line to select it";
+  if(barInput){
+    barInput.value = "";
+    barInput.placeholder = "Type the whole line…";
+    barInput.disabled = true;
+  }
+  if(barBtn) barBtn.disabled = true;
+}
+
+function submitActiveGuess(){
+  if(!activeTarget) return;
+  const barInput = document.getElementById("lineBarInput");
+  const value = barInput ? barInput.value : "";
+  if(!value.trim()) return;
+
+  const { scene, beatIdx, beatData, line } = activeTarget;
+  const message = checkFullLine(scene, beatIdx, beatData, value);
+  updateSceneProgress(scene);
+  updateOverallProgress();
+  renderLine(scene, beatIdx, beatData, line);
+
+  const feedback = document.getElementById("feedback-" + scene.id + "-" + beatIdx);
+  if(feedback) feedback.textContent = message;
+
+  const sceneProgress = progress[scene.id] || {};
+  const stillHidden = beatData.words.some((t, idx) => hasLetters(t) && !sceneProgress[beatIdx + "-" + idx]);
+  if(stillHidden){
+    if(barInput){ barInput.value = ""; barInput.focus(); }
+  }else{
+    clearActiveTarget(); // line is fully solved, nothing left to target
+  }
+}
+
+// Compares a full-line guess word-by-word against the beat's text,
+// marking correct words revealed in place. Returns a feedback message.
+function checkFullLine(scene, beatIdx, beatData, guessText){
+  const guessWords = guessText.trim().split(/\s+/).filter(Boolean);
+  if(!guessWords.length) return "";
+
+  const sceneProgress = progress[scene.id] || {};
+
+  // Positions still hidden, in reading order. The typed guess is matched
+  // against these positions in sequence — so after a partial reveal you
+  // only need to type the words that are STILL hidden, not retype the
+  // ones already shown. (On a fresh line this is just every word, in
+  // order, which is the same as typing the whole line.)
+  const remainingIndices = [];
+  beatData.words.forEach((token, idx) => {
+    if(!hasLetters(token)) return; // punctuation-only, nothing to guess
+    const key = beatIdx + "-" + idx;
+    if(!sceneProgress[key]) remainingIndices.push(idx);
+  });
+
+  const revealedBeforeThisBeat = beatData.guessableCount - remainingIndices.length;
+  const isFirstAttempt = !beatData.fullLineAttempted && revealedBeforeThisBeat === 0;
+
+  let matched = 0;
+  let attempted = 0;
+
+  remainingIndices.forEach((idx, i) => {
+    const guess = guessWords[i];
+    if(guess === undefined) return; // ran out of typed words before this position
+    const token = beatData.words[idx];
+    attempted++;
+    const isMatch = normalize(guess) === normalize(token);
+    recordAttempt(scene, beatIdx, idx, isMatch);
+    if(isMatch){
+      matched++;
+      markRevealed(scene, beatIdx, idx);
+    }
+  });
+
+  const isPerfectFirstTry = isFirstAttempt && matched > 0 && matched === beatData.guessableCount;
+  beatData.fullLineAttempted = true;
+
+  if(attempted === 0){
+    return "Nothing new to check — remaining words are already revealed.";
+  }
+  if(isPerfectFirstTry){
+    const bonus = beatData.guessableCount + Math.ceil(beatData.guessableCount / 2);
+    addScore(bonus);
+    return "Perfect, first try! +" + bonus + " points.";
+  }
+  if(matched > 0){
+    addScore(matched);
+    return matched + " of " + attempted + " remaining word" + (attempted === 1 ? "" : "s") +
+      " matched. +" + matched + " point" + (matched === 1 ? "" : "s") + ".";
+  }
+  return "0 of " + attempted + " matched. Try again.";
+}
+
+function showFloatingPoints(line, span, text){
+  if(!line || !span) return;
+  const el = document.createElement("span");
+  el.className = "float-points";
+  el.textContent = text;
+  el.style.left = span.offsetLeft + "px";
+  el.style.top = (span.offsetTop - 4) + "px";
+  line.appendChild(el);
+  setTimeout(() => el.remove(), 900);
+}
+
+function updateSceneProgress(scene){
+  const sceneProgress = progress[scene.id] || {};
+  const revealedCount = Object.keys(sceneProgress).length;
+  const label = document.getElementById("prog-" + scene.id);
+  if(label){
+    const complete = revealedCount === scene._guessableCount && scene._guessableCount > 0;
+    label.textContent = revealedCount + " / " + scene._guessableCount + " words revealed" + (complete ? "  ✓" : "");
+  }
+}
+
+function updateOverallProgress(){
+  let total = 0, revealed = 0;
+  currentFilm.scenes.forEach(scene => {
+    total += scene._guessableCount || 0;
+    revealed += Object.keys(progress[scene.id] || {}).length;
+  });
+  const pct = total ? Math.round((revealed/total)*100) : 0;
+  document.getElementById("overallBar").style.width = pct + "%";
+  document.getElementById("overallLabel").textContent = revealed + " / " + total + " words revealed";
+}
+
+function applyTheme(theme){
+  document.body.classList.toggle("dark-mode", theme === "dark");
+  const btn = document.getElementById("themeToggle");
+  if(btn) btn.textContent = theme === "dark" ? "☀️" : "🌙";
+}
+
+function renderFilmScenes(){
+  const container = document.getElementById("scenes");
+  container.innerHTML = "";
+  if(!currentFilm.scenes.length){
+    const empty = document.createElement("div");
+    empty.className = "empty-note";
+    empty.textContent = "No passages added yet for " + currentFilm.title + ".";
+    container.appendChild(empty);
+    return;
+  }
+  currentFilm.scenes.forEach(scene => container.appendChild(buildScene(scene)));
+}
+
+function updateFilmButtons(){
+  document.querySelectorAll(".film-btn").forEach(btn => {
+    btn.classList.toggle("active", btn.dataset.filmId === currentFilm.id);
+  });
+}
+
+function selectFilm(filmId){
+  const film = FILMS.find(f => f.id === filmId);
+  if(!film) return;
+
+  if(currentFilm){
+    memoryCache[currentFilm.id] = { progress, score, hints };
+  }
+
+  currentFilm = film;
+  clearActiveTarget();
+
+  if(memoryCache[filmId]){
+    progress = memoryCache[filmId].progress;
+    score = memoryCache[filmId].score;
+    hints = memoryCache[filmId].hints;
+  }else{
+    progress = loadProgress(filmId);
+    score = loadScore(filmId);
+    hints = loadHints(filmId);
+  }
+
+  updateScoreDisplay();
+  renderFilmScenes();
+  updateOverallProgress();
+  updateFilmButtons();
+  saveActiveFilm(filmId);
+}
+
+// ---------------------------------------------------------------
+// Tabs
+// ---------------------------------------------------------------
+function switchTab(tab){
+  document.querySelectorAll(".tab-btn").forEach(btn => {
+    btn.classList.toggle("active", btn.dataset.tab === tab);
+  });
+  document.getElementById("gamePanel").style.display = tab === "game" ? "" : "none";
+  document.getElementById("scoreboardPanel").style.display = tab === "scoreboard" ? "" : "none";
+  if(tab === "scoreboard") renderScoreboard();
+}
+
+// ---------------------------------------------------------------
+// Profile / Auth (Firebase Authentication, optional)
+// ---------------------------------------------------------------
+let currentUser = null;
+let authMode = "login";
+
+function updateProfileButton(){
+  const btn = document.getElementById("profileBtn");
+  if(!btn) return;
+  if(currentUser){
+    btn.textContent = currentUser.displayName || currentUser.email || "Account";
+    btn.classList.add("signed-in");
+  }else{
+    btn.textContent = "Sign in";
+    btn.classList.remove("signed-in");
+  }
+}
+
+function renderProfileModalContent(){
+  const accountSection = document.getElementById("accountSection");
+  const formSection = document.getElementById("authFormSection");
+  if(currentUser){
+    accountSection.style.display = "block";
+    formSection.style.display = "none";
+    document.getElementById("accountName").textContent = currentUser.displayName || currentUser.email || "Account";
+  }else{
+    accountSection.style.display = "none";
+    formSection.style.display = "block";
+    document.getElementById("authError").textContent = "";
+    document.getElementById("cloudDisabledNote").style.display = CLOUD_ENABLED ? "none" : "block";
+    document.getElementById("authSubmit").disabled = !CLOUD_ENABLED;
+  }
+}
+
+function renderStats(){
+  const el = document.getElementById("statsSection");
+  if(!el) return;
+  const accuracy = stats.attempts ? Math.round((stats.correct / stats.attempts) * 100) : null;
+  const avgAttempts = computeAvgAttemptsPerWord();
+
+  const rows = [
+    ["Accuracy", accuracy === null ? "—" : accuracy + "%"],
+    ["Avg. attempts per word", avgAttempts ? avgAttempts.toFixed(1) : "—"],
+    ["Longest streak", stats.longestStreak + " word" + (stats.longestStreak === 1 ? "" : "s")]
+  ];
+
+  el.innerHTML = "";
+  rows.forEach(([label, value]) => {
+    const row = document.createElement("div");
+    row.className = "stat-row";
+    const labelEl = document.createElement("span");
+    labelEl.className = "stat-label";
+    labelEl.textContent = label;
+    const valueEl = document.createElement("span");
+    valueEl.className = "stat-value";
+    valueEl.textContent = value;
+    row.appendChild(labelEl);
+    row.appendChild(valueEl);
+    el.appendChild(row);
+  });
+}
+
+function openAuthModal(){
+  document.getElementById("authOverlay").style.display = "flex";
+  renderProfileModalContent();
+  renderStats();
+  if(!currentUser) document.getElementById("authEmail").focus();
+}
+function closeAuthModal(){
+  document.getElementById("authOverlay").style.display = "none";
+}
+function setAuthMode(mode){
+  authMode = mode;
+  document.querySelectorAll(".modal-tab").forEach(btn => btn.classList.toggle("active", btn.dataset.mode === mode));
+  document.getElementById("authDisplayName").style.display = mode === "signup" ? "block" : "none";
+  document.getElementById("authSubmit").textContent = mode === "signup" ? "Create Account" : "Sign In";
+  document.getElementById("authError").textContent = "";
+}
+
+function friendlyAuthError(e){
+  const code = (e && e.code) || "";
+  if(code.includes("email-already-in-use")) return "That email already has an account — try signing in instead.";
+  if(code.includes("invalid-email")) return "That doesn't look like a valid email address.";
+  if(code.includes("weak-password")) return "Password should be at least 6 characters.";
+  if(code.includes("wrong-password") || code.includes("user-not-found") || code.includes("invalid-credential")) return "Incorrect email or password.";
+  return "Something went wrong. Please try again.";
+}
+
+async function ensureUserDoc(user, displayName){
+  if(!db) return;
+  const ref = db.collection("users").doc(user.uid);
+  const snap = await ref.get();
+  if(!snap.exists){
+    await ref.set({
+      displayName: displayName || user.displayName || "Anonymous",
+      totalScore: computeTotalScoreAcrossFilms(),
+      scores: computeScoresByFilm(),
+      updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+    });
+  }
+}
+
+async function handleAuthSubmit(){
+  if(!CLOUD_ENABLED) return;
+  const email = document.getElementById("authEmail").value.trim();
+  const password = document.getElementById("authPassword").value;
+  const displayName = document.getElementById("authDisplayName").value.trim();
+  const errorEl = document.getElementById("authError");
+  errorEl.textContent = "";
+
+  try{
+    if(authMode === "signup"){
+      if(!displayName){
+        errorEl.textContent = "Please enter a display name.";
+        return;
+      }
+      const cred = await auth.createUserWithEmailAndPassword(email, password);
+      await cred.user.updateProfile({ displayName: displayName });
+      await ensureUserDoc(cred.user, displayName);
+    }else{
+      await auth.signInWithEmailAndPassword(email, password);
+    }
+    renderProfileModalContent();
+  }catch(e){
+    errorEl.textContent = friendlyAuthError(e);
+  }
+}
+
+function syncScoreToCloud(){
+  if(!CLOUD_ENABLED || !currentUser || !db) return;
+  const byFilm = computeScoresByFilm();
+  const total = Object.values(byFilm).reduce((a, b) => a + b, 0);
+  db.collection("users").doc(currentUser.uid).set({
+    displayName: currentUser.displayName || currentUser.email || "Anonymous",
+    totalScore: total,
+    scores: byFilm,
+    updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+  }, { merge: true }).catch(e => console.warn("Cloud sync failed:", e));
+}
+
+// ---------------------------------------------------------------
+// Scoreboard (Firestore, optional) — combined or per-film
+// ---------------------------------------------------------------
+let scoreboardUnsub = null;
+let scoreboardFilter = "combined";
+
+function buildScoreboardFilter(){
+  const wrap = document.getElementById("scoreboardFilter");
+  wrap.innerHTML = "";
+
+  const combinedBtn = document.createElement("button");
+  combinedBtn.type = "button";
+  combinedBtn.textContent = "Combined";
+  combinedBtn.dataset.filter = "combined";
+  wrap.appendChild(combinedBtn);
+
+  FILMS.forEach(film => {
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.textContent = film.short || film.title;
+    btn.title = film.title; // full name on hover
+    btn.dataset.filter = film.id;
+    wrap.appendChild(btn);
+  });
+
+  wrap.querySelectorAll("button").forEach(btn => {
+    btn.addEventListener("click", () => {
+      scoreboardFilter = btn.dataset.filter;
+      updateScoreboardFilterButtons();
+      renderScoreboard();
+    });
+  });
+  updateScoreboardFilterButtons();
+}
+function updateScoreboardFilterButtons(){
+  document.querySelectorAll(".scoreboard-filter button").forEach(btn => {
+    btn.classList.toggle("active", btn.dataset.filter === scoreboardFilter);
+  });
+}
+
+function renderScoreboard(){
+  const list = document.getElementById("scoreboardList");
+  const note = document.getElementById("scoreboardNote");
+
+  if(!CLOUD_ENABLED){
+    note.textContent = "The global leaderboard isn't configured yet — see the setup comment near the top of the page's script for how to connect a free Firebase project.";
+    list.innerHTML = "";
+    return;
+  }
+  note.textContent = "";
+
+  if(scoreboardUnsub) scoreboardUnsub();
+
+  const isCombined = scoreboardFilter === "combined";
+  const orderField = isCombined ? "totalScore" : ("scores." + scoreboardFilter);
+
+  scoreboardUnsub = db.collection("users").orderBy(orderField, "desc").limit(50)
+    .onSnapshot(snap => {
+      list.innerHTML = "";
+      if(snap.empty){
+        note.textContent = isCombined
+          ? "No scores yet — be the first!"
+          : "No one has scored on this film yet — be the first!";
+        return;
+      }
+      let rank = 0;
+      snap.forEach(doc => {
+        rank++;
+        const data = doc.data();
+        const displayScore = isCombined
+          ? (data.totalScore || 0)
+          : ((data.scores && data.scores[scoreboardFilter]) || 0);
+
+        const row = document.createElement("div");
+        row.className = "leaderboard-row" + (currentUser && doc.id === currentUser.uid ? " me" : "");
+
+        const rankEl = document.createElement("span");
+        rankEl.className = "leaderboard-rank";
+        rankEl.textContent = "#" + rank;
+
+        const nameEl = document.createElement("span");
+        nameEl.className = "leaderboard-name";
+        nameEl.textContent = data.displayName || "Anonymous";
+
+        const scoreEl = document.createElement("span");
+        scoreEl.className = "leaderboard-score";
+        scoreEl.textContent = displayScore + " pts";
+
+        row.appendChild(rankEl);
+        row.appendChild(nameEl);
+        row.appendChild(scoreEl);
+        list.appendChild(row);
+      });
+    }, err => {
+      note.textContent = "Couldn't load the leaderboard right now.";
+      console.warn(err);
+    });
+}
+
+function init(){
+  applyTheme(loadTheme());
+
+  document.getElementById("themeToggle").addEventListener("click", () => {
+    const next = document.body.classList.contains("dark-mode") ? "light" : "dark";
+    applyTheme(next);
+    saveTheme(next);
+  });
+
+  document.querySelectorAll(".tab-btn").forEach(btn => {
+    btn.addEventListener("click", () => switchTab(btn.dataset.tab));
+  });
+  buildScoreboardFilter();
+
+  document.getElementById("profileBtn").addEventListener("click", openAuthModal);
+  document.getElementById("authClose").addEventListener("click", closeAuthModal);
+  document.getElementById("authOverlay").addEventListener("click", (e) => {
+    if(e.target.id === "authOverlay") closeAuthModal();
+  });
+  document.querySelectorAll(".modal-tab").forEach(btn => {
+    btn.addEventListener("click", () => setAuthMode(btn.dataset.mode));
+  });
+  document.getElementById("authSubmit").addEventListener("click", handleAuthSubmit);
+  document.getElementById("authPassword").addEventListener("keydown", (e) => {
+    if(e.key === "Enter"){
+      e.preventDefault();
+      handleAuthSubmit();
+    }
+  });
+  document.getElementById("signOutBtn").addEventListener("click", () => {
+    if(CLOUD_ENABLED && auth) auth.signOut();
+    closeAuthModal();
+  });
+
+  if(CLOUD_ENABLED){
+    auth.onAuthStateChanged(user => {
+      currentUser = user;
+      updateProfileButton();
+      if(user) syncScoreToCloud();
+    });
+  }
+
+  const filmSelector = document.getElementById("filmSelector");
+  FILMS.forEach(film => {
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "film-btn";
+    btn.textContent = film.title;
+    btn.dataset.filmId = film.id;
+    btn.addEventListener("click", () => selectFilm(film.id));
+    filmSelector.appendChild(btn);
+  });
+
+  const savedFilmId = loadActiveFilm();
+  const initialFilm = FILMS.find(f => f.id === savedFilmId) || FILMS[0];
+  selectFilm(initialFilm.id);
+
+  const barInput = document.getElementById("lineBarInput");
+  const barBtn = document.getElementById("lineBarBtn");
+  barBtn.addEventListener("click", submitActiveGuess);
+  barInput.addEventListener("keydown", (e) => {
+    if(e.key === "Enter"){
+      e.preventDefault();
+      submitActiveGuess();
+    }else if(e.key === "Escape"){
+      clearActiveTarget();
+    }
+  });
+
+  document.getElementById("resetBtn").addEventListener("click", () => {
+    if(confirm("Reset progress and score for " + currentFilm.title + "? This cannot be undone.")){
+      progress = {};
+      score = 0;
+      hints = {};
+      saveProgress(currentFilm.id, progress);
+      saveScore(currentFilm.id, score);
+      saveHints(currentFilm.id, hints);
+      clearActiveTarget();
+      renderFilmScenes();
+      updateOverallProgress();
+      updateScoreDisplay();
+      syncScoreToCloud();
+    }
+  });
+}
+
+init();
+</script>
+
+</body>
+</html>
