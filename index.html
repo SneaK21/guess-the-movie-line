@@ -1253,6 +1253,7 @@ function buildScene(scene){
 
     const line = document.createElement("div");
     line.className = "line";
+    line.id = "line-" + scene.id + "-" + beatIdx;
 
     const words = beatDef.text.split(" ");
     const guessableCount = words.filter(hasLetters).length;
@@ -1393,6 +1394,57 @@ function revealWord(scene, beatIdx, idx, token, span){
   markRevealed(scene, beatIdx, idx);
   updateSceneProgress(scene);
   updateOverallProgress();
+  advanceToNextLineIfComplete(scene, beatIdx);
+}
+
+// Finds the line immediately after (scene, beatIdx) within the current
+// chapter: the next beat in the same scene, or beat 0 of the next scene
+// that actually has beats. Returns null once there's nothing left in the
+// chapter.
+function findNextLine(scene, beatIdx){
+  if(beatIdx + 1 < scene.beats.length){
+    return { scene, beatIdx: beatIdx + 1 };
+  }
+  if(!currentChapter) return null;
+  const sceneIdx = currentChapter.scenes.indexOf(scene);
+  for(let i = sceneIdx + 1; i < currentChapter.scenes.length; i++){
+    const nextScene = currentChapter.scenes[i];
+    if(nextScene.beats && nextScene.beats.length) return { scene: nextScene, beatIdx: 0 };
+  }
+  return null;
+}
+
+// Once every guessable word in (scene, beatIdx) has been revealed — whether
+// by clicking individual words or typing the whole line — automatically
+// target the next line and scroll it into view, so you can keep going
+// without having to click anything.
+function advanceToNextLineIfComplete(scene, beatIdx){
+  const beatData = scene._beats && scene._beats[beatIdx];
+  if(!beatData || !beatData.guessableCount) return;
+
+  const sceneProgress = progress[scene.id] || {};
+  const revealedInBeat = Object.keys(sceneProgress).filter(k => k.split("-")[0] === String(beatIdx)).length;
+  if(revealedInBeat < beatData.guessableCount) return; // this line isn't finished yet
+
+  const next = findNextLine(scene, beatIdx);
+  const targetLabel = document.getElementById("lineBarTarget");
+
+  if(!next){
+    clearActiveTarget();
+    if(targetLabel) targetLabel.textContent = "🎉 Chapter complete! Pick another chapter above.";
+    return;
+  }
+
+  const nextLineEl = document.getElementById("line-" + next.scene.id + "-" + next.beatIdx);
+  const nextBeatData = next.scene._beats && next.scene._beats[next.beatIdx];
+  const nextSpeaker = next.scene.beats[next.beatIdx].speaker;
+  if(!nextLineEl || !nextBeatData) return;
+
+  // Small delay so the correct-word flash is visible before the page moves.
+  setTimeout(() => {
+    setActiveTarget(next.scene, next.beatIdx, nextBeatData, nextLineEl, nextSpeaker);
+    nextLineEl.scrollIntoView({ behavior: "smooth", block: "center" });
+  }, 350);
 }
 
 // The bottom bar's current target: whichever line was last clicked.
@@ -1459,7 +1511,7 @@ function submitActiveGuess(){
   if(stillHidden){
     if(barInput){ barInput.value = ""; barInput.focus(); }
   }else{
-    clearActiveTarget(); // line is fully solved, nothing left to target
+    advanceToNextLineIfComplete(scene, beatIdx); // line is fully solved — move on to the next one
   }
 }
 
