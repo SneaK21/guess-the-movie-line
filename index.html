@@ -1614,42 +1614,65 @@ function updateSceneProgress(scene){
   }
 }
 
-// Flattens every scene across every chapter of a film into one array —
-// used for whole-film progress totals, independent of which chapter is
-// currently open.
-function allScenesOfFilm(film){
-  return film.chapters.flatMap(chapter => chapter.scenes);
+// Total guessable words in a scene, computed straight from the data (not
+// a DOM-populated cache), so it's correct even for a scene that hasn't
+// been built/rendered yet this session.
+function sceneGuessableCount(scene){
+  let total = 0;
+  scene.beats.forEach(beatDef => {
+    total += beatDef.text.split(" ").filter(hasLetters).length;
+  });
+  return total;
 }
 
-function updateOverallProgress(){
+// Total guessable words vs. words revealed so far for a chapter, computed
+// straight from the data, so it works even for a chapter that hasn't been
+// opened yet this session.
+function chapterProgressStats(chapter){
   let total = 0, revealed = 0;
-  allScenesOfFilm(currentFilm).forEach(scene => {
-    total += scene._guessableCount || 0;
+  chapter.scenes.forEach(scene => {
+    total += sceneGuessableCount(scene);
     revealed += Object.keys(progress[scene.id] || {}).length;
   });
-  const pct = total ? Math.round((revealed/total)*100) : 0;
-  document.getElementById("overallBar").style.width = pct + "%";
-  document.getElementById("overallLabel").textContent = revealed + " / " + total + " words revealed";
+  return { total, revealed };
+}
+
+// The bar/label above the scenes area is context-sensitive: on the chapter
+// list it shows how many chapters are fully filled out; inside a chapter
+// it shows word progress for just that chapter. Both are computed straight
+// from the data (never a stale DOM cache), which is what was causing the
+// "56 / 0 words revealed" bug — the old version only counted chapters that
+// had already been opened and rendered at least once this session.
+function updateOverallProgress(){
+  const bar = document.getElementById("overallBar");
+  const label = document.getElementById("overallLabel");
+  if(!bar || !label) return;
+
+  if(currentChapter){
+    let total = 0, revealed = 0;
+    currentChapter.scenes.forEach(scene => {
+      total += sceneGuessableCount(scene);
+      revealed += Object.keys(progress[scene.id] || {}).length;
+    });
+    const pct = total ? Math.round((revealed/total)*100) : 0;
+    bar.style.width = pct + "%";
+    label.textContent = revealed + " / " + total + " words revealed";
+  }else{
+    const totalChapters = currentFilm.chapters.length;
+    const completeCount = currentFilm.chapters.filter(chapter => {
+      const { total, revealed } = chapterProgressStats(chapter);
+      return total > 0 && revealed >= total;
+    }).length;
+    const pct = totalChapters ? Math.round((completeCount/totalChapters)*100) : 0;
+    bar.style.width = pct + "%";
+    label.textContent = completeCount + " / " + totalChapters + " chapters filled out";
+  }
 }
 
 function applyTheme(theme){
   document.body.classList.toggle("dark-mode", theme === "dark");
   const btn = document.getElementById("themeToggle");
   if(btn) btn.textContent = theme === "dark" ? "☀️" : "🌙";
-}
-
-// Total guessable words vs. words revealed so far for a chapter, computed
-// straight from the data (not the DOM), so it works even for a chapter
-// that hasn't been opened yet this session.
-function chapterProgressStats(chapter){
-  let total = 0, revealed = 0;
-  chapter.scenes.forEach(scene => {
-    scene.beats.forEach(beatDef => {
-      total += beatDef.text.split(" ").filter(hasLetters).length;
-    });
-    revealed += Object.keys(progress[scene.id] || {}).length;
-  });
-  return { total, revealed };
 }
 
 // Chapter list — shown after picking a film. Chapters with lines already
@@ -1708,12 +1731,14 @@ function selectChapter(chapterId){
   currentChapter = chapter;
   clearActiveTarget();
   renderChapterScenes();
+  updateOverallProgress();
 }
 
 function backToChapterList(){
   currentChapter = null;
   clearActiveTarget();
   renderChapterList();
+  updateOverallProgress();
 }
 
 function updateFilmButtons(){
