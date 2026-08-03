@@ -184,6 +184,52 @@
     color:var(--accent-strong);
     font-weight:700;
   }
+  .chapter-list{
+    display:grid;
+    grid-template-columns:repeat(auto-fill, minmax(220px, 1fr));
+    gap:8px;
+    margin-bottom:22px;
+  }
+  .chapter-btn{
+    text-align:left;
+    background:var(--bg);
+    border:1px solid var(--border);
+    border-radius:8px;
+    padding:10px 12px;
+    font-size:0.88rem;
+    color:var(--muted);
+    cursor:pointer;
+    transition:border-color 0.15s, color 0.15s;
+  }
+  .chapter-btn:hover{
+    border-color:var(--accent);
+    color:var(--text);
+  }
+  .chapter-btn.has-content{
+    color:var(--text);
+    font-weight:600;
+  }
+  .chapter-btn.active{
+    border-color:var(--accent-strong);
+    color:var(--accent-strong);
+    font-weight:700;
+  }
+  .chapter-back-btn{
+    display:block;
+    width:fit-content;
+    margin:0 0 18px;
+    background:none;
+    border:none;
+    border-bottom:1px solid var(--muted);
+    color:var(--muted);
+    font-size:0.85rem;
+    cursor:pointer;
+    padding:0 0 2px;
+  }
+  .chapter-back-btn:hover{
+    border-bottom-color:var(--accent);
+    color:var(--accent);
+  }
   .reset-btn{
     display:block;
     width:fit-content;
@@ -675,6 +721,8 @@
     </div>
     <div class="progress-outer"><div class="progress-inner" id="overallBar"></div></div>
 
+    <div class="chapter-list" id="chapterList"></div>
+    <button class="chapter-back-btn" id="chapterBackBtn" style="display:none;" type="button">&larr; Back to chapters</button>
     <div id="scenes"></div>
 
   </div>
@@ -794,79 +842,120 @@ const FILMS = [
     id: "fotr",
     title: "The Fellowship of the Ring",
     short: "FotR",
-    scenes: [
-      {
-        id: "s1",
-        bracket: "[Prologue — the history of the One Ring is told over images of ancient wars]",
-        beats: [
-          { speaker: "Galadriel (V.O.)", text: "The world is changed. I feel it in the water. I feel it in the earth. I smell it in the air." }
-        ]
-      },
-      {
-        id: "s2",
-        bracket: "[Bag End, The Shire — Gandalf arrives late to Bilbo's birthday party]",
-        beats: [
+    chapters: [
+      { id: "c1", title: "Prologue", scenes: [
+        { id: "s1", bracket: "[Prologue — the history of the One Ring]", beats: [
+          { speaker: "Galadriel (V.O.)", text: "The world is changed. I feel it in the water. I feel it in the earth. I smell it in the air. Much that once was, is lost. For none now live who remember it." }
+        ] }
+      ] },
+      { id: "c2", title: "Gandalf's Arrival", scenes: [
+        { id: "s2", bracket: "[Bag End, The Shire — Gandalf arrives late to Bilbo's birthday party]", beats: [
           { speaker: "Gandalf", text: "A wizard is never late, Frodo Baggins, nor is he early. He arrives precisely when he means to." }
-        ]
-      },
-      {
-        id: "s3",
-        bracket: "[The Mines of Moria — Frodo confides in Gandalf about the weight of carrying the Ring]",
-        beats: [
-          { speaker: "Frodo", text: "I wish the Ring had never come to me. I wish none of this had happened." },
-          { speaker: "Gandalf", text: "So do all who live to see such times, but that is not for them to decide. All we have to decide is what to do with the time that is given us." }
-        ]
-      },
-      {
-        id: "s4",
-        bracket: "[Council of Elrond, Rivendell — the Fellowship's quest is decided]",
-        beats: [
+        ] }
+      ] },
+      { id: "c3", title: "Gandalf and Bilbo at Bag End", scenes: [] },
+      { id: "c4", title: "Gandalf and Bilbo Smoking", scenes: [] },
+      { id: "c5", title: "Bilbo's Birthday Party", scenes: [] },
+      { id: "c6", title: "Bilbo's Speech", scenes: [] },
+      { id: "c7", title: "Gandalf and Bilbo Discuss the Ring", scenes: [] },
+      { id: "c8", title: "Frodo Arrives at Bag End", scenes: [] },
+      { id: "c9", title: "Gandalf Explains the History of the Ring", scenes: [] },
+      { id: "c10", title: "Frodo Learns Gollum's Story", scenes: [] },
+      { id: "c11", title: "Gandalf Sends Frodo Away From the Shire", scenes: [] },
+      { id: "c12", title: "Gandalf Confronts Saruman at Isengard", scenes: [] },
+      { id: "c13", title: "Saruman Reveals His Betrayal", scenes: [] },
+      { id: "c14", title: "Frodo and Sam Leave Hobbiton", scenes: [] },
+      { id: "c15", title: "Merry and Pippin Join the Journey", scenes: [] },
+      { id: "c16", title: "Fleeing the Black Rider in the Cornfield", scenes: [] },
+      { id: "c17", title: "Hiding From the Nazgûl Under the Tree Roots", scenes: [] },
+      { id: "c18", title: "The Hobbits Reach the Ferry", scenes: [] },
+      { id: "c19", title: "Arriving at Bree", scenes: [] },
+      { id: "c20", title: "The Prancing Pony Inn", scenes: [] },
+      { id: "c21", title: "Meeting Strider", scenes: [] },
+      { id: "c22", title: "The Nazgûl Attack the Empty Room", scenes: [] },
+      { id: "c23", title: "Leaving Bree With Strider", scenes: [] },
+      { id: "c24", title: "Camping at Weathertop", scenes: [] },
+      { id: "c25", title: "Aragorn's Tale of Beren and Lúthien", scenes: [] },
+      { id: "c26", title: "The Witch-king Attacks Frodo at Weathertop", scenes: [] },
+      { id: "c27", title: "Arwen Rescues Frodo", scenes: [] },
+      { id: "c28", title: "The Ford of Bruinen", scenes: [] },
+      { id: "c29", title: "Frodo Wakes in Rivendell", scenes: [] },
+      { id: "c30", title: "Bilbo and Frodo Reunite", scenes: [] },
+      { id: "c31", title: "The Council of Elrond", scenes: [
+        { id: "s6", bracket: "[Council of Elrond — Boromir doubts the wisdom of walking into the enemy's land]", beats: [
+          { speaker: "Boromir", text: "One does not simply walk into Mordor." }
+        ] }
+      ] },
+      { id: "c32", title: "Frodo Volunteers to Take the Ring", scenes: [
+        { id: "s4", bracket: "[Council of Elrond, Rivendell — the Fellowship's quest is decided]", beats: [
           { speaker: "Frodo", text: "I will take it. I will take the Ring to Mordor, though I do not know the way." }
-        ]
-      },
-      {
-        id: "s5",
-        bracket: "[Council of Elrond — Aragorn, Legolas, and Gimli each pledge themselves to Frodo's quest]",
-        beats: [
+        ] }
+      ] },
+      { id: "c33", title: "The Fellowship of the Ring Is Formed", scenes: [
+        { id: "s5", bracket: "[Council of Elrond — Aragorn, Legolas, and Gimli each pledge themselves to Frodo's quest]", beats: [
           { speaker: "Aragorn", text: "You have my sword." },
           { speaker: "Legolas", text: "And you have my bow." },
           { speaker: "Gimli", text: "And my axe!" }
-        ]
-      },
-      {
-        id: "s6",
-        bracket: "[Council of Elrond — Boromir doubts the wisdom of walking into the enemy's land]",
-        beats: [
-          { speaker: "Boromir", text: "One does not simply walk into Mordor." }
-        ]
-      },
-      {
-        id: "s7",
-        bracket: "[The Mines of Moria — the Fellowship reaches the Bridge of Khazad-dûm and a Balrog appears]",
-        beats: [
+        ] }
+      ] },
+      { id: "c34", title: "Leaving Rivendell", scenes: [] },
+      { id: "c35", title: "Boromir Trains Merry and Pippin", scenes: [] },
+      { id: "c36", title: "The Attempt to Cross Caradhras", scenes: [] },
+      { id: "c37", title: "Saruman's Storm on the Mountain", scenes: [] },
+      { id: "c38", title: "The Decision to Enter Moria", scenes: [] },
+      { id: "c39", title: "The Watcher in the Water", scenes: [] },
+      { id: "c40", title: "Frodo Confides in Gandalf", scenes: [
+        { id: "s3", bracket: "[The Mines of Moria — Frodo confides in Gandalf about the weight of carrying the Ring]", beats: [
+          { speaker: "Frodo", text: "I wish the Ring had never come to me. I wish none of this had happened." },
+          { speaker: "Gandalf", text: "So do all who live to see such times, but that is not for them to decide. All we have to decide is what to do with the time that is given us." }
+        ] }
+      ] },
+      { id: "c41", title: "Finding Balin's Tomb", scenes: [] },
+      { id: "c42", title: "Reading the Book of Mazarbul", scenes: [] },
+      { id: "c43", title: "The Orc Ambush in the Chamber", scenes: [] },
+      { id: "c44", title: "Frodo's Mithril Shirt Saves Him", scenes: [] },
+      { id: "c45", title: "Fleeing Across the Bridge of Khazad-dûm", scenes: [] },
+      { id: "c46", title: "Gandalf and the Balrog — \"You Shall Not Pass!\"", scenes: [
+        { id: "s7", bracket: "[The Mines of Moria — the Fellowship reaches the Bridge of Khazad-dûm and a Balrog appears]", beats: [
           { speaker: "Gandalf", text: "You cannot pass! I am a servant of the Secret Fire, wielder of the flame of Anor. The dark fire will not avail you, flame of Udûn! You shall not pass!" }
-        ]
-      },
-      {
-        id: "s8",
-        bracket: "[The Bridge of Khazad-dûm — as Gandalf falls, he calls out to the fleeing Fellowship]",
-        beats: [
+        ] }
+      ] },
+      { id: "c47", title: "Gandalf Falls into the Chasm", scenes: [
+        { id: "s8", bracket: "[The Bridge of Khazad-dûm — as Gandalf falls, he calls out to the fleeing Fellowship]", beats: [
           { speaker: "Gandalf", text: "Fly, you fools!" }
-        ]
-      }
+        ] }
+      ] },
+      { id: "c48", title: "Mourning Gandalf", scenes: [] },
+      { id: "c49", title: "Arriving in Lothlórien", scenes: [] },
+      { id: "c50", title: "Galadriel's Warning to the Fellowship", scenes: [] },
+      { id: "c51", title: "Boromir and Aragorn Discuss the Ring's Temptation", scenes: [] },
+      { id: "c52", title: "Frodo and the Mirror of Galadriel", scenes: [] },
+      { id: "c53", title: "Frodo Offers Galadriel the Ring", scenes: [] },
+      { id: "c54", title: "Leaving Lothlórien by Boat", scenes: [] },
+      { id: "c55", title: "Passing the Argonath", scenes: [] },
+      { id: "c56", title: "Camp at Amon Hen", scenes: [] },
+      { id: "c57", title: "Boromir Tries to Take the Ring", scenes: [] },
+      { id: "c58", title: "Frodo Puts on the Ring to Escape", scenes: [] },
+      { id: "c59", title: "Aragorn Lets Frodo Go", scenes: [] },
+      { id: "c60", title: "The Uruk-hai Attack at Amon Hen", scenes: [] },
+      { id: "c61", title: "Boromir's Last Stand", scenes: [] },
+      { id: "c62", title: "Boromir's Death", scenes: [] },
+      { id: "c63", title: "Merry and Pippin Are Captured", scenes: [] },
+      { id: "c64", title: "Sam Catches Up to Frodo", scenes: [] },
+      { id: "c65", title: "The Fellowship Is Broken", scenes: [] }
     ]
   },
   {
     id: "ttt",
     title: "The Two Towers",
     short: "TTT",
-    scenes: []
+    chapters: []
   },
   {
     id: "rotk",
     title: "The Return of the King",
     short: "RotK",
-    scenes: []
+    chapters: []
   }
 ];
 
@@ -981,6 +1070,7 @@ function saveStats(){
 }
 
 let currentFilm = null;      // the FILMS entry currently on screen
+let currentChapter = null;   // the chapter (within currentFilm.chapters) currently on screen, or null when showing the chapter list
 let progress = {};           // { sceneId: { "beatIdx-wordIdx": true, ... } } for currentFilm
 let score = 0;                // score for currentFilm
 let hints = {};               // { sceneId: { "beatIdx-wordIdx": lettersRevealedCount, ... } } for currentFilm
@@ -1452,9 +1542,16 @@ function updateSceneProgress(scene){
   }
 }
 
+// Flattens every scene across every chapter of a film into one array —
+// used for whole-film progress totals, independent of which chapter is
+// currently open.
+function allScenesOfFilm(film){
+  return film.chapters.flatMap(chapter => chapter.scenes);
+}
+
 function updateOverallProgress(){
   let total = 0, revealed = 0;
-  currentFilm.scenes.forEach(scene => {
+  allScenesOfFilm(currentFilm).forEach(scene => {
     total += scene._guessableCount || 0;
     revealed += Object.keys(progress[scene.id] || {}).length;
   });
@@ -1469,17 +1566,64 @@ function applyTheme(theme){
   if(btn) btn.textContent = theme === "dark" ? "☀️" : "🌙";
 }
 
-function renderFilmScenes(){
-  const container = document.getElementById("scenes");
+// Chapter list — shown after picking a film. Chapters with lines already
+// written are bolded; empty chapters are still clickable and just show a
+// "not added yet" note when opened.
+function renderChapterList(){
+  const container = document.getElementById("chapterList");
   container.innerHTML = "";
-  if(!currentFilm.scenes.length){
+  document.getElementById("chapterBackBtn").style.display = "none";
+  document.getElementById("scenes").innerHTML = "";
+
+  if(!currentFilm.chapters.length){
     const empty = document.createElement("div");
     empty.className = "empty-note";
-    empty.textContent = "No passages added yet for " + currentFilm.title + ".";
+    empty.textContent = "No chapters added yet for " + currentFilm.title + ".";
     container.appendChild(empty);
     return;
   }
-  currentFilm.scenes.forEach(scene => container.appendChild(buildScene(scene)));
+
+  currentFilm.chapters.forEach((chapter, i) => {
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "chapter-btn" + (chapter.scenes.length ? " has-content" : "");
+    btn.textContent = (i + 1) + ". " + chapter.title;
+    btn.dataset.chapterId = chapter.id;
+    btn.addEventListener("click", () => selectChapter(chapter.id));
+    container.appendChild(btn);
+  });
+}
+
+// Single chapter view — shown after clicking a chapter in the list.
+function renderChapterScenes(){
+  document.getElementById("chapterList").innerHTML = "";
+  const backBtn = document.getElementById("chapterBackBtn");
+  backBtn.style.display = "";
+
+  const container = document.getElementById("scenes");
+  container.innerHTML = "";
+  if(!currentChapter.scenes.length){
+    const empty = document.createElement("div");
+    empty.className = "empty-note";
+    empty.textContent = "No lines added yet for \"" + currentChapter.title + "\".";
+    container.appendChild(empty);
+    return;
+  }
+  currentChapter.scenes.forEach(scene => container.appendChild(buildScene(scene)));
+}
+
+function selectChapter(chapterId){
+  const chapter = currentFilm.chapters.find(c => c.id === chapterId);
+  if(!chapter) return;
+  currentChapter = chapter;
+  clearActiveTarget();
+  renderChapterScenes();
+}
+
+function backToChapterList(){
+  currentChapter = null;
+  clearActiveTarget();
+  renderChapterList();
 }
 
 function updateFilmButtons(){
@@ -1497,6 +1641,7 @@ function selectFilm(filmId){
   }
 
   currentFilm = film;
+  currentChapter = null;
   clearActiveTarget();
 
   if(memoryCache[filmId]){
@@ -1510,7 +1655,7 @@ function selectFilm(filmId){
   }
 
   updateScoreDisplay();
-  renderFilmScenes();
+  renderChapterList();
   updateOverallProgress();
   updateFilmButtons();
   saveActiveFilm(filmId);
@@ -1844,13 +1989,16 @@ function init(){
       saveProgress(currentFilm.id, progress);
       saveScore(currentFilm.id, score);
       saveHints(currentFilm.id, hints);
+      currentChapter = null;
       clearActiveTarget();
-      renderFilmScenes();
+      renderChapterList();
       updateOverallProgress();
       updateScoreDisplay();
       syncScoreToCloud();
     }
   });
+
+  document.getElementById("chapterBackBtn").addEventListener("click", backToChapterList);
 }
 
 init();
