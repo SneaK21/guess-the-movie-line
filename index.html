@@ -343,6 +343,11 @@
   .line.targeted{
     box-shadow:inset 0 -2px 0 0 var(--accent-strong);
   }
+  .line-shown{
+    font-style:italic;
+    color:var(--muted);
+    cursor:default;
+  }
   .float-points{
     position:absolute;
     font-family:'Cinzel', serif;
@@ -862,14 +867,68 @@ const FILMS = [
     short: "FotR",
     chapters: [
       { id: "c1", title: "Prologue", scenes: [
-        { id: "s1", bracket: "[Prologue — the history of the One Ring]", beats: [
+        { id: "s1", bracket: "[Prologue — the History of the One Ring]", beats: [
           { speaker: "Galadriel (V.O.)", text: "The world is changed. I feel it in the water. I feel it in the earth. I smell it in the air." },
           { speaker: "Galadriel (V.O.)", text: "Much that once was, is lost. For none now live who remember it.", pause: true }
+        ] },
+        { id: "s2", bracket: "[Prologue — Forging of the rings]", beats: [
+          { speaker: "Galadriel (V.O.)", text: "It began with the forging of the great rings." },
+          { speaker: "Galadriel (V.O.)", text: "Three were given to the elves. Immortal, wisest and fairest of all beings." },
+          { speaker: "Galadriel (V.O.)", text: "Seven to the dwarf lords, great miners and craftsmen of the mountain halls." },
+          { speaker: "Galadriel (V.O.)", text: "And nine, nine rings were gifted to the race of Men, who above all else, desire power." },
+          { speaker: "Galadriel (V.O.)", text: "For within these rings was bound the strength and will to govern each race. But they were all of them, deceived." },
+          { speaker: "Galadriel (V.O.)", text: "For another ring was made. In the land of Mordor, in the fires of Mount Doom, the dark lord Sauron forged in secret a master Ring, to control all others. And into this Ring, he poured his cruelty, his malice and his will to dominate all life." },
+          { speaker: "Galadriel (V.O.)", text: "One Ring to rule them all.", pause: true }
+        ] },
+        { id: "s3", bracket: "[Prologue — the Last Alliance]", beats: [
+          { speaker: "Galadriel (V.O.)", text: "One by one, the Free Lands of Middle-earth fell to the power of the Ring." },
+          { speaker: "Galadriel (V.O.)", text: "But there were some who resisted. A Last Alliance of Men and Elves marched against the armies of Mordor. And on the slopes of Mount Doom, they fought for the freedom of Middle-earth.", pause: true }
+        ] },
+        { id: "s4", bracket: "[Prologue — Slaying of Sauron]", beats: [
+          { speaker: "Galadriel (V.O.)", text: "Victory was near.", pause: true },
+          { speaker: "Galadriel (V.O.)", text: "But the power of the Ring, could not be undone.", pause: true },
+          { speaker: "Galadriel (V.O.)", text: "It was in this moment, when all hope had faded, that Isildur, son of the king, took up his father's sword.", pause: true },
+          { speaker: "Galadriel (V.O.)", text: "Sauron, the enemy of the Free Peoples of Middle-earth, was defeated." }
+        ] },
+        { id: "s5", bracket: "[Prologue — the Betrayal of the Ring]", beats: [
+          { speaker: "Galadriel (V.O.)", text: "The Ring passed to Isildur, who had this one chance to destroy evil forever." },
+          { speaker: "Galadriel (V.O.)", text: "But the hearts of Men, are easily corrupted. And the Ring of Power has a will of its own.", pause: true },
+          { speaker: "Galadriel (V.O.)", text: "It betrayed Isildur to his death. And some things that should not have been forgotten, were lost." },
+          { speaker: "Galadriel (V.O.)", text: "History became legend, legend became myth. And for two and a half thousand years, the Ring passed out of all knowledge. Until, when chance came, it ensnared a new bearer." }
+        ] },
+        { id: "s6", bracket: "[Prologue — Gollum in the Cave]", beats: [
+          { speaker: "Gollum (flashback)", text: "My precious", shown: true },
+          { speaker: "Galadriel (V.O. continued)", text: "The Ring came to the creature Gollum, who took it deep into the tunnels of the Misty Mountains." },
+          { speaker: "Galadriel (V.O. continued)", text: "And there it consumed him.", pause: true }
+        ] },
+        { id: "s6b", bracket: "[Gollum's Cave — flashback continues]", beats: [
+          { speaker: "Gollum (flashback)", text: "It came to me. My own. My love. My own. My precious.", shown: true },
+          { speaker: "Galadriel (V.O. continued)", text: "The Ring brought to Gollum unnatural long life. For 500 years it poisoned his mind. And in the gloom of Gollum's cave, it waited.", pause: true },
+          { speaker: "Galadriel (V.O. continued)", text: "Darkness crept back into the forests of the world. Rumor grew of a shadow in the East, whispers of a nameless fear." },
+          { speaker: "Galadriel (V.O. continued)", text: "And the Ring of Power perceived, its time had now come.", pause: true },
+          { speaker: "Galadriel (V.O. continued)", text: "It abandoned Gollum. But something happened then the Ring did not intend." },
+          { speaker: "Galadriel (V.O. continued)", text: "It was picked up by the most unlikely creature imaginable." },
+          { speaker: "Bilbo (flashback)", text: "What's this?", shown: true },
+          { speaker: "Galadriel (V.O. continued)", text: "A Hobbit, Bilbo Baggins of the Shire." },
+          { speaker: "Bilbo (flashback)", text: "A ring.", shown: true },
+          { speaker: "Gollum (flashback)", text: "Lost! My precious is lost!", shown: true, pause: true },
+          { speaker: "Galadriel (V.O. continued)", text: "For the time will soon come when Hobbits, will shape the fortunes, of all." }
         ] }
       ] },
       { id: "c2", title: "Gandalf's Arrival", scenes: [
-        { id: "s2", bracket: "[Bag End, The Shire — Gandalf arrives late to Bilbo's birthday party]", beats: [
+        { id: "s7", bracket: "[Bag End, The Shire — Gandalf is riding on his cart]", beats: [
+          { speaker: "Frodo", text: "You are late!" },
           { speaker: "Gandalf", text: "A wizard is never late, Frodo Baggins, nor is he early. He arrives precisely when he means to." }
+        ] },
+        { id: "s7b", bracket: "[Both start laughing]", beats: [
+          { speaker: "Frodo", text: "It is wonderful to see you Gandalf!" },
+          { speaker: "Gandalf", text: "You didn't think I'd miss your uncle's birthday.", pause: true },
+          { speaker: "", text: "(laughing)", shown: true },
+          { speaker: "Gandalf", text: "So how is the old rascal?" },
+          { speaker: "Gandalf", text: "I hear it's going to be a party of special magnificence." },
+          { speaker: "Frodo", text: "You know Bilbo. He's got the whole place in an uproar." },
+          { speaker: "Gandalf", text: "Yeah, well that should please him." },
+          { speaker: "Frodo", text: "Half the Shire's been invited, and the rest of them are turning up anyway." }
         ] }
       ] },
       { id: "c3", title: "Gandalf and Bilbo at Bag End", scenes: [] },
@@ -901,17 +960,17 @@ const FILMS = [
       { id: "c29", title: "Frodo Wakes in Rivendell", scenes: [] },
       { id: "c30", title: "Bilbo and Frodo Reunite", scenes: [] },
       { id: "c31", title: "The Council of Elrond", scenes: [
-        { id: "s6", bracket: "[Council of Elrond — Boromir doubts the wisdom of walking into the enemy's land]", beats: [
+        { id: "s300", bracket: "[Council of Elrond — Boromir doubts the wisdom of walking into the enemy's land]", beats: [
           { speaker: "Boromir", text: "One does not simply walk into Mordor." }
         ] }
       ] },
       { id: "c32", title: "Frodo Volunteers to Take the Ring", scenes: [
-        { id: "s4", bracket: "[Council of Elrond, Rivendell — the Fellowship's quest is decided]", beats: [
+        { id: "s301", bracket: "[Council of Elrond, Rivendell — the Fellowship's quest is decided]", beats: [
           { speaker: "Frodo", text: "I will take it. I will take the Ring to Mordor, though I do not know the way." }
         ] }
       ] },
       { id: "c33", title: "The Fellowship of the Ring Is Formed", scenes: [
-        { id: "s5", bracket: "[Council of Elrond — Aragorn, Legolas, and Gimli each pledge themselves to Frodo's quest]", beats: [
+        { id: "s302", bracket: "[Council of Elrond — Aragorn, Legolas, and Gimli each pledge themselves to Frodo's quest]", beats: [
           { speaker: "Aragorn", text: "You have my sword." },
           { speaker: "Legolas", text: "And you have my bow." },
           { speaker: "Gimli", text: "And my axe!" }
@@ -924,7 +983,7 @@ const FILMS = [
       { id: "c38", title: "The Decision to Enter Moria", scenes: [] },
       { id: "c39", title: "The Watcher in the Water", scenes: [] },
       { id: "c40", title: "Frodo Confides in Gandalf", scenes: [
-        { id: "s3", bracket: "[The Mines of Moria — Frodo confides in Gandalf about the weight of carrying the Ring]", beats: [
+        { id: "s303", bracket: "[The Mines of Moria — Frodo confides in Gandalf about the weight of carrying the Ring]", beats: [
           { speaker: "Frodo", text: "I wish the Ring had never come to me. I wish none of this had happened." },
           { speaker: "Gandalf", text: "So do all who live to see such times, but that is not for them to decide. All we have to decide is what to do with the time that is given us." }
         ] }
@@ -935,7 +994,7 @@ const FILMS = [
       { id: "c44", title: "Frodo's Mithril Shirt Saves Him", scenes: [] },
       { id: "c45", title: "Fleeing Across the Bridge of Khazad-dûm", scenes: [] },
       { id: "c46", title: "Gandalf and the Balrog — \"You Shall Not Pass!\"", scenes: [
-        { id: "s7", bracket: "[The Mines of Moria — the Fellowship reaches the Bridge of Khazad-dûm and a Balrog appears]", beats: [
+        { id: "s304", bracket: "[The Mines of Moria — the Fellowship reaches the Bridge of Khazad-dûm and a Balrog appears]", beats: [
           { speaker: "Gandalf", text: "You cannot pass!" },
           { speaker: "Frodo", text: "Gandalf!" },
           { speaker: "Gandalf", text: "I am a servant of the Secret Fire, wielder of the flame of Anor. The dark fire will not avail you, flame of Udûn!" },
@@ -943,7 +1002,7 @@ const FILMS = [
         ] }
       ] },
       { id: "c47", title: "Gandalf Falls into the Chasm", scenes: [
-        { id: "s8", bracket: "[The Bridge of Khazad-dûm — as Gandalf falls, he calls out to the fleeing Fellowship]", beats: [
+        { id: "s305", bracket: "[The Bridge of Khazad-dûm — as Gandalf falls, he calls out to the fleeing Fellowship]", beats: [
           { speaker: "Gandalf", text: "Fly, you fools!" }
         ] }
       ] },
@@ -1220,6 +1279,14 @@ function computeAvgAttemptsPerWord(){
 // current progress. Used both on first build and after a full-line guess.
 function renderLine(scene, beatIdx, beatData, line){
   line.innerHTML = "";
+
+  // Shown beats (narrator asides, gibberish, or anything you'd rather just
+  // display than make someone guess) are never masked and aren't guessable.
+  if(beatData.shown){
+    line.textContent = beatData.words.join(" ");
+    return;
+  }
+
   const sceneProgress = progress[scene.id] || {};
 
   beatData.words.forEach((token, idx) => {
@@ -1279,7 +1346,7 @@ function buildScene(scene){
     if(beatDef.pause) beatClass += " beat-pause";
     beatWrap.className = beatClass;
 
-    if(!sameSpeakerAsPrev){
+    if(!sameSpeakerAsPrev && beatDef.speaker){
       const speakerEl = document.createElement("div");
       speakerEl.className = "speaker";
       speakerEl.textContent = beatDef.speaker;
@@ -1287,33 +1354,39 @@ function buildScene(scene){
     }
 
     const line = document.createElement("div");
-    line.className = "line";
+    line.className = "line" + (beatDef.shown ? " line-shown" : "");
     line.id = "line-" + scene.id + "-" + beatIdx;
 
     const words = beatDef.text.split(" ");
-    const guessableCount = words.filter(hasLetters).length;
-    const beatData = { words: words, guessableCount: guessableCount, fullLineAttempted: false };
+    // Shown beats display as plain text — nothing to guess, so they don't
+    // count toward the scene's guessable total or score.
+    const guessableCount = beatDef.shown ? 0 : words.filter(hasLetters).length;
+    const beatData = { words: words, guessableCount: guessableCount, fullLineAttempted: false, shown: !!beatDef.shown };
     scene._beats[beatIdx] = beatData;
     totalGuessable += guessableCount;
 
     renderLine(scene, beatIdx, beatData, line);
 
-    // Clicking anywhere on the line that isn't a still-hidden word (which
-    // stops propagation itself) targets this line in the bottom bar, so
-    // you can type the whole thing while the asterisks stay visible.
-    line.addEventListener("click", () => {
-      const sceneProgress = progress[scene.id] || {};
-      const hasHidden = beatData.words.some((t, idx) => hasLetters(t) && !sceneProgress[beatIdx + "-" + idx]);
-      if(!hasHidden) return;
-      setActiveTarget(scene, beatIdx, beatData, line, beatDef.speaker);
-    });
+    if(!beatDef.shown){
+      // Clicking anywhere on the line that isn't a still-hidden word (which
+      // stops propagation itself) targets this line in the bottom bar, so
+      // you can type the whole thing while the asterisks stay visible.
+      line.addEventListener("click", () => {
+        const sceneProgress = progress[scene.id] || {};
+        const hasHidden = beatData.words.some((t, idx) => hasLetters(t) && !sceneProgress[beatIdx + "-" + idx]);
+        if(!hasHidden) return;
+        setActiveTarget(scene, beatIdx, beatData, line, beatDef.speaker);
+      });
+    }
 
     beatWrap.appendChild(line);
 
-    const feedback = document.createElement("div");
-    feedback.className = "line-feedback";
-    feedback.id = "feedback-" + scene.id + "-" + beatIdx;
-    beatWrap.appendChild(feedback);
+    if(!beatDef.shown){
+      const feedback = document.createElement("div");
+      feedback.className = "line-feedback";
+      feedback.id = "feedback-" + scene.id + "-" + beatIdx;
+      beatWrap.appendChild(feedback);
+    }
 
     card.appendChild(beatWrap);
   });
@@ -1432,19 +1505,23 @@ function revealWord(scene, beatIdx, idx, token, span){
   advanceToNextLineIfComplete(scene, beatIdx);
 }
 
-// Finds the line immediately after (scene, beatIdx) within the current
-// chapter: the next beat in the same scene, or beat 0 of the next scene
-// that actually has beats. Returns null once there's nothing left in the
-// chapter.
+// Finds the next GUESSABLE line after (scene, beatIdx) within the current
+// chapter — skipping over any "shown" beats along the way, since those
+// aren't something to target or type into. Checks the rest of the same
+// scene first, then subsequent scenes in the chapter. Returns null once
+// there's nothing guessable left.
 function findNextLine(scene, beatIdx){
-  if(beatIdx + 1 < scene.beats.length){
-    return { scene, beatIdx: beatIdx + 1 };
+  for(let i = beatIdx + 1; i < scene.beats.length; i++){
+    if(scene._beats[i] && scene._beats[i].guessableCount > 0) return { scene, beatIdx: i };
   }
   if(!currentChapter) return null;
   const sceneIdx = currentChapter.scenes.indexOf(scene);
-  for(let i = sceneIdx + 1; i < currentChapter.scenes.length; i++){
-    const nextScene = currentChapter.scenes[i];
-    if(nextScene.beats && nextScene.beats.length) return { scene: nextScene, beatIdx: 0 };
+  for(let s = sceneIdx + 1; s < currentChapter.scenes.length; s++){
+    const nextScene = currentChapter.scenes[s];
+    if(!nextScene._beats) continue;
+    for(let i = 0; i < nextScene.beats.length; i++){
+      if(nextScene._beats[i] && nextScene._beats[i].guessableCount > 0) return { scene: nextScene, beatIdx: i };
+    }
   }
   return null;
 }
@@ -1642,6 +1719,7 @@ function updateSceneProgress(scene){
 function sceneGuessableCount(scene){
   let total = 0;
   scene.beats.forEach(beatDef => {
+    if(beatDef.shown) return; // shown beats are display-only, not guessable
     total += beatDef.text.split(" ").filter(hasLetters).length;
   });
   return total;
