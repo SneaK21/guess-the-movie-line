@@ -395,7 +395,6 @@
   }
   .line-song{
     font-style:italic;
-    text-align:left;
   }
   .line-song::before,
   .line-song::after{
@@ -1493,6 +1492,7 @@ function renderLine(scene, beatIdx, beatData, line){
     const span = document.createElement("span");
     const key = beatIdx + "-" + idx;
     span.dataset.key = key;
+    const isLastWord = idx === beatData.words.length - 1;
 
     const isMaskable = hiddenIndices ? hiddenIndices.has(idx) : true;
 
@@ -1500,7 +1500,7 @@ function renderLine(scene, beatIdx, beatData, line){
       span.className = "word " + (hasLetters(token) ? "context" : "punct-only");
       span.textContent = token;
       line.appendChild(span);
-      line.appendChild(document.createTextNode(" "));
+      if(!isLastWord) line.appendChild(document.createTextNode(" "));
       return;
     }
 
@@ -1516,7 +1516,7 @@ function renderLine(scene, beatIdx, beatData, line){
     }
 
     line.appendChild(span);
-    line.appendChild(document.createTextNode(" "));
+    if(!isLastWord) line.appendChild(document.createTextNode(" "));
   });
 }
 
