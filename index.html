@@ -994,12 +994,11 @@ const FILMS = [
         { id: "s9", bracket: "[Bag End — someone's at the door]", beats: [
           { speaker: "Bilbo", text: "Frodo! Someone at the door!" },
           { speaker: "Bilbo", text: "Frodo, the door!", pause: true },
-          { speaker: "Bilbo", text: "Sticklebacks. Where is that boy? Frodo!" }
+          { speaker: "Bilbo", text: "Sticklebacks. Where is that boy? Frodo!", hide: ["Where is that boy? Frodo!"] }
         ] },
-        { id: "s10", bracket: "[The road into Hobbiton — Gandalf's cart approaches, singing]", beats: [
-          { speaker: "Gandalf (singing)", text: "Down from the door where it began, and I must follow if I can. The road goes ever on and on, down from the door where it began. Now far ahead the road has gone, and I must follow if I can.", shown: true }
-        ] },
-        { id: "s7", bracket: "[Bag End, The Shire — Gandalf is riding on his cart]", beats: [
+        { id: "s7", bracket: "[Outskirts of The Shire — Gandalf is riding on his cart]", beats: [
+          { speaker: "Gandalf (singing)", text: "Down from the door where it began, and I must follow if I can. The road goes ever on and on, down from the door where it began. Now far ahead the road has gone, and I must follow if I can.", hide: ["The road goes ever on and on, down from the door where it began."] },
+          { speaker: "", text: "(Frodo approaches)", shown: true },
           { speaker: "Frodo", text: "You are late!" },
           { speaker: "Gandalf", text: "A wizard is never late, Frodo Baggins, nor is he early. He arrives precisely when he means to." }
         ] },
@@ -1009,7 +1008,7 @@ const FILMS = [
           { speaker: "", text: "(laughing)", shown: true },
           { speaker: "Gandalf", text: "So how is the old rascal?" },
           { speaker: "Gandalf", text: "I hear it's going to be a party of special magnificence." },
-          { speaker: "Frodo", text: "You know Bilbo. He's got the whole place in an uproar." },
+          { speaker: "Frodo", text: "You know Bilbo. He's got the whole place in an uproar.", hide: ["He's got the whole place in an uproar."] },
           { speaker: "Gandalf", text: "Yeah, well that should please him." },
           { speaker: "Frodo", text: "Half the Shire's been invited, and the rest of them are turning up anyway." }
         ] }
