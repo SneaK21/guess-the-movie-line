@@ -729,11 +729,11 @@
     <div class="instructions">
       <strong>How to play:</strong> Pick a film above. Each passage describes a moment from the film in brackets.
       Below it, the actual line is hidden behind asterisks. Click any hidden word to guess just that word (you can
-      also spend a few points on a letter hint if you're stuck), or click anywhere else on the line to target it,
-      then type the words that are still hidden and press <strong>Enter</strong> to check. Correct words lock in and
-      stay revealed forever; incorrect or unmatched words stay hidden. You don't need to retype words already
-      revealed. Each correct word is worth <strong>+1 point</strong>; nail an entire line correctly on your very
-      first attempt for some little extra bonus points. Good luck and have fun remembering your favorite lines!
+      also spend a point on a letter hint if you're stuck), or click anywhere else on the line to target it, then
+      type any words you remember — in any order, not just from the start — and press <strong>Enter</strong> to
+      check. Correct words lock in and stay revealed forever, wherever they fall in the line; incorrect words are
+      just ignored. Each correct word is worth <strong>+1 point</strong>; nail an entire line correctly on your
+      very first attempt for some little extra bonus points. Good luck and have fun remembering your favorite lines!
     </div>
 
     <button class="reset-btn" id="resetBtn">Reset progress for this film</button>
@@ -1323,6 +1323,16 @@ function recordAttempt(scene, beatIdx, idx, wasCorrect){
   saveStats();
 }
 
+// A typed word in the bottom bar that didn't match anything still hidden
+// in the line. There's no specific word position to blame it on (since
+// guesses are no longer matched positionally — see checkFullLine), but it
+// should still count against accuracy and break a streak.
+function recordMiss(){
+  stats.attempts++;
+  stats.currentStreak = 0;
+  saveStats();
+}
+
 function computeAvgAttemptsPerWord(){
   // Only counts words that were actually guessed at least once (hint-completed
   // words never call recordAttempt, so they're naturally excluded).
@@ -1656,8 +1666,8 @@ function setActiveTarget(scene, beatIdx, beatData, line, speakerName){
     barInput.disabled = false;
     barInput.value = "";
     barInput.placeholder = anyRevealedYet
-      ? "Type the words still hidden…"
-      : "Type " + speakerName + "'s whole line…";
+      ? "Type any words you remember, any order…"
+      : "Type " + speakerName + "'s whole line, or just the words you know…";
     barInput.focus();
   }
   if(barBtn) barBtn.disabled = false;
@@ -1707,41 +1717,46 @@ function submitActiveGuess(){
 // Compares a full-line guess word-by-word against the beat's text,
 // marking correct words revealed in place. Returns a feedback message.
 function checkFullLine(scene, beatIdx, beatData, guessText){
-  const guessWords = guessText.trim().split(/\s+/).filter(Boolean);
+  const guessWords = guessText.trim().split(/\s+/).filter(Boolean).filter(w => normalize(w));
   if(!guessWords.length) return "";
 
   const sceneProgress = progress[scene.id] || {};
 
-  // Positions still hidden, in reading order. The typed guess is matched
-  // against these positions in sequence — so after a partial reveal you
-  // only need to type the words that are STILL hidden, not retype the
-  // ones already shown. (On a fresh line this is just every word, in
-  // order, which is the same as typing the whole line.)
-  const remainingIndices = [];
+  // Every position still hidden in this line (not just the next one in
+  // reading order) — each typed word is checked against ALL of these, so
+  // you can type words from anywhere in the line, in any order, and only
+  // the ones you actually know. A typed word that matches more than one
+  // still-hidden occurrence (a repeated word) reveals every occurrence.
+  const hiddenPositions = [];
   beatData.words.forEach((token, idx) => {
     if(!hasLetters(token)) return; // punctuation-only, nothing to guess
     const key = beatIdx + "-" + idx;
-    if(!sceneProgress[key]) remainingIndices.push(idx);
+    if(!sceneProgress[key]) hiddenPositions.push(idx);
   });
 
-  const revealedBeforeThisBeat = beatData.guessableCount - remainingIndices.length;
+  const revealedBeforeThisBeat = beatData.guessableCount - hiddenPositions.length;
   const isFirstAttempt = !beatData.fullLineAttempted && revealedBeforeThisBeat === 0;
 
+  const stillUnmatched = new Set(hiddenPositions);
   let matched = 0;
-  let attempted = 0;
 
-  remainingIndices.forEach((idx, i) => {
-    const guess = guessWords[i];
-    if(guess === undefined) return; // ran out of typed words before this position
-    const token = beatData.words[idx];
-    attempted++;
-    const isMatch = normalize(guess) === normalize(token);
-    recordAttempt(scene, beatIdx, idx, isMatch);
-    if(isMatch){
-      matched++;
-      markRevealed(scene, beatIdx, idx);
-    }
+  guessWords.forEach(guess => {
+    const normGuess = normalize(guess);
+    let foundAny = false;
+    hiddenPositions.forEach(idx => {
+      if(!stillUnmatched.has(idx)) return;
+      if(normalize(beatData.words[idx]) === normGuess){
+        stillUnmatched.delete(idx);
+        matched++;
+        foundAny = true;
+        recordAttempt(scene, beatIdx, idx, true);
+        markRevealed(scene, beatIdx, idx);
+      }
+    });
+    if(!foundAny) recordMiss();
   });
+
+  const attempted = guessWords.length;
 
   const isPerfectFirstTry = isFirstAttempt && matched > 0 && matched === beatData.guessableCount;
   beatData.fullLineAttempted = true;
