@@ -219,10 +219,6 @@
     border-color:var(--green);
   }
   .chapter-complete-banner{
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    gap:14px;
     text-align:center;
     color:var(--green);
     font-weight:700;
@@ -231,25 +227,38 @@
     padding-top:18px;
     border-top:1px dashed var(--border);
   }
-  .chapter-nav-btn{
-    background:none;
+  .chapter-edge-nav{
+    position:fixed;
+    top:50%;
+    transform:translateY(-50%);
+    z-index:40;
+    width:46px;
+    height:46px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:var(--bg);
     border:1px solid var(--green);
     color:var(--green);
-    border-radius:6px;
-    padding:6px 12px;
+    border-radius:50%;
+    font-size:1.3rem;
     font-weight:700;
-    font-size:0.95rem;
-    cursor:pointer;
     font-family:'Courier Prime', monospace;
-    flex-shrink:0;
+    cursor:pointer;
+    box-shadow:0 2px 10px rgba(0,0,0,0.15);
+    opacity:0.88;
+    transition:opacity .15s ease, transform .15s ease;
   }
-  .chapter-nav-btn:hover{
-    background:var(--green);
-    color:var(--bg);
+  .chapter-edge-nav:hover{
+    opacity:1;
+    transform:translateY(-50%) scale(1.08);
   }
-  .chapter-nav-spacer{
-    width:42px;
-    flex-shrink:0;
+  .chapter-edge-nav.prev{ left:14px; }
+  .chapter-edge-nav.next{ right:14px; }
+  @media (max-width: 700px){
+    .chapter-edge-nav{ width:38px; height:38px; font-size:1.1rem; }
+    .chapter-edge-nav.prev{ left:6px; }
+    .chapter-edge-nav.next{ right:6px; }
   }
   .chapter-back-btn{
     display:block;
@@ -793,6 +802,9 @@
     <button type="button" id="lineBarBtn" disabled>Check</button>
   </div>
 </div>
+
+<button class="chapter-edge-nav prev" id="chapterPrevBtn" style="display:none;" type="button" aria-label="Previous chapter" title="Previous chapter">&larr;</button>
+<button class="chapter-edge-nav next" id="chapterNextBtn" style="display:none;" type="button" aria-label="Next chapter" title="Next chapter">&rarr;</button>
 
 <div class="modal-overlay" id="authOverlay">
   <div class="modal">
@@ -1705,41 +1717,44 @@ function buildChapterCompleteBanner(){
   banner.id = "chapterCompleteBanner";
   banner.className = "chapter-complete-banner";
 
-  const idx = currentChapter ? currentFilm.chapters.indexOf(currentChapter) : -1;
-  const hasPrev = idx > 0;
-  const hasNext = idx >= 0 && idx < currentFilm.chapters.length - 1;
-
-  if(hasPrev){
-    const prevBtn = document.createElement("button");
-    prevBtn.type = "button";
-    prevBtn.className = "chapter-nav-btn";
-    prevBtn.textContent = "←";
-    prevBtn.title = "Previous chapter: " + currentFilm.chapters[idx - 1].title;
-    prevBtn.addEventListener("click", () => goToAdjacentChapter(-1));
-    banner.appendChild(prevBtn);
-  }else{
-    banner.appendChild(document.createElement("span")).className = "chapter-nav-spacer";
-  }
-
-  const msg = document.createElement("span");
-  msg.textContent = hasNext
-    ? "🎉 Chapter complete! Continue to the next chapter"
+  const { hasNext } = chapterNavState();
+  banner.textContent = hasNext
+    ? "🎉 Chapter complete! Continue to the next chapter →"
     : "🎉 Chapter complete! Pick another chapter above.";
-  banner.appendChild(msg);
-
-  if(hasNext){
-    const nextBtn = document.createElement("button");
-    nextBtn.type = "button";
-    nextBtn.className = "chapter-nav-btn";
-    nextBtn.textContent = "→";
-    nextBtn.title = "Next chapter: " + currentFilm.chapters[idx + 1].title;
-    nextBtn.addEventListener("click", () => goToAdjacentChapter(1));
-    banner.appendChild(nextBtn);
-  }else{
-    banner.appendChild(document.createElement("span")).className = "chapter-nav-spacer";
-  }
 
   return banner;
+}
+
+// Whether there's a chapter before/after the current one in the list.
+function chapterNavState(){
+  const idx = currentChapter ? currentFilm.chapters.indexOf(currentChapter) : -1;
+  return {
+    idx,
+    hasPrev: idx > 0,
+    hasNext: idx >= 0 && idx < currentFilm.chapters.length - 1
+  };
+}
+
+// Shows the fixed prev/next arrows pinned to the screen edges (only once a
+// chapter is actually complete), or hides them entirely otherwise. Kept as
+// floating edge buttons rather than inline in the banner text so they read
+// as a page-level "switch chapter" control, not part of the sentence.
+function updateChapterEdgeNav(show){
+  const prevBtn = document.getElementById("chapterPrevBtn");
+  const nextBtn = document.getElementById("chapterNextBtn");
+  if(!prevBtn || !nextBtn) return;
+
+  if(!show){
+    prevBtn.style.display = "none";
+    nextBtn.style.display = "none";
+    return;
+  }
+
+  const { idx, hasPrev, hasNext } = chapterNavState();
+  prevBtn.style.display = hasPrev ? "" : "none";
+  nextBtn.style.display = hasNext ? "" : "none";
+  if(hasPrev) prevBtn.title = "Previous chapter: " + currentFilm.chapters[idx - 1].title;
+  if(hasNext) nextBtn.title = "Next chapter: " + currentFilm.chapters[idx + 1].title;
 }
 
 // Once every guessable word in (scene, beatIdx) has been revealed — whether
@@ -1764,6 +1779,7 @@ function advanceToNextLineIfComplete(scene, beatIdx){
       scenesContainer.appendChild(banner);
       banner.scrollIntoView({ behavior: "smooth", block: "center" });
     }
+    updateChapterEdgeNav(true);
     return;
   }
 
@@ -2031,6 +2047,7 @@ function renderChapterList(){
   container.innerHTML = "";
   document.getElementById("chapterBackBtn").style.display = "none";
   document.getElementById("scenes").innerHTML = "";
+  updateChapterEdgeNav(false);
 
   if(!currentFilm.chapters.length){
     const empty = document.createElement("div");
@@ -2059,6 +2076,7 @@ function renderChapterScenes(){
   document.getElementById("chapterList").innerHTML = "";
   const backBtn = document.getElementById("chapterBackBtn");
   backBtn.style.display = "";
+  updateChapterEdgeNav(false);
 
   const container = document.getElementById("scenes");
   container.innerHTML = "";
@@ -2143,7 +2161,12 @@ function switchTab(tab){
   });
   document.getElementById("gamePanel").style.display = tab === "game" ? "" : "none";
   document.getElementById("scoreboardPanel").style.display = tab === "scoreboard" ? "" : "none";
-  if(tab === "scoreboard") renderScoreboard();
+  if(tab === "scoreboard"){
+    renderScoreboard();
+    updateChapterEdgeNav(false);
+  }else if(document.getElementById("chapterCompleteBanner")){
+    updateChapterEdgeNav(true);
+  }
 }
 
 // ---------------------------------------------------------------
@@ -2472,6 +2495,8 @@ function init(){
   });
 
   document.getElementById("chapterBackBtn").addEventListener("click", backToChapterList);
+  document.getElementById("chapterPrevBtn").addEventListener("click", () => goToAdjacentChapter(-1));
+  document.getElementById("chapterNextBtn").addEventListener("click", () => goToAdjacentChapter(1));
 }
 
 init();
