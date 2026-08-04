@@ -219,6 +219,10 @@
     border-color:var(--green);
   }
   .chapter-complete-banner{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:14px;
     text-align:center;
     color:var(--green);
     font-weight:700;
@@ -226,6 +230,26 @@
     margin-top:18px;
     padding-top:18px;
     border-top:1px dashed var(--border);
+  }
+  .chapter-nav-btn{
+    background:none;
+    border:1px solid var(--green);
+    color:var(--green);
+    border-radius:6px;
+    padding:6px 12px;
+    font-weight:700;
+    font-size:0.95rem;
+    cursor:pointer;
+    font-family:'Courier Prime', monospace;
+    flex-shrink:0;
+  }
+  .chapter-nav-btn:hover{
+    background:var(--green);
+    color:var(--bg);
+  }
+  .chapter-nav-spacer{
+    width:42px;
+    flex-shrink:0;
   }
   .chapter-back-btn{
     display:block;
@@ -1671,6 +1695,53 @@ function findNextLine(scene, beatIdx){
   return null;
 }
 
+// Builds the "chapter complete" banner: a left arrow to the previous
+// chapter (if any), the celebration message, and a right arrow to the
+// next chapter (if any). At either end of the chapter list, that side
+// just shows blank space instead of an arrow, so the message stays
+// centered either way.
+function buildChapterCompleteBanner(){
+  const banner = document.createElement("div");
+  banner.id = "chapterCompleteBanner";
+  banner.className = "chapter-complete-banner";
+
+  const idx = currentChapter ? currentFilm.chapters.indexOf(currentChapter) : -1;
+  const hasPrev = idx > 0;
+  const hasNext = idx >= 0 && idx < currentFilm.chapters.length - 1;
+
+  if(hasPrev){
+    const prevBtn = document.createElement("button");
+    prevBtn.type = "button";
+    prevBtn.className = "chapter-nav-btn";
+    prevBtn.textContent = "←";
+    prevBtn.title = "Previous chapter: " + currentFilm.chapters[idx - 1].title;
+    prevBtn.addEventListener("click", () => goToAdjacentChapter(-1));
+    banner.appendChild(prevBtn);
+  }else{
+    banner.appendChild(document.createElement("span")).className = "chapter-nav-spacer";
+  }
+
+  const msg = document.createElement("span");
+  msg.textContent = hasNext
+    ? "🎉 Chapter complete! Continue to the next chapter"
+    : "🎉 Chapter complete! Pick another chapter above.";
+  banner.appendChild(msg);
+
+  if(hasNext){
+    const nextBtn = document.createElement("button");
+    nextBtn.type = "button";
+    nextBtn.className = "chapter-nav-btn";
+    nextBtn.textContent = "→";
+    nextBtn.title = "Next chapter: " + currentFilm.chapters[idx + 1].title;
+    nextBtn.addEventListener("click", () => goToAdjacentChapter(1));
+    banner.appendChild(nextBtn);
+  }else{
+    banner.appendChild(document.createElement("span")).className = "chapter-nav-spacer";
+  }
+
+  return banner;
+}
+
 // Once every guessable word in (scene, beatIdx) has been revealed — whether
 // by clicking individual words or typing the whole line — automatically
 // target the next line and scroll it into view, so you can keep going
@@ -1689,10 +1760,7 @@ function advanceToNextLineIfComplete(scene, beatIdx){
     clearActiveTarget();
     const scenesContainer = document.getElementById("scenes");
     if(scenesContainer && !document.getElementById("chapterCompleteBanner")){
-      const banner = document.createElement("div");
-      banner.id = "chapterCompleteBanner";
-      banner.className = "chapter-complete-banner";
-      banner.textContent = "🎉 Chapter complete! Pick another chapter above.";
+      const banner = buildChapterCompleteBanner();
       scenesContainer.appendChild(banner);
       banner.scrollIntoView({ behavior: "smooth", block: "center" });
     }
@@ -2011,6 +2079,17 @@ function selectChapter(chapterId){
   clearActiveTarget();
   renderChapterScenes();
   updateOverallProgress();
+}
+
+// Jumps straight to the chapter before/after the current one in the list
+// (direction: -1 for previous, +1 for next), used by the prev/next arrows
+// on the chapter-complete banner. Does nothing if already at either end.
+function goToAdjacentChapter(direction){
+  if(!currentChapter) return;
+  const idx = currentFilm.chapters.indexOf(currentChapter);
+  const targetIdx = idx + direction;
+  if(targetIdx < 0 || targetIdx >= currentFilm.chapters.length) return;
+  selectChapter(currentFilm.chapters[targetIdx].id);
 }
 
 function backToChapterList(){
