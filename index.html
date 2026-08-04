@@ -393,6 +393,24 @@
     color:var(--muted);
     cursor:default;
   }
+  .line-song{
+    font-style:italic;
+  }
+  .line-song::before,
+  .line-song::after{
+    font-style:normal;
+    font-size:1.3em;
+    color:var(--accent);
+    vertical-align:-2px;
+  }
+  .line-song::before{
+    content:"♪";
+    margin-right:8px;
+  }
+  .line-song::after{
+    content:"♪";
+    margin-left:8px;
+  }
   .float-points{
     position:absolute;
     font-family:'Cinzel', serif;
@@ -997,7 +1015,7 @@ const FILMS = [
           { speaker: "Bilbo", text: "Sticklebacks. Where is that boy? Frodo!", hide: ["Where is that boy? Frodo!"] }
         ] },
         { id: "s7", bracket: "[Outskirts of The Shire — Gandalf is riding on his cart]", beats: [
-          { speaker: "Gandalf (singing)", text: "♪ Down from the door where it began, and I must follow if I can. The road goes ever on and on, down from the door where it began. Now far ahead the road has gone, and I must follow if I can. ♪", hide: ["The road goes ever on and on, down from the door where it began."] },
+          { speaker: "Gandalf (singing)", text: "Down from the door where it began, and I must follow if I can. The road goes ever on and on, down from the door where it began. Now far ahead the road has gone, and I must follow if I can.", hide: ["The road goes ever on and on, down from the door where it began."], song: true },
           { speaker: "", text: "(Frodo approaches)", shown: true },
           { speaker: "Frodo", text: "You are late!" },
           { speaker: "Gandalf", text: "A wizard is never late, Frodo Baggins, nor is he early. He arrives precisely when he means to." },
@@ -1536,7 +1554,7 @@ function buildScene(scene){
     }
 
     const line = document.createElement("div");
-    line.className = "line" + (beatDef.shown ? " line-shown" : "");
+    line.className = "line" + (beatDef.shown ? " line-shown" : "") + (beatDef.song ? " line-song" : "");
     line.id = "line-" + scene.id + "-" + beatIdx;
 
     const words = beatDef.text.split(" ");
