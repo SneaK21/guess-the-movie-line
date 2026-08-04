@@ -228,37 +228,27 @@
     border-top:1px dashed var(--border);
   }
   .chapter-edge-nav{
-    position:fixed;
-    top:50%;
-    transform:translateY(-50%);
-    z-index:40;
-    width:46px;
-    height:46px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    background:var(--bg);
-    border:1px solid var(--green);
-    color:var(--green);
-    border-radius:50%;
-    font-size:1.3rem;
-    font-weight:700;
+    flex-shrink:0;
+    background:none;
+    border:none;
+    color:var(--muted);
     font-family:'Courier Prime', monospace;
+    font-size:0.85rem;
+    letter-spacing:0.5px;
     cursor:pointer;
-    box-shadow:0 2px 10px rgba(0,0,0,0.15);
-    opacity:0.88;
-    transition:opacity .15s ease, transform .15s ease;
+    padding:8px 2px;
+    white-space:nowrap;
+    transition:color .15s ease;
   }
-  .chapter-edge-nav:hover{
-    opacity:1;
-    transform:translateY(-50%) scale(1.08);
+  .chapter-edge-nav:hover:not(:disabled){
+    color:var(--accent-strong);
   }
-  .chapter-edge-nav.prev{ left:14px; }
-  .chapter-edge-nav.next{ right:14px; }
-  @media (max-width: 700px){
-    .chapter-edge-nav{ width:38px; height:38px; font-size:1.1rem; }
-    .chapter-edge-nav.prev{ left:6px; }
-    .chapter-edge-nav.next{ right:6px; }
+  .chapter-edge-nav:disabled{
+    color:var(--border);
+    cursor:default;
+  }
+  @media (max-width:700px){
+    .chapter-edge-nav{ font-size:0.65rem; padding:8px 0; }
   }
   .chapter-back-btn{
     display:block;
@@ -479,11 +469,16 @@
     background:var(--bg);
     border-top:1px solid var(--border);
     box-shadow:0 -2px 10px rgba(0,0,0,0.06);
-    padding:12px 20px;
+    padding:12px 14px;
+    display:flex;
+    align-items:center;
+    gap:4px;
   }
   .line-bar-inner{
     max-width:640px;
     margin:0 auto;
+    flex:1;
+    min-width:0;
     display:flex;
     align-items:center;
     gap:10px;
@@ -796,15 +791,14 @@
 </div>
 
 <div class="line-bar">
+  <button class="chapter-edge-nav prev" id="chapterPrevBtn" style="display:none;" type="button" aria-label="Previous chapter" title="Previous chapter">&lt;-----</button>
   <div class="line-bar-inner">
     <span class="line-bar-target" id="lineBarTarget">Click a line to select it</span>
     <input type="text" id="lineBarInput" placeholder="Type the whole line…" autocomplete="off" spellcheck="false" disabled>
     <button type="button" id="lineBarBtn" disabled>Check</button>
   </div>
+  <button class="chapter-edge-nav next" id="chapterNextBtn" style="display:none;" type="button" aria-label="Next chapter" title="Next chapter">-----&gt;</button>
 </div>
-
-<button class="chapter-edge-nav prev" id="chapterPrevBtn" style="display:none;" type="button" aria-label="Previous chapter" title="Previous chapter">&larr;</button>
-<button class="chapter-edge-nav next" id="chapterNextBtn" style="display:none;" type="button" aria-label="Next chapter" title="Next chapter">&rarr;</button>
 
 <div class="modal-overlay" id="authOverlay">
   <div class="modal">
@@ -1707,21 +1701,14 @@ function findNextLine(scene, beatIdx){
   return null;
 }
 
-// Builds the "chapter complete" banner: a left arrow to the previous
-// chapter (if any), the celebration message, and a right arrow to the
-// next chapter (if any). At either end of the chapter list, that side
-// just shows blank space instead of an arrow, so the message stays
-// centered either way.
+// Builds the "chapter complete" banner shown at the end of a chapter's
+// content. Chapter-to-chapter navigation itself lives in the persistent
+// prev/next links in the bottom bar (see updateChapterEdgeNav), not here.
 function buildChapterCompleteBanner(){
   const banner = document.createElement("div");
   banner.id = "chapterCompleteBanner";
   banner.className = "chapter-complete-banner";
-
-  const { hasNext } = chapterNavState();
-  banner.textContent = hasNext
-    ? "🎉 Chapter complete! Continue to the next chapter →"
-    : "🎉 Chapter complete! Pick another chapter above.";
-
+  banner.textContent = "🎉 Chapter complete!";
   return banner;
 }
 
@@ -1735,26 +1722,29 @@ function chapterNavState(){
   };
 }
 
-// Shows the fixed prev/next arrows pinned to the screen edges (only once a
-// chapter is actually complete), or hides them entirely otherwise. Kept as
-// floating edge buttons rather than inline in the banner text so they read
-// as a page-level "switch chapter" control, not part of the sentence.
-function updateChapterEdgeNav(show){
+// Keeps the prev/next chapter links in the bottom bar in sync. They're
+// visible any time a chapter is open (not just once it's complete), so you
+// can hop to the next or previous chapter without going back to the list —
+// each side just disables itself at either end of the chapter list.
+function updateChapterEdgeNav(){
   const prevBtn = document.getElementById("chapterPrevBtn");
   const nextBtn = document.getElementById("chapterNextBtn");
   if(!prevBtn || !nextBtn) return;
 
-  if(!show){
+  if(!currentChapter){
     prevBtn.style.display = "none";
     nextBtn.style.display = "none";
     return;
   }
 
+  prevBtn.style.display = "";
+  nextBtn.style.display = "";
+
   const { idx, hasPrev, hasNext } = chapterNavState();
-  prevBtn.style.display = hasPrev ? "" : "none";
-  nextBtn.style.display = hasNext ? "" : "none";
-  if(hasPrev) prevBtn.title = "Previous chapter: " + currentFilm.chapters[idx - 1].title;
-  if(hasNext) nextBtn.title = "Next chapter: " + currentFilm.chapters[idx + 1].title;
+  prevBtn.disabled = !hasPrev;
+  nextBtn.disabled = !hasNext;
+  prevBtn.title = hasPrev ? "Previous chapter: " + currentFilm.chapters[idx - 1].title : "";
+  nextBtn.title = hasNext ? "Next chapter: " + currentFilm.chapters[idx + 1].title : "";
 }
 
 // Once every guessable word in (scene, beatIdx) has been revealed — whether
@@ -1779,7 +1769,6 @@ function advanceToNextLineIfComplete(scene, beatIdx){
       scenesContainer.appendChild(banner);
       banner.scrollIntoView({ behavior: "smooth", block: "center" });
     }
-    updateChapterEdgeNav(true);
     return;
   }
 
@@ -2047,7 +2036,7 @@ function renderChapterList(){
   container.innerHTML = "";
   document.getElementById("chapterBackBtn").style.display = "none";
   document.getElementById("scenes").innerHTML = "";
-  updateChapterEdgeNav(false);
+  updateChapterEdgeNav();
 
   if(!currentFilm.chapters.length){
     const empty = document.createElement("div");
@@ -2076,7 +2065,7 @@ function renderChapterScenes(){
   document.getElementById("chapterList").innerHTML = "";
   const backBtn = document.getElementById("chapterBackBtn");
   backBtn.style.display = "";
-  updateChapterEdgeNav(false);
+  updateChapterEdgeNav();
 
   const container = document.getElementById("scenes");
   container.innerHTML = "";
@@ -2163,9 +2152,10 @@ function switchTab(tab){
   document.getElementById("scoreboardPanel").style.display = tab === "scoreboard" ? "" : "none";
   if(tab === "scoreboard"){
     renderScoreboard();
-    updateChapterEdgeNav(false);
-  }else if(document.getElementById("chapterCompleteBanner")){
-    updateChapterEdgeNav(true);
+    document.getElementById("chapterPrevBtn").style.display = "none";
+    document.getElementById("chapterNextBtn").style.display = "none";
+  }else{
+    updateChapterEdgeNav();
   }
 }
 
