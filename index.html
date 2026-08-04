@@ -266,6 +266,27 @@
     border-bottom-color:var(--accent);
     color:var(--accent);
   }
+  .chapter-heading{
+    text-align:center;
+    margin:0 0 22px;
+    padding-bottom:14px;
+    border-bottom:1px solid var(--border);
+  }
+  .chapter-heading .chapter-heading-num{
+    display:block;
+    color:var(--muted);
+    font-size:0.75rem;
+    letter-spacing:2px;
+    text-transform:uppercase;
+    margin-bottom:6px;
+  }
+  .chapter-heading .chapter-heading-title{
+    font-family:'Cinzel', serif;
+    font-weight:700;
+    font-size:1.5rem;
+    color:var(--accent-strong);
+    letter-spacing:0.3px;
+  }
   .reset-btn{
     display:block;
     width:fit-content;
@@ -778,6 +799,7 @@
 
     <div class="chapter-list" id="chapterList"></div>
     <button class="chapter-back-btn" id="chapterBackBtn" style="display:none;" type="button">&larr; Back to chapters</button>
+    <div class="chapter-heading" id="chapterHeading" style="display:none;"></div>
     <div id="scenes"></div>
 
   </div>
@@ -2036,6 +2058,12 @@ function renderChapterList(){
   container.innerHTML = "";
   document.getElementById("chapterBackBtn").style.display = "none";
   document.getElementById("scenes").innerHTML = "";
+  const heading = document.getElementById("chapterHeading");
+  heading.style.display = "none";
+  heading.innerHTML = "";
+  document.getElementById("filmSelector").style.display = "";
+  document.querySelector(".instructions").style.display = "";
+  document.getElementById("resetBtn").style.display = "";
   updateChapterEdgeNav();
 
   if(!currentFilm.chapters.length){
@@ -2065,7 +2093,23 @@ function renderChapterScenes(){
   document.getElementById("chapterList").innerHTML = "";
   const backBtn = document.getElementById("chapterBackBtn");
   backBtn.style.display = "";
+  document.getElementById("filmSelector").style.display = "none";
+  document.querySelector(".instructions").style.display = "none";
+  document.getElementById("resetBtn").style.display = "none";
   updateChapterEdgeNav();
+
+  const idx = currentFilm.chapters.indexOf(currentChapter);
+  const heading = document.getElementById("chapterHeading");
+  heading.innerHTML = "";
+  const num = document.createElement("span");
+  num.className = "chapter-heading-num";
+  num.textContent = "Chapter " + String(idx + 1).padStart(2, "0");
+  const title = document.createElement("span");
+  title.className = "chapter-heading-title";
+  title.textContent = currentChapter.title;
+  heading.appendChild(num);
+  heading.appendChild(title);
+  heading.style.display = "";
 
   const container = document.getElementById("scenes");
   container.innerHTML = "";
