@@ -2060,6 +2060,63 @@ function updateChapterEdgeNav(){
   nextBtn.title = hasNext ? "Next chapter: " + currentFilm.chapters[idx + 1].title : "";
 }
 
+// Scans forward from (scene, beatIdx) — the rest of the current scene, then
+// subsequent scenes in the chapter — for the next beat that still has
+// unrevealed guessable words. Mirrors findFirstUnrevealedLine's traversal
+// but only looks ahead, never wrapping back to the start.
+function findNextUnrevealedLine(scene, beatIdx){
+  function isUnrevealed(sc, i){
+    const beatData = sc._beats && sc._beats[i];
+    if(!beatData || !beatData.guessableCount) return false;
+    const sceneProgress = progress[sc.id] || {};
+    const revealedInBeat = Object.keys(sceneProgress).filter(k => k.split("-")[0] === String(i)).length;
+    return revealedInBeat < beatData.guessableCount;
+  }
+
+  for(let i = beatIdx + 1; i < scene.beats.length; i++){
+    if(isUnrevealed(scene, i)) return { scene, beatIdx: i };
+  }
+  if(!currentChapter) return null;
+  const sceneIdx = currentChapter.scenes.indexOf(scene);
+  for(let s = sceneIdx + 1; s < currentChapter.scenes.length; s++){
+    const nextScene = currentChapter.scenes[s];
+    if(!nextScene._beats) continue;
+    for(let i = 0; i < nextScene.beats.length; i++){
+      if(isUnrevealed(nextScene, i)) return { scene: nextScene, beatIdx: i };
+    }
+  }
+  return null;
+}
+
+// Animates the page scrolling an element to the vertical center of the
+// viewport over a fixed duration with ease-in-out easing. Used instead of
+// scrollIntoView's native "smooth" behavior, which can still feel like a
+// sudden jump (browsers vary a lot here, and some silently ignore it
+// entirely under reduced-motion settings) — this guarantees a slow, visible
+// glide every time, however far the target is.
+function smoothScrollToElement(el, duration){
+  if(!el) return;
+  duration = duration || 900;
+  const startY = window.pageYOffset;
+  const rect = el.getBoundingClientRect();
+  const targetY = startY + rect.top - (window.innerHeight / 2) + (rect.height / 2);
+  const distance = targetY - startY;
+  if(Math.abs(distance) < 1) return;
+  const startTime = performance.now();
+
+  function easeInOutCubic(t){
+    return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+  }
+
+  function step(now){
+    const elapsed = now - startTime;
+    const progress = Math.min(elapsed / duration, 1);
+    window.scrollTo(0, startY + distance * easeInOutCubic(progress));
+    if(progress < 1) requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
+
 // Once every guessable word in (scene, beatIdx) has been revealed — whether
 // by clicking individual words or typing the whole line — automatically
 // target the next line and scroll it into view, so you can keep going
@@ -2072,28 +2129,33 @@ function advanceToNextLineIfComplete(scene, beatIdx){
   const revealedInBeat = Object.keys(sceneProgress).filter(k => k.split("-")[0] === String(beatIdx)).length;
   if(revealedInBeat < beatData.guessableCount) return; // this line isn't finished yet
 
-  // Chapter-wide check, not just "nothing left after this line" — words can
-  // get revealed out of order (clicking around, or jumping chapters and
-  // back), so finishing whatever's physically last on the page doesn't mean
-  // every other line in the chapter is done too.
-  const { total, revealed } = chapterProgressStats(currentChapter);
-  if(revealed >= total){
-    clearActiveTarget();
-    const scenesContainer = document.getElementById("scenes");
-    if(scenesContainer && !document.getElementById("chapterCompleteBanner")){
-      const banner = buildChapterCompleteBanner();
-      scenesContainer.appendChild(banner);
-      // Same delay as the normal advance, so the last correct-word flash is
-      // visible before the page jumps down to the banner.
-      setTimeout(() => banner.scrollIntoView({ behavior: "smooth", block: "center" }), 900);
-    }
-    return;
-  }
+  // Prefer the next line in reading order, same as the film goes — only
+  // fall back to scanning the whole chapter (which could jump backward to
+  // something skipped earlier) once nothing at all remains ahead of here.
+  let next = findNextUnrevealedLine(scene, beatIdx);
 
-  // Not actually done yet — jump to whatever's still unrevealed anywhere in
-  // the chapter, which could be earlier than where we just finished.
-  const next = findFirstUnrevealedLine(currentChapter);
-  if(!next) return; // shouldn't happen given the check above, but guard anyway
+  if(!next){
+    // Chapter-wide check, not just "nothing left after this line" — words
+    // can get revealed out of order (clicking around, or jumping chapters
+    // and back), so finishing whatever's physically last on the page
+    // doesn't mean every other line in the chapter is done too.
+    const { total, revealed } = chapterProgressStats(currentChapter);
+    if(revealed >= total){
+      clearActiveTarget();
+      const scenesContainer = document.getElementById("scenes");
+      if(scenesContainer && !document.getElementById("chapterCompleteBanner")){
+        const banner = buildChapterCompleteBanner();
+        scenesContainer.appendChild(banner);
+        // Same delay as the normal advance, so the last correct-word flash is
+        // visible before the page scrolls down to the banner.
+        setTimeout(() => smoothScrollToElement(banner), 900);
+      }
+      return;
+    }
+    // Not actually done — something earlier in the chapter got skipped.
+    next = findFirstUnrevealedLine(currentChapter);
+    if(!next) return; // shouldn't happen given the check above, but guard anyway
+  }
 
   const nextLineEl = document.getElementById("line-" + next.scene.id + "-" + next.beatIdx);
   const nextBeatData = next.scene._beats && next.scene._beats[next.beatIdx];
@@ -2104,7 +2166,7 @@ function advanceToNextLineIfComplete(scene, beatIdx){
   // and see the correct-word flash before the page moves on.
   setTimeout(() => {
     setActiveTarget(next.scene, next.beatIdx, nextBeatData, nextLineEl, nextSpeaker);
-    nextLineEl.scrollIntoView({ behavior: "smooth", block: "center" });
+    smoothScrollToElement(nextLineEl);
   }, 900);
 }
 
@@ -2174,7 +2236,7 @@ function activateNextUnrevealedFromInput(){
   const speakerName = scene.beats[beatIdx].speaker;
   if(!lineEl || !beatData) return;
   setActiveTarget(scene, beatIdx, beatData, lineEl, speakerName);
-  lineEl.scrollIntoView({ behavior: "smooth", block: "center" });
+  smoothScrollToElement(lineEl);
 }
 
 function submitActiveGuess(){
