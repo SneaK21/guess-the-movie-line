@@ -92,6 +92,11 @@ gone through this check yet.
 - Use `hide: [...]` when a line is long or hard to recall verbatim; keep the
   memorable/quotable fragment in the hide list and let the rest show as
   context, instead of masking the whole thing.
+- A character's name doesn't need to stay guessable every time it's said —
+  once two characters have addressed each other by name a few times in the
+  same conversation, later repeats can go in the `hide` list (or just be
+  left out of it) so the fun part of the line stays hidden instead of "say
+  the name you've already typed three times."
 - Use `shown: true` for short action cues in parentheses — e.g.
   `(laughing)`, `(both hug)`, `(Frodo stands up)` — usually placed after a
   `pause: true` beat, right where the film has a beat of silence or action.
