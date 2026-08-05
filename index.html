@@ -1160,9 +1160,83 @@ const FILMS = [
       ] },
       { id: "c9", title: "Gandalf Explains the History of the Ring", scenes: [] },
       { id: "c10", title: "Frodo Learns Gollum's Story", scenes: [] },
-      { id: "c11", title: "Gandalf Sends Frodo Away From the Shire", scenes: [] },
-      { id: "c12", title: "Gandalf Confronts Saruman at Isengard", scenes: [] },
-      { id: "c13", title: "Saruman Reveals His Betrayal", scenes: [] },
+      { id: "c11", title: "Gandalf Sends Frodo Away From the Shire", scenes: [
+        { id: "s31", bracket: "[Bag End — Gandalf tells Frodo he must leave the Shire at once]", beats: [
+          { speaker: "Gandalf", text: "You must leave. And leave quickly." },
+          { speaker: "Frodo", text: "Where? Where do I go?" },
+          { speaker: "Gandalf", text: "Get out of the Shire. Make for the village of Bree." },
+          { speaker: "Frodo", text: "What about you?" },
+          { speaker: "Gandalf", text: "I'll be waiting for you at the inn of the Prancing Pony." },
+          { speaker: "Frodo", text: "And the ring will be safe there?" },
+          { speaker: "Gandalf", text: "I don't know, Frodo. I don't have any answers.", pause: true },
+          { speaker: "Gandalf", text: "I must see the head of my order. He is both wise and powerful. Trust me, Frodo. He'll know what to do.", hide: ["Trust me, Frodo."] },
+          { speaker: "Gandalf", text: "You'll have to leave the name of Baggins behind you. That name is not safe outside the Shire.", hide: ["You'll have to leave the name of Baggins behind you."] },
+          { speaker: "Gandalf", text: "Travel only by day. And stay off the road." },
+          { speaker: "Frodo", text: "I can cut across country easily enough." },
+          { speaker: "", text: "(Gandalf pulls Frodo down out of sight)", shown: true },
+          { speaker: "Gandalf", text: "My dear Frodo. Hobbits really are amazing creatures. You can learn all that there is to know about their ways in a month. And yet, after a hundred years, they can still surprise you.", pause: true }
+        ] },
+        { id: "s32", bracket: "[Bag End garden — Sam is caught eavesdropping]", beats: [
+          { speaker: "Gandalf", text: "Confound it all, Samwise Gamgee! Have you been eavesdropping?" },
+          { speaker: "Sam", text: "I haven't been dropping no eaves, honest! I was just cutting the grass under the window there, if you follow me.", hide: ["I haven't been dropping no eaves."] },
+          { speaker: "Gandalf", text: "A little late for trimming the verge, don't you think?" },
+          { speaker: "Sam", text: "I heard raised voices." },
+          { speaker: "Gandalf", text: "What did you hear? Speak!" },
+          { speaker: "Sam", text: "Nothing important. That is, I heard a good deal about a ring, and a Dark Lord, and something about the end of the world but—", hide: ["a ring, and a Dark Lord"] },
+          { speaker: "Sam", text: "Please, Mr. Gandalf, sir, don't hurt me. Don't turn me into anything unnatural.", pause: true },
+          { speaker: "Gandalf", text: "No? Perhaps not." },
+          { speaker: "Gandalf", text: "I've thought of a better use for you.", pause: true },
+          { speaker: "", text: "(Gandalf grabs Sam by the collar and pulls him along)", shown: true },
+          { speaker: "Gandalf", text: "Come along, Samwise. Keep up." },
+          { speaker: "Gandalf", text: "Be careful, both of you. The enemy has many spies in his service: birds, beasts." }
+        ] }
+      ] },
+      { id: "c12", title: "Gandalf Confronts Saruman at Isengard", scenes: [
+        { id: "s33", bracket: "[Isengard — Gandalf seeks Saruman's counsel about the Ring]", beats: [
+          { speaker: "", text: "(Gandalf rides through the gates of Isengard)", shown: true },
+          { speaker: "Saruman (V.O.)", text: "Smoke rises from the Mountain of Doom. The hour grows late. And Gandalf the Grey rides to Isengard, seeking my counsel. For that is why you have come, is it not, my old friend?", hide: ["For that is why you have come, is it not, my old friend?"] },
+          { speaker: "Gandalf", text: "Saruman." },
+          { speaker: "Saruman", text: "You are sure of this?" },
+          { speaker: "Gandalf", text: "Beyond any doubt." },
+          { speaker: "Saruman", text: "So the ring of power has been found. All these long years, it was in the Shire, under my very nose.", pause: true },
+          { speaker: "Gandalf", text: "Yet you did not have the wit to see it. Your love of the halfling's leaf has clearly slowed your mind." },
+          { speaker: "Gandalf", text: "But we still have time. Time enough to counter Sauron if we act quickly." },
+          { speaker: "Saruman", text: "Time? What time do you think we have?", pause: true },
+          { speaker: "Saruman", text: "Sauron has regained much of his former strength. He cannot yet take physical form, but his spirit has lost none of its potency.", hide: ["his spirit has lost none of its potency."] },
+          { speaker: "Saruman", text: "Concealed within his fortress, the Lord of Mordor sees all. His gaze pierces cloud, shadow, earth and flesh.", hide: ["His gaze pierces cloud, shadow, earth and flesh."] },
+          { speaker: "Saruman", text: "You know of what I speak, Gandalf. A great eye, lidless, wreathed in flame.", pause: true },
+          { speaker: "Gandalf", text: "The eye of Sauron." },
+          { speaker: "Saruman", text: "He is gathering all evil to him. Very soon, he'll have summoned an army great enough for an assault upon Middle-earth." },
+          { speaker: "Gandalf", text: "You know this? How?" },
+          { speaker: "Saruman", text: "I have seen it." },
+          { speaker: "Gandalf", text: "A palantir is a dangerous tool, Saruman.", pause: true },
+          { speaker: "Saruman", text: "Why? Why should we fear to use it?" },
+          { speaker: "Gandalf", text: "They are not all accounted for, the lost seeing-stones. We do not know who else may be watching.", hide: ["We do not know who else may be watching."] }
+        ] },
+        { id: "s34", bracket: "[Isengard — Saruman reveals the Nazgûl are already searching for the Ring]", beats: [
+          { speaker: "Saruman", text: "The hour is later than you think. Sauron's forces are already moving." },
+          { speaker: "Saruman", text: "The Nine have left Minas Morgul.", pause: true },
+          { speaker: "Gandalf", text: "The Nine?" },
+          { speaker: "Saruman", text: "They crossed the river Isen on Midsummer's Eve, disguised as riders in black.", hide: ["disguised as riders in black."] },
+          { speaker: "Gandalf", text: "They've reached the Shire?" },
+          { speaker: "Saruman", text: "They will find the ring. And kill the one who carries it.", pause: true },
+          { speaker: "Gandalf", text: "Frodo!", pause: true }
+        ] }
+      ] },
+      { id: "c13", title: "Saruman Reveals His Betrayal", scenes: [
+        { id: "s35", bracket: "[Isengard — Saruman urges Gandalf to join with Sauron]", beats: [
+          { speaker: "Saruman", text: "You did not seriously think that a hobbit could contend with the will of Sauron? There are none who can.", pause: true },
+          { speaker: "Saruman", text: "Against the power of Mordor, there can be no victory.", pause: true },
+          { speaker: "Saruman", text: "We must join with him, Gandalf." },
+          { speaker: "Saruman", text: "We must join with Sauron.", pause: true },
+          { speaker: "Saruman", text: "It would be wise, my friend." },
+          { speaker: "Gandalf", text: "Tell me, friend, when did Saruman the Wise abandon reason for madness?" }
+        ] },
+        { id: "s36", bracket: "[Isengard — Saruman overpowers Gandalf and imprisons him atop Orthanc]", beats: [
+          { speaker: "", text: "(Saruman overpowers Gandalf with his staff and imprisons him atop the tower of Orthanc)", shown: true },
+          { speaker: "Saruman", text: "I gave you the chance of aiding me willingly, but you have elected the way of pain!" }
+        ] }
+      ] },
       { id: "c14", title: "Frodo and Sam Leave Hobbiton", scenes: [] },
       { id: "c15", title: "Merry and Pippin Join the Journey", scenes: [] },
       { id: "c16", title: "Fleeing the Black Rider in the Cornfield", scenes: [] },
