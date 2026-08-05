@@ -1101,9 +1101,63 @@ const FILMS = [
       ] },
       { id: "c4", title: "Gandalf and Bilbo Smoking", scenes: [] },
       { id: "c5", title: "Bilbo's Birthday Party", scenes: [] },
-      { id: "c6", title: "Bilbo's Speech", scenes: [] },
-      { id: "c7", title: "Gandalf and Bilbo Discuss the Ring", scenes: [] },
-      { id: "c8", title: "Frodo Arrives at Bag End", scenes: [] },
+      { id: "c6", title: "Bilbo's Speech", scenes: [
+        { id: "s25", bracket: "[Bilbo's Birthday Party — Bilbo climbs up to address the crowd]", beats: [
+          { speaker: "Bilbo", text: "My dear Bagginses and Boggins, Tooks and Brandybucks, Grubbs, Chubbs, Hornblowers, Bolgers, Bracegirdles, and Proudfoots." },
+          { speaker: "", text: "(a hobbit in the crowd shouts) Proudfeet!", shown: true },
+          { speaker: "Bilbo", text: "Proudfoots." },
+          { speaker: "Bilbo", text: "Today is my 111th birthday!", pause: true },
+          { speaker: "", text: "(the crowd cheers)", shown: true },
+          { speaker: "Bilbo", text: "Alas, eleventy-one years is far too short a time to live among such excellent and admirable hobbits." },
+          { speaker: "Bilbo", text: "I don't know half of you half as well as I should like, and I like less than half of you half as well as you deserve.", pause: true }
+        ] },
+        { id: "s26", bracket: "[Bilbo's Birthday Party — Bilbo's farewell]", beats: [
+          { speaker: "Bilbo", text: "I have things to do. I've put this off for far too long." },
+          { speaker: "Bilbo", text: "I regret to announce this is the end.", pause: true },
+          { speaker: "Bilbo", text: "I'm going now." },
+          { speaker: "Bilbo", text: "I bid you all a very fond farewell." },
+          { speaker: "Bilbo", text: "Goodbye.", pause: true },
+          { speaker: "", text: "(Bilbo slips the Ring onto his finger and vanishes before the stunned crowd)", shown: true }
+        ] }
+      ] },
+      { id: "c7", title: "Gandalf and Bilbo Discuss the Ring", scenes: [
+        { id: "s27", bracket: "[Bag End — Gandalf finds Bilbo packing, the Ring still in his pocket]", beats: [
+          { speaker: "", text: "(Gandalf finds Bilbo at Bag End, gathering his things)", shown: true },
+          { speaker: "Gandalf", text: "Bilbo, the ring is still in your pocket." },
+          { speaker: "Bilbo", text: "Oh. Oh, yes." },
+          { speaker: "Bilbo", text: "It's mine. I found it. It came to me." },
+          { speaker: "Gandalf", text: "Bilbo, all these years you've been wearing that ring, and never once did it enter your head to wonder if that were so?", pause: true },
+          { speaker: "Gandalf", text: "It isn't yours, Bilbo. It never was." }
+        ] },
+        { id: "s28", bracket: "[Bag End — Bilbo's moment of fear, and Gandalf's warning]", beats: [
+          { speaker: "Bilbo", text: "You want it for yourself!" },
+          { speaker: "", text: "(Bilbo's shadow rears up, monstrous, and Gandalf's own shadow swells to meet it)", shown: true },
+          { speaker: "Gandalf", text: "Bilbo Baggins, do not take me for some conjuror of cheap tricks!", pause: true },
+          { speaker: "Gandalf", text: "I am not trying to rob you." },
+          { speaker: "Gandalf", text: "I'm trying to help you." },
+          { speaker: "", text: "(the shadows fade; Bilbo softens, ashamed)", shown: true },
+          { speaker: "Gandalf", text: "All your long years, we've been friends." },
+          { speaker: "Gandalf", text: "Trust me, as you once did." },
+          { speaker: "Gandalf", text: "Let it go.", pause: true }
+        ] },
+        { id: "s29", bracket: "[Bag End — Bilbo lets go of the Ring and departs]", beats: [
+          { speaker: "Bilbo", text: "You're right, Gandalf." },
+          { speaker: "Bilbo", text: "The ring should go to Frodo." },
+          { speaker: "", text: "(Bilbo sets the Ring down on the floor by the door, hesitates, then steps away from it)", shown: true },
+          { speaker: "Bilbo", text: "I, I think I'm ready for another adventure." },
+          { speaker: "", text: "(Bilbo shoulders his pack and walks out the door, whistling)", shown: true }
+        ] }
+      ] },
+      { id: "c8", title: "Frodo Arrives at Bag End", scenes: [
+        { id: "s30", bracket: "[Bag End — Frodo returns and finds Gandalf still there]", beats: [
+          { speaker: "", text: "(Frodo returns to Bag End and finds Gandalf deep in thought)", shown: true },
+          { speaker: "Frodo", text: "Gandalf?" },
+          { speaker: "Gandalf", text: "Bilbo's gone, hasn't he?" },
+          { speaker: "Frodo", text: "Yes. He's gone. I think he's really gone." },
+          { speaker: "Gandalf", text: "He asked me to give you Bag End, along with everything in it." },
+          { speaker: "Gandalf", text: "The ring is yours now. Put it somewhere out of sight." }
+        ] }
+      ] },
       { id: "c9", title: "Gandalf Explains the History of the Ring", scenes: [] },
       { id: "c10", title: "Frodo Learns Gollum's Story", scenes: [] },
       { id: "c11", title: "Gandalf Sends Frodo Away From the Shire", scenes: [] },
