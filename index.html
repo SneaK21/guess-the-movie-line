@@ -1996,22 +1996,6 @@ function findFirstUnrevealedLine(chapter){
   return null;
 }
 
-function findNextLine(scene, beatIdx){
-  for(let i = beatIdx + 1; i < scene.beats.length; i++){
-    if(scene._beats[i] && scene._beats[i].guessableCount > 0) return { scene, beatIdx: i };
-  }
-  if(!currentChapter) return null;
-  const sceneIdx = currentChapter.scenes.indexOf(scene);
-  for(let s = sceneIdx + 1; s < currentChapter.scenes.length; s++){
-    const nextScene = currentChapter.scenes[s];
-    if(!nextScene._beats) continue;
-    for(let i = 0; i < nextScene.beats.length; i++){
-      if(nextScene._beats[i] && nextScene._beats[i].guessableCount > 0) return { scene: nextScene, beatIdx: i };
-    }
-  }
-  return null;
-}
-
 // Builds the "chapter complete" banner shown at the end of a chapter's
 // content. Chapter-to-chapter navigation itself lives in the persistent
 // prev/next links in the bottom bar (see updateChapterEdgeNav), not here.
@@ -2070,18 +2054,28 @@ function advanceToNextLineIfComplete(scene, beatIdx){
   const revealedInBeat = Object.keys(sceneProgress).filter(k => k.split("-")[0] === String(beatIdx)).length;
   if(revealedInBeat < beatData.guessableCount) return; // this line isn't finished yet
 
-  const next = findNextLine(scene, beatIdx);
-
-  if(!next){
+  // Chapter-wide check, not just "nothing left after this line" — words can
+  // get revealed out of order (clicking around, or jumping chapters and
+  // back), so finishing whatever's physically last on the page doesn't mean
+  // every other line in the chapter is done too.
+  const { total, revealed } = chapterProgressStats(currentChapter);
+  if(revealed >= total){
     clearActiveTarget();
     const scenesContainer = document.getElementById("scenes");
     if(scenesContainer && !document.getElementById("chapterCompleteBanner")){
       const banner = buildChapterCompleteBanner();
       scenesContainer.appendChild(banner);
-      banner.scrollIntoView({ behavior: "smooth", block: "center" });
+      // Same delay as the normal advance, so the last correct-word flash is
+      // visible before the page jumps down to the banner.
+      setTimeout(() => banner.scrollIntoView({ behavior: "smooth", block: "center" }), 900);
     }
     return;
   }
+
+  // Not actually done yet — jump to whatever's still unrevealed anywhere in
+  // the chapter, which could be earlier than where we just finished.
+  const next = findFirstUnrevealedLine(currentChapter);
+  if(!next) return; // shouldn't happen given the check above, but guard anyway
 
   const nextLineEl = document.getElementById("line-" + next.scene.id + "-" + next.beatIdx);
   const nextBeatData = next.scene._beats && next.scene._beats[next.beatIdx];
