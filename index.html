@@ -1735,6 +1735,7 @@ function renderLine(scene, beatIdx, beatData, line){
 
   const sceneProgress = progress[scene.id] || {};
   const hiddenIndices = beatData.hiddenIndices; // null = every real word is guessable; Set = only these indices are
+  const givenIndices = beatData.givenIndices; // null/undefined = no free starter words; Set = these indices are given away
 
   beatData.words.forEach((token, idx) => {
     const span = document.createElement("span");
@@ -1743,8 +1744,9 @@ function renderLine(scene, beatIdx, beatData, line){
     const isLastWord = idx === beatData.words.length - 1;
 
     const isMaskable = hiddenIndices ? hiddenIndices.has(idx) : true;
+    const isGivenFree = !!(givenIndices && givenIndices.has(idx));
 
-    if(!hasLetters(token) || !isMaskable){
+    if(!hasLetters(token) || !isMaskable || isGivenFree){
       span.className = "word " + (hasLetters(token) ? "context" : "punct-only");
       span.textContent = token;
       line.appendChild(span);
@@ -1814,14 +1816,20 @@ function buildScene(scene){
     // traditional fully-guessable beat (every real word is masked).
     const usesHideList = Array.isArray(beatDef.hide);
     const hiddenIndices = usesHideList ? computeHiddenIndices(beatDef.text, words, beatDef.hide) : null;
+    // `given: [...]` is the mirror of `hide` — only meaningful on a beat
+    // that's otherwise fully guessable (no `hide` list). It names one or two
+    // specific words to give away for free as a starter/foothold, while
+    // every other real word in the line stays masked and guessable.
+    const usesGivenList = !usesHideList && Array.isArray(beatDef.given);
+    const givenIndices = usesGivenList ? computeHiddenIndices(beatDef.text, words, beatDef.given) : null;
     // Shown beats display as plain text — nothing to guess, so they don't
     // count toward the scene's guessable total or score.
     const guessableCount = beatDef.shown
       ? 0
       : (usesHideList
           ? words.filter((w, i) => hiddenIndices.has(i) && hasLetters(w)).length
-          : words.filter(hasLetters).length);
-    const beatData = { words: words, guessableCount: guessableCount, fullLineAttempted: false, shown: !!beatDef.shown, hiddenIndices: hiddenIndices };
+          : words.filter((w, i) => hasLetters(w) && !(givenIndices && givenIndices.has(i))).length);
+    const beatData = { words: words, guessableCount: guessableCount, fullLineAttempted: false, shown: !!beatDef.shown, hiddenIndices: hiddenIndices, givenIndices: givenIndices };
     scene._beats[beatIdx] = beatData;
     totalGuessable += guessableCount;
 
@@ -1836,6 +1844,7 @@ function buildScene(scene){
         const hasHidden = beatData.words.some((t, idx) => {
           if(!hasLetters(t)) return false;
           if(hiddenIndices && !hiddenIndices.has(idx)) return false;
+          if(givenIndices && givenIndices.has(idx)) return false;
           return !sceneProgress[beatIdx + "-" + idx];
         });
         if(!hasHidden) return;
@@ -2213,6 +2222,7 @@ function checkFullLine(scene, beatIdx, beatData, guessText){
   beatData.words.forEach((token, idx) => {
     if(!hasLetters(token)) return; // punctuation-only, nothing to guess
     if(beatData.hiddenIndices && !beatData.hiddenIndices.has(idx)) return; // context text, not guessable
+    if(beatData.givenIndices && beatData.givenIndices.has(idx)) return; // free starter word, not guessable
     const key = beatIdx + "-" + idx;
     if(!sceneProgress[key]) hiddenPositions.push(idx);
   });
@@ -2309,6 +2319,10 @@ function sceneGuessableCount(scene){
       // Partial beat — only the words inside the hidden phrases count.
       const hiddenIndices = computeHiddenIndices(beatDef.text, words, beatDef.hide);
       total += words.filter((w, i) => hiddenIndices.has(i) && hasLetters(w)).length;
+    }else if(Array.isArray(beatDef.given)){
+      // Otherwise-fully-guessable beat, minus its one or two free starter words.
+      const givenIndices = computeHiddenIndices(beatDef.text, words, beatDef.given);
+      total += words.filter((w, i) => hasLetters(w) && !givenIndices.has(i)).length;
     }else{
       total += words.filter(hasLetters).length;
     }
