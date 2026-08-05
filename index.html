@@ -1051,7 +1051,9 @@ const FILMS = [
           { speaker: "Bilbo", text: "Where's it gone?" }
         ] },
         { id: "s13", bracket: "[Bag End garden — Frodo needles Gandalf about his reputation]", beats: [
-          { speaker: "Frodo", text: "He's up to something. All right, then. Keep your secrets." },
+          { speaker: "Frodo", text: "He's up to something.", pause: true },
+          { speaker: "", text: "(Gandalf looks at him weirdly, then looks away and puffs smoke out of his mouth)", shown: true },
+          { speaker: "Frodo", text: "All right, then. Keep your secrets." },
           { speaker: "Gandalf", text: "What?" },
           { speaker: "Frodo", text: "But I know you have something to do with it." },
           { speaker: "Gandalf", text: "Good gracious me." },
@@ -1922,6 +1924,7 @@ function startGuess(scene, beatIdx, idx, correctToken, span, line){
     setHintCount(scene, beatIdx, idx, next);
     input.placeholder = maskWordWithHint(correctToken, next);
     hintBtn.disabled = score < HINT_COST;
+    input.focus(); // clicking the button blurred the input — bring focus back so typing/another hint click keeps working
   });
 
   input.addEventListener("keydown", (e) => {
@@ -1949,7 +1952,9 @@ function startGuess(scene, beatIdx, idx, correctToken, span, line){
   input.addEventListener("blur", () => {
     // small delay so a click that triggered blur doesn't fight the cancel
     setTimeout(() => {
-      if(span.contains(input)) cancel();
+      if(!span.contains(input)) return; // already replaced (e.g. the word got fully revealed)
+      if(box.contains(document.activeElement)) return; // focus moved to the hint button, not away — stay open
+      cancel();
     }, 100);
   });
 }
