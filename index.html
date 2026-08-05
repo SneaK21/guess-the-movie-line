@@ -1038,14 +1038,14 @@ const FILMS = [
           { speaker: "Gandalf", text: "I hear it's going to be a party of special magnificence." },
           { speaker: "Frodo", text: "You know Bilbo. He's got the whole place in an uproar.", hide: ["He's got the whole place in an uproar."] },
           { speaker: "Gandalf", text: "Yeah, well that should please him.", hide: ["that should please him."] },
-          { speaker: "Frodo", text: "Half the Shire's been invited, and the rest of them are turning up anyway." }
+          { speaker: "Frodo", text: "Half the Shire's been invited, and the rest of them are turning up anyway.", given: ["invited"] }
         ] }
       ] },
       { id: "c3", title: "The Incident with the Dragon", scenes: [
         { id: "s11", bracket: "[Bag End — Frodo tells Gandalf that Bilbo's been acting strange]", beats: [
           { speaker: "Bilbo (V.O.)", text: "There's always been a Baggins living here under the Hill in Bag End. And there always will be.", shown: true, pause: true },
-          { speaker: "Frodo", text: "To tell you the truth, Bilbo's been a bit odd lately. I mean, more than usual." },
-          { speaker: "Frodo", text: "He's taken to locking himself in his study. He spends hours and hours pouring over old maps when he thinks I'm not looking.", pause: true }
+          { speaker: "Frodo", text: "To tell you the truth, Bilbo's been a bit odd lately. I mean, more than usual.", given: ["odd"] },
+          { speaker: "Frodo", text: "He's taken to locking himself in his study. He spends hours and hours pouring over old maps when he thinks I'm not looking.", given: ["study", "maps"], pause: true }
         ] },
         { id: "s12", bracket: "[The Shire — Bilbo searches for something]", beats: [
           { speaker: "Bilbo", text: "Where's it gone?" }
@@ -1060,7 +1060,7 @@ const FILMS = [
           { speaker: "Frodo", text: "Before you came along, we Bagginses were very well thought of." },
           { speaker: "Gandalf", text: "Indeed." },
           { speaker: "Frodo", text: "Never had any adventures or did anything unexpected." },
-          { speaker: "Gandalf", text: "If you're referring to the incident with the dragon, I was barely involved. All I did was give your uncle a little nudge out of the door." },
+          { speaker: "Gandalf", text: "If you're referring to the incident with the dragon, I was barely involved. All I did was give your uncle a little nudge out of the door.", given: ["involved", "nudge"] },
           { speaker: "Frodo", text: "Whatever you did, you've been officially labeled a disturber of the peace." },
           { speaker: "Gandalf", text: "Oh, really?" }
         ] },
@@ -1083,10 +1083,10 @@ const FILMS = [
           { speaker: "Bilbo", text: "Come on, come in! Welcome, welcome!" }
         ] },
         { id: "s17", bracket: "[Inside Bag End — Bilbo fusses over tea]", beats: [
-          { speaker: "Bilbo", text: "Tea? Or maybe something a little stronger? I've got a few bottles of the Old Winyard left. 1296. Very good year — almost as old as I am! It was laid down by my father. What say we open one, eh?" },
+          { speaker: "Bilbo", text: "Tea? Or maybe something a little stronger? I've got a few bottles of the Old Winyard left. 1296. Very good year — almost as old as I am! It was laid down by my father. What say we open one, eh?", given: ["stronger", "Winyard", "year", "father"] },
           { speaker: "Gandalf", text: "Just tea, thank you." },
-          { speaker: "Bilbo", text: "I was expecting you sometime last week. Not that it matters — you come and go as you please, always have done and always will.", pause: true },
-          { speaker: "Bilbo", text: "You caught me a bit unprepared, I'm afraid. We've got cold chicken and a bit of pickle... there's some cheese here. Oh, no, it won't do. We've got raspberry jam, an apple tart... but not much for afters. Oh, no, we're all right — I've just found some sponge cake." },
+          { speaker: "Bilbo", text: "I was expecting you sometime last week. Not that it matters — you come and go as you please, always have done and always will.", given: ["week", "please"], pause: true },
+          { speaker: "Bilbo", text: "You caught me a bit unprepared, I'm afraid. We've got cold chicken and a bit of pickle... there's some cheese here. Oh, no, it won't do. We've got raspberry jam, an apple tart... but not much for afters. Oh, no, we're all right — I've just found some sponge cake.", given: ["chicken", "jam", "sponge"] },
           { speaker: "Bilbo", text: "I could make you some eggs if you'd like — oh. Gandalf?", pause: true },
           { speaker: "Gandalf", text: "Just tea, thank you." },
           { speaker: "Bilbo", text: "Oh, right. You don't mind if I eat, do you?" },
@@ -1096,8 +1096,8 @@ const FILMS = [
           { speaker: "Lobelia (V.O.)", text: "Bilbo! Bilbo Baggins!" },
           { speaker: "Bilbo", text: "I'm not at home! It's the Sackville-Bagginses.", pause: true },
           { speaker: "Lobelia (V.O.)", text: "I know you're in there!" },
-          { speaker: "Bilbo", text: "They're after the house. They've never forgiven me for living this long." },
-          { speaker: "Bilbo", text: "I've got to get away from these confounded relatives hanging on the bell all day. They never give me a moment's peace! I want to see mountains again — mountains, Gandalf! And then find somewhere quiet where I can finish my book.", pause: true },
+          { speaker: "Bilbo", text: "They're after the house. They've never forgiven me for living this long.", given: ["forgiven"] },
+          { speaker: "Bilbo", text: "I've got to get away from these confounded relatives hanging on the bell all day. They never give me a moment's peace! I want to see mountains again — mountains, Gandalf! And then find somewhere quiet where I can finish my book.", given: ["confounded", "peace", "mountains", "finish"], pause: true },
           { speaker: "Bilbo", text: "Oh, tea!" }
         ] }
       ] },
@@ -1217,7 +1217,7 @@ const FILMS = [
           { speaker: "Frodo", text: "In Gollum's cave." },
           { speaker: "Gandalf", text: "Yes.", pause: true },
           { speaker: "Gandalf", text: "For 60 years, the ring lay quiet in Bilbo's keeping, prolonging his life, delaying old age.", hide: ["prolonging his life, delaying old age."] },
-          { speaker: "Gandalf", text: "But no longer, Frodo. Evil is stirring in Mordor. The ring has awoken. It's heard its master's call.", pause: true },
+          { speaker: "Gandalf", text: "But no longer, Frodo. Evil is stirring in Mordor. The ring has awoken. It's heard its master's call.", given: ["awoken"], pause: true },
           { speaker: "Frodo", text: "But he was destroyed. Sauron was destroyed." },
           { speaker: "Gandalf", text: "No, Frodo." },
           { speaker: "Gandalf", text: "The spirit of Sauron endured." }
@@ -1247,7 +1247,7 @@ const FILMS = [
           { speaker: "Gandalf", text: "Travel only by day. And stay off the road." },
           { speaker: "Frodo", text: "I can cut across country easily enough." },
           { speaker: "", text: "(Gandalf pulls Frodo down out of sight)", shown: true },
-          { speaker: "Gandalf", text: "My dear Frodo. Hobbits really are amazing creatures. You can learn all that there is to know about their ways in a month. And yet, after a hundred years, they can still surprise you.", pause: true }
+          { speaker: "Gandalf", text: "My dear Frodo. Hobbits really are amazing creatures. You can learn all that there is to know about their ways in a month. And yet, after a hundred years, they can still surprise you.", given: ["amazing", "month", "surprise"], pause: true }
         ] },
         { id: "s32", bracket: "[Bag End garden — Sam is caught eavesdropping]", beats: [
           { speaker: "Gandalf", text: "Confound it all, Samwise Gamgee! Have you been eavesdropping?" },
@@ -1271,15 +1271,15 @@ const FILMS = [
           { speaker: "Gandalf", text: "Saruman." },
           { speaker: "Saruman", text: "You are sure of this?" },
           { speaker: "Gandalf", text: "Beyond any doubt." },
-          { speaker: "Saruman", text: "So the ring of power has been found. All these long years, it was in the Shire, under my very nose.", pause: true },
-          { speaker: "Gandalf", text: "Yet you did not have the wit to see it. Your love of the halfling's leaf has clearly slowed your mind." },
+          { speaker: "Saruman", text: "So the ring of power has been found. All these long years, it was in the Shire, under my very nose.", given: ["nose"], pause: true },
+          { speaker: "Gandalf", text: "Yet you did not have the wit to see it. Your love of the halfling's leaf has clearly slowed your mind.", given: ["wit", "leaf"] },
           { speaker: "Gandalf", text: "But we still have time. Time enough to counter Sauron if we act quickly." },
           { speaker: "Saruman", text: "Time? What time do you think we have?", pause: true },
           { speaker: "Saruman", text: "Sauron has regained much of his former strength. He cannot yet take physical form, but his spirit has lost none of its potency.", hide: ["his spirit has lost none of its potency."] },
           { speaker: "Saruman", text: "Concealed within his fortress, the Lord of Mordor sees all. His gaze pierces cloud, shadow, earth and flesh.", hide: ["His gaze pierces cloud, shadow, earth and flesh."] },
           { speaker: "Saruman", text: "You know of what I speak, Gandalf. A great eye, lidless, wreathed in flame.", pause: true },
           { speaker: "Gandalf", text: "The eye of Sauron." },
-          { speaker: "Saruman", text: "He is gathering all evil to him. Very soon, he'll have summoned an army great enough for an assault upon Middle-earth." },
+          { speaker: "Saruman", text: "He is gathering all evil to him. Very soon, he'll have summoned an army great enough for an assault upon Middle-earth.", given: ["evil", "assault"] },
           { speaker: "Gandalf", text: "You know this? How?" },
           { speaker: "Saruman", text: "I have seen it." },
           { speaker: "Gandalf", text: "A palantir is a dangerous tool, Saruman.", pause: true },
