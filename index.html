@@ -934,6 +934,16 @@ if(CLOUD_ENABLED){
 // short, individually well-known lines to demonstrate the engine.
 // The Two Towers and The Return of the King are left empty on
 // purpose — add scenes to their arrays the same way to fill them in.
+//
+// Scene ids (s1, s2, s3, ...) run chronologically across the whole film,
+// in the same order the chapters and scenes appear in this file — not
+// scoped per chapter. When adding a new scene, give it the next unused
+// number in story order (inserting it between existing scenes bumps
+// nothing else — just pick a number that keeps the sequence in order,
+// e.g. reuse the gap if content is later cut, or extend past the current
+// highest number if appending). If a scene's id ever needs to change to
+// keep the sequence honest, add the old→new mapping to
+// SCENE_ID_MIGRATIONS above so anyone's already-revealed words carry over.
 // ---------------------------------------------------------------
 const FILMS = [
   {
@@ -976,7 +986,7 @@ const FILMS = [
           { speaker: "Galadriel (V.O. continued)", text: "The Ring came to the creature Gollum, who took it deep into the tunnels of the Misty Mountains." },
           { speaker: "Galadriel (V.O. continued)", text: "And there it consumed him.", pause: true }
         ] },
-        { id: "s6b", bracket: "[Gollum's Cave — flashback continues]", beats: [
+        { id: "s7", bracket: "[Gollum's Cave — flashback continues]", beats: [
           { speaker: "Gollum (flashback)", text: "It came to me. My own. My love. My own. My precious.", shown: true },
           { speaker: "Galadriel (V.O. continued)", text: "The Ring brought to Gollum unnatural long life. For 500 years it poisoned his mind. And in the gloom of Gollum's cave, it waited.", pause: true },
           { speaker: "Galadriel (V.O. continued)", text: "Darkness crept back into the forests of the world. Rumor grew of a shadow in the East, whispers of a nameless fear." },
@@ -991,7 +1001,7 @@ const FILMS = [
         ] }
       ] },
       { id: "c1b", title: "Concerning Hobbits", scenes: [
-        { id: "s19", bracket: "[Bilbo, writing into his book]", beats: [
+        { id: "s8", bracket: "[Bilbo, writing into his book]", beats: [
           { speaker: "Bilbo (V.O.)", text: "The 22nd day of September in the year 1400 by Shire-reckoning.", hide: ["September", "in the year 1400 by Shire-reckoning"] },
           { speaker: "Bilbo (V.O.)", text: "Bag End, Bagshot Row, Hobbiton, Westfarthing, the Shire, Middle-earth.", hide: ["Bagshot Row", "Westfarthing", "Middle-earth"] },
           { speaker: "Bilbo (V.O.)", text: "The Third Age of this world.", shown: true },
@@ -1014,7 +1024,7 @@ const FILMS = [
           { speaker: "Bilbo", text: "Frodo, the door!", pause: true },
           { speaker: "Bilbo", text: "Sticklebacks. Where is that boy? Frodo!", hide: ["Where is that boy? Frodo!"] }
         ] },
-        { id: "s7", bracket: "[Outskirts of The Shire — Gandalf is riding on his cart]", beats: [
+        { id: "s10", bracket: "[Outskirts of The Shire — Gandalf is riding on his cart]", beats: [
           { speaker: "Gandalf (singing)", text: "Down from the door where it began, and I must follow if I can. The road goes ever on and on, down from the door where it began. Now far ahead the road has gone, and I must follow if I can.", hide: ["The road goes ever on and on, down from the door where it began."], song: true },
           { speaker: "", text: "(Frodo approaches)", shown: true },
           { speaker: "Frodo", text: "You are late!" },
@@ -1117,17 +1127,17 @@ const FILMS = [
       { id: "c29", title: "Frodo Wakes in Rivendell", scenes: [] },
       { id: "c30", title: "Bilbo and Frodo Reunite", scenes: [] },
       { id: "c31", title: "The Council of Elrond", scenes: [
-        { id: "s300", bracket: "[Council of Elrond — Boromir doubts the wisdom of walking into the enemy's land]", beats: [
+        { id: "s19", bracket: "[Council of Elrond — Boromir doubts the wisdom of walking into the enemy's land]", beats: [
           { speaker: "Boromir", text: "One does not simply walk into Mordor." }
         ] }
       ] },
       { id: "c32", title: "Frodo Volunteers to Take the Ring", scenes: [
-        { id: "s301", bracket: "[Council of Elrond, Rivendell — the Fellowship's quest is decided]", beats: [
+        { id: "s20", bracket: "[Council of Elrond, Rivendell — the Fellowship's quest is decided]", beats: [
           { speaker: "Frodo", text: "I will take it. I will take the Ring to Mordor, though I do not know the way." }
         ] }
       ] },
       { id: "c33", title: "The Fellowship of the Ring Is Formed", scenes: [
-        { id: "s302", bracket: "[Council of Elrond — Aragorn, Legolas, and Gimli each pledge themselves to Frodo's quest]", beats: [
+        { id: "s21", bracket: "[Council of Elrond — Aragorn, Legolas, and Gimli each pledge themselves to Frodo's quest]", beats: [
           { speaker: "Aragorn", text: "You have my sword." },
           { speaker: "Legolas", text: "And you have my bow." },
           { speaker: "Gimli", text: "And my axe!" }
@@ -1140,7 +1150,7 @@ const FILMS = [
       { id: "c38", title: "The Decision to Enter Moria", scenes: [] },
       { id: "c39", title: "The Watcher in the Water", scenes: [] },
       { id: "c40", title: "Frodo Confides in Gandalf", scenes: [
-        { id: "s303", bracket: "[The Mines of Moria — Frodo confides in Gandalf about the weight of carrying the Ring]", beats: [
+        { id: "s22", bracket: "[The Mines of Moria — Frodo confides in Gandalf about the weight of carrying the Ring]", beats: [
           { speaker: "Frodo", text: "I wish the Ring had never come to me. I wish none of this had happened." },
           { speaker: "Gandalf", text: "So do all who live to see such times, but that is not for them to decide. All we have to decide is what to do with the time that is given us." }
         ] }
@@ -1151,7 +1161,7 @@ const FILMS = [
       { id: "c44", title: "Frodo's Mithril Shirt Saves Him", scenes: [] },
       { id: "c45", title: "Fleeing Across the Bridge of Khazad-dûm", scenes: [] },
       { id: "c46", title: "Gandalf and the Balrog — \"You Shall Not Pass!\"", scenes: [
-        { id: "s304", bracket: "[The Mines of Moria — the Fellowship reaches the Bridge of Khazad-dûm and a Balrog appears]", beats: [
+        { id: "s23", bracket: "[The Mines of Moria — the Fellowship reaches the Bridge of Khazad-dûm and a Balrog appears]", beats: [
           { speaker: "Gandalf", text: "You cannot pass!" },
           { speaker: "Frodo", text: "Gandalf!" },
           { speaker: "Gandalf", text: "I am a servant of the Secret Fire, wielder of the flame of Anor. The dark fire will not avail you, flame of Udûn!" },
@@ -1159,7 +1169,7 @@ const FILMS = [
         ] }
       ] },
       { id: "c47", title: "Gandalf Falls into the Chasm", scenes: [
-        { id: "s305", bracket: "[The Bridge of Khazad-dûm — as Gandalf falls, he calls out to the fleeing Fellowship]", beats: [
+        { id: "s24", bracket: "[The Bridge of Khazad-dûm — as Gandalf falls, he calls out to the fleeing Fellowship]", beats: [
           { speaker: "Gandalf", text: "Fly, you fools!" }
         ] }
       ] },
@@ -1211,10 +1221,39 @@ const HINT_COST = 1;
 // between visits in that case.
 let storageAvailable = true;
 
+// Scene ids were renumbered to run chronologically (see commit that did the
+// reordering). This maps any old id that moved to its new one, so progress
+// and hints saved under the old ids still resolve to the right scene instead
+// of silently vanishing. Safe to leave in permanently — old ids simply never
+// show up again once migrated.
+const SCENE_ID_MIGRATIONS = {
+  "s6b": "s7",
+  "s19": "s8",
+  "s7": "s10",
+  "s300": "s19",
+  "s301": "s20",
+  "s302": "s21",
+  "s303": "s22",
+  "s304": "s23",
+  "s305": "s24"
+};
+
+function migrateSceneIds(stateObj){
+  if(!stateObj) return stateObj;
+  let changed = false;
+  const migrated = {};
+  Object.keys(stateObj).forEach(oldId => {
+    const newId = SCENE_ID_MIGRATIONS[oldId] || oldId;
+    if(newId !== oldId) changed = true;
+    migrated[newId] = Object.assign({}, migrated[newId] || {}, stateObj[oldId]);
+  });
+  return changed ? migrated : stateObj;
+}
+
 function loadProgress(filmId){
   try{
     const raw = localStorage.getItem(STORAGE_PREFIX + filmId);
-    return raw ? JSON.parse(raw) : {};
+    return raw ? migrateSceneIds(JSON.parse(raw)) : {};
   }catch(e){
     storageAvailable = false;
     return {};
@@ -1249,7 +1288,7 @@ function saveScore(filmId, value){
 function loadHints(filmId){
   try{
     const raw = localStorage.getItem(HINTS_PREFIX + filmId);
-    return raw ? JSON.parse(raw) : {};
+    return raw ? migrateSceneIds(JSON.parse(raw)) : {};
   }catch(e){
     return {};
   }
