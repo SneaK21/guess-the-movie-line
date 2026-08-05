@@ -14,11 +14,11 @@ Legend: ✅ done · 🚧 needs revisit · ⬜ not started yet
 | 3b | Gandalf and Bilbo at Bag End | ✅ | |
 | 4 | Gandalf and Bilbo Smoking | 🚧 | Drafted from memory, not yet checked against the .srt |
 | 5 | Bilbo's Birthday Party | 🚧 | Drafted from memory, not yet checked against the .srt |
-| 6 | Bilbo's Speech | 🚧 | Drafted from memory, not yet checked against the .srt |
+| 6 | Bilbo's Speech | 🚧 | "Boffins" typo fixed; rest still not checked against the .srt |
 | 7 | Gandalf and Bilbo Discuss the Ring | 🚧 | Drafted from memory, not yet checked against the .srt |
-| 8 | Frodo Arrives at Bag End | 🚧 | Drafted from memory, not yet checked against the .srt |
-| 9 | Gandalf Explains the History of the Ring | 🚧 | Drafted from memory, not yet checked against the .srt |
-| 10 | Frodo Learns Gollum's Story | 🚧 | Drafted from memory, not yet checked against the .srt |
+| 8 | Frodo Arrives at Bag End | ✅ | Corrected against the .srt |
+| 9 | Gandalf Explains the History of the Ring | ✅ | Rebuilt against the .srt (fire test + ring history; the "wish it never happened" bit was misplaced here, moved to ch. 40 where it belongs) |
+| 10 | Frodo Learns Gollum's Story | ✅ | Rebuilt against the .srt (the actual Bag End scene — Gollum's torture reveals the Shire; the "pity" conversation was misplaced here, moved to ch. 40 where it belongs) |
 | 11 | Gandalf Sends Frodo Away From the Shire | ✅ | Sourced from .srt |
 | 12 | Gandalf Confronts Saruman at Isengard | ✅ | Sourced from .srt |
 | 13 | Saruman Reveals His Betrayal | ✅ | Sourced from .srt |
@@ -48,7 +48,7 @@ Legend: ✅ done · 🚧 needs revisit · ⬜ not started yet
 | 37 | Saruman's Storm on the Mountain | ⬜ | |
 | 38 | The Decision to Enter Moria | ⬜ | |
 | 39 | The Watcher in the Water | ⬜ | |
-| 40 | Frodo Confides in Gandalf | ✅ | |
+| 40 | Frodo Confides in Gandalf | ✅ | Now includes the full "pity" conversation about Gollum (was wrongly split into ch. 9/10 before) |
 | 41 | Finding Balin's Tomb | ⬜ | |
 | 42 | Reading the Book of Mazarbul | ⬜ | |
 | 43 | The Orc Ambush in the Chamber | ⬜ | |
@@ -77,11 +77,14 @@ Legend: ✅ done · 🚧 needs revisit · ⬜ not started yet
 
 ## Sourcing note
 
-Chapters 11-13 were built by searching the uploaded .srt for the relevant
-lines. Going forward, new chapters are drafted from memory instead of
-systematically working through the full subtitle file — flagged 🚧 until
-double-checked. If a specific line's wording matters, paste the short
-excerpt you want double-checked and it'll get verified against that.
+Chapters marked ✅ with "Sourced from .srt" / "against the .srt" were built
+or corrected by looking up that specific scene in the uploaded subtitle
+file — not from memory. That's now the default for new chapters and for
+double-checking existing ones. What this does *not* mean: there's no
+standalone full-film transcript file, and chapters aren't pre-mined ahead of
+what's actively being worked on — each chapter's lines get looked up when
+that chapter is being built, one at a time. Chapters still marked 🚧 haven't
+gone through this check yet.
 
 ## Style notes (from ch. 2 / ch. 11-13)
 

@@ -1131,7 +1131,7 @@ const FILMS = [
       ] },
       { id: "c6", title: "Bilbo's Speech", scenes: [
         { id: "s25", bracket: "[Bilbo's Birthday Party — Bilbo climbs up to address the crowd]", beats: [
-          { speaker: "Bilbo", text: "My dear Bagginses and Boggins, Tooks and Brandybucks, Grubbs, Chubbs, Hornblowers, Bolgers, Bracegirdles, and Proudfoots." },
+          { speaker: "Bilbo", text: "My dear Bagginses and Boffins, Tooks and Brandybucks, Grubbs, Chubbs, Hornblowers, Bolgers, Bracegirdles, and Proudfoots." },
           { speaker: "", text: "(a hobbit in the crowd shouts) Proudfeet!", shown: true },
           { speaker: "Bilbo", text: "Proudfoots." },
           { speaker: "Bilbo", text: "Today is my 111th birthday!", pause: true },
@@ -1178,45 +1178,57 @@ const FILMS = [
       ] },
       { id: "c8", title: "Frodo Arrives at Bag End", scenes: [
         { id: "s30", bracket: "[Bag End — Frodo returns and finds Gandalf still there]", beats: [
-          { speaker: "", text: "(Frodo returns to Bag End and finds Gandalf deep in thought)", shown: true },
+          { speaker: "Frodo", text: "He talked for so long about leaving. I didn't think he'd really do it.", pause: true },
           { speaker: "Frodo", text: "Gandalf?" },
-          { speaker: "Gandalf", text: "Bilbo's gone, hasn't he?" },
-          { speaker: "Frodo", text: "Yes. He's gone. I think he's really gone." },
-          { speaker: "Gandalf", text: "He asked me to give you Bag End, along with everything in it." },
-          { speaker: "Gandalf", text: "The ring is yours now. Put it somewhere out of sight." }
+          { speaker: "Gandalf", text: "Bilbo's ring." },
+          { speaker: "Gandalf", text: "He's gone to stay with the elves. He's left you Bag End, along with all his possessions.", hide: ["He's left you Bag End, along with all his possessions."] },
+          { speaker: "Gandalf", text: "The ring is yours now." },
+          { speaker: "Gandalf", text: "Put it somewhere out of sight." },
+          { speaker: "Frodo", text: "Where are you going?" },
+          { speaker: "Gandalf", text: "There are some things that I must see to." },
+          { speaker: "Frodo", text: "What things?" },
+          { speaker: "Gandalf", text: "Questions. Questions that need answering." },
+          { speaker: "Frodo", text: "You've only just arrived. I don't understand." },
+          { speaker: "Gandalf", text: "Neither do I.", pause: true },
+          { speaker: "Gandalf", text: "Keep it secret." },
+          { speaker: "Gandalf", text: "Keep it safe." }
         ] }
       ] },
       { id: "c9", title: "Gandalf Explains the History of the Ring", scenes: [
-        { id: "s40", bracket: "[Bag End, years later — Gandalf returns and tests the Ring in the fire]", beats: [
-          { speaker: "", text: "(Gandalf arrives at Bag End, urgent and grim)", shown: true },
-          { speaker: "Frodo", text: "Gandalf?" },
-          { speaker: "", text: "(Gandalf snatches the Ring and throws it into the fireplace)", shown: true },
-          { speaker: "Frodo", text: "What did you do that for?", pause: true },
+        { id: "s40", bracket: "[Bag End, years later — Gandalf tests the Ring in the fire]", beats: [
+          { speaker: "Gandalf", text: "Is it secret? Is it safe?", pause: true },
+          { speaker: "", text: "(Gandalf grabs the Ring and throws it into the fire)", shown: true },
+          { speaker: "Frodo", text: "What are you doing?" },
           { speaker: "Gandalf", text: "Hold out your hand, Frodo. It's quite cool." },
-          { speaker: "", text: "(faint fiery letters glow across the surface of the Ring)", shown: true },
-          { speaker: "Frodo", text: "What can you see? Can you read it?" },
-          { speaker: "Gandalf", text: "This is the One Ring, forged by the Dark Lord Sauron in the fires of Mount Doom.", hide: ["forged by the Dark Lord Sauron in the fires of Mount Doom."] },
-          { speaker: "Gandalf", text: "Taken by Isildur from the hand of Sauron himself." }
+          { speaker: "Gandalf", text: "What can you see? Can you see anything?" },
+          { speaker: "Frodo", text: "Nothing. There's nothing.", pause: true },
+          { speaker: "Gandalf", text: "Wait." },
+          { speaker: "Frodo", text: "There are markings." },
+          { speaker: "Frodo", text: "It's some form of Elvish. I can't read it." },
+          { speaker: "Gandalf", text: "There are few who can. The language is that of Mordor, which I will not utter here.", hide: ["The language is that of Mordor, which I will not utter here."] },
+          { speaker: "Frodo", text: "Mordor!", pause: true }
         ] },
-        { id: "s41", bracket: "[Bag End — Frodo learns what he must do]", beats: [
-          { speaker: "Frodo", text: "I wish the ring had never come to me. I wish none of this had happened.", pause: true },
-          { speaker: "Gandalf", text: "So do all who live to see such times. But that is not for them to decide.", pause: true },
-          { speaker: "Gandalf", text: "All we have to decide is what to do with the time that is given to us." },
-          { speaker: "Gandalf", text: "There are other forces at work in this world, Frodo, besides the will of evil. Bilbo was meant to find the Ring. In which case, you were also meant to have it.", hide: ["you were also meant to have it."] },
-          { speaker: "Gandalf", text: "And that is an encouraging thought.", pause: true },
-          { speaker: "Gandalf", text: "Keep it secret. Keep it safe." }
+        { id: "s41", bracket: "[Bag End — Gandalf explains where the Ring came from]", beats: [
+          { speaker: "Gandalf", text: "This is the One Ring, forged by the Dark Lord Sauron in the fires of Mount Doom.", hide: ["forged by the Dark Lord Sauron in the fires of Mount Doom."] },
+          { speaker: "Gandalf", text: "Taken by Isildur from the hand of Sauron himself." },
+          { speaker: "Gandalf", text: "Bilbo found it." },
+          { speaker: "Frodo", text: "In Gollum's cave." },
+          { speaker: "Gandalf", text: "Yes.", pause: true },
+          { speaker: "Gandalf", text: "For 60 years, the ring lay quiet in Bilbo's keeping, prolonging his life, delaying old age.", hide: ["prolonging his life, delaying old age."] },
+          { speaker: "Gandalf", text: "But no longer, Frodo. Evil is stirring in Mordor. The ring has awoken. It's heard its master's call.", pause: true },
+          { speaker: "Frodo", text: "But he was destroyed. Sauron was destroyed." },
+          { speaker: "Gandalf", text: "No, Frodo." },
+          { speaker: "Gandalf", text: "The spirit of Sauron endured." }
         ] }
       ] },
       { id: "c10", title: "Frodo Learns Gollum's Story", scenes: [
-        { id: "s42", bracket: "[Bag End — Gandalf tells Frodo the truth about Gollum]", beats: [
-          { speaker: "Frodo", text: "It's a pity Bilbo didn't kill him when he had the chance.", pause: true },
-          { speaker: "Gandalf", text: "Pity?", pause: true },
-          { speaker: "Gandalf", text: "It is pity that stayed Bilbo's hand.", pause: true },
-          { speaker: "Gandalf", text: "Many that live deserve death. And some that die deserve life." },
-          { speaker: "Gandalf", text: "Can you give it to them, Frodo?" },
-          { speaker: "Gandalf", text: "Do not be too eager to deal out death in judgement. Even the very wise cannot see all ends.", hide: ["Even the very wise cannot see all ends."] },
-          { speaker: "Gandalf", text: "My heart tells me that Gollum has some part to play yet, for good or ill, before this is over.", pause: true },
-          { speaker: "Gandalf", text: "The pity of Bilbo may rule the fate of many." }
+        { id: "s42", bracket: "[Bag End — Gandalf tells Frodo how the enemy found the Shire]", beats: [
+          { speaker: "Frodo", text: "No one knows it's here, do they? Do they, Gandalf?", pause: true },
+          { speaker: "Gandalf", text: "There is one other who knew that Bilbo had the ring." },
+          { speaker: "Gandalf", text: "I looked everywhere for the creature Gollum. But the enemy found him first.", pause: true },
+          { speaker: "Gandalf", text: "I don't know how long they tortured him. But amidst the endless screams and inane babble, they discerned two words:", hide: ["amidst the endless screams and inane babble"] },
+          { speaker: "Gandalf", text: "Shire! Baggins!", pause: true },
+          { speaker: "Frodo", text: "Shire. Baggins. But that would lead them here!" }
         ] }
       ] },
       { id: "c11", title: "Gandalf Sends Frodo Away From the Shire", scenes: [
@@ -1339,7 +1351,15 @@ const FILMS = [
       { id: "c40", title: "Frodo Confides in Gandalf", scenes: [
         { id: "s22", bracket: "[The Mines of Moria — Frodo confides in Gandalf about the weight of carrying the Ring]", beats: [
           { speaker: "Frodo", text: "I wish the Ring had never come to me. I wish none of this had happened." },
-          { speaker: "Gandalf", text: "So do all who live to see such times, but that is not for them to decide. All we have to decide is what to do with the time that is given us." }
+          { speaker: "Gandalf", text: "So do all who live to see such times, but that is not for them to decide. All we have to decide is what to do with the time that is given us." },
+          { speaker: "Frodo", text: "It's a pity Bilbo didn't kill him when he had the chance.", pause: true },
+          { speaker: "Gandalf", text: "Pity?", pause: true },
+          { speaker: "Gandalf", text: "It is pity that stayed Bilbo's hand." },
+          { speaker: "Gandalf", text: "Many that live deserve death. And some that die deserve life." },
+          { speaker: "Gandalf", text: "Can you give it to them, Frodo?" },
+          { speaker: "Gandalf", text: "Do not be too eager to deal out death in judgement. Even the very wise cannot see all ends.", hide: ["Even the very wise cannot see all ends."] },
+          { speaker: "Gandalf", text: "My heart tells me that Gollum has some part to play yet, for good or ill, before this is over.", pause: true },
+          { speaker: "Gandalf", text: "The pity of Bilbo may rule the fate of many." }
         ] }
       ] },
       { id: "c41", title: "Finding Balin's Tomb", scenes: [] },
