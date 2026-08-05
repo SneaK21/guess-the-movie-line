@@ -12,13 +12,13 @@ Legend: ✅ done · 🚧 needs revisit · ⬜ not started yet
 | 2 | Gandalf's Arrival | ✅ | |
 | 3 | The Incident with the Dragon | ✅ | |
 | 3b | Gandalf and Bilbo at Bag End | ✅ | |
-| 4 | Gandalf and Bilbo Smoking | ⬜ | |
-| 5 | Bilbo's Birthday Party | ⬜ | |
+| 4 | Gandalf and Bilbo Smoking | 🚧 | Drafted from memory, not yet checked against the .srt |
+| 5 | Bilbo's Birthday Party | 🚧 | Drafted from memory, not yet checked against the .srt |
 | 6 | Bilbo's Speech | 🚧 | Drafted from memory, not yet checked against the .srt |
 | 7 | Gandalf and Bilbo Discuss the Ring | 🚧 | Drafted from memory, not yet checked against the .srt |
 | 8 | Frodo Arrives at Bag End | 🚧 | Drafted from memory, not yet checked against the .srt |
-| 9 | Gandalf Explains the History of the Ring | ⬜ | |
-| 10 | Frodo Learns Gollum's Story | ⬜ | |
+| 9 | Gandalf Explains the History of the Ring | 🚧 | Drafted from memory, not yet checked against the .srt |
+| 10 | Frodo Learns Gollum's Story | 🚧 | Drafted from memory, not yet checked against the .srt |
 | 11 | Gandalf Sends Frodo Away From the Shire | ✅ | Sourced from .srt |
 | 12 | Gandalf Confronts Saruman at Isengard | ✅ | Sourced from .srt |
 | 13 | Saruman Reveals His Betrayal | ✅ | Sourced from .srt |
@@ -74,6 +74,14 @@ Legend: ✅ done · 🚧 needs revisit · ⬜ not started yet
 | 63 | Merry and Pippin Are Captured | ⬜ | |
 | 64 | Sam Catches Up to Frodo | ⬜ | |
 | 65 | The Fellowship Is Broken | ⬜ | |
+
+## Sourcing note
+
+Chapters 11-13 were built by searching the uploaded .srt for the relevant
+lines. Going forward, new chapters are drafted from memory instead of
+systematically working through the full subtitle file — flagged 🚧 until
+double-checked. If a specific line's wording matters, paste the short
+excerpt you want double-checked and it'll get verified against that.
 
 ## Style notes (from ch. 2 / ch. 11-13)
 

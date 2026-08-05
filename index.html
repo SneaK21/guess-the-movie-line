@@ -1099,8 +1099,36 @@ const FILMS = [
           { speaker: "Bilbo", text: "Oh, tea!" }
         ] }
       ] },
-      { id: "c4", title: "Gandalf and Bilbo Smoking", scenes: [] },
-      { id: "c5", title: "Bilbo's Birthday Party", scenes: [] },
+      { id: "c4", title: "Gandalf and Bilbo Smoking", scenes: [
+        { id: "s37", bracket: "[Bag End garden — Bilbo and Gandalf share a pipe before the party]", beats: [
+          { speaker: "Gandalf", text: "So, you mean to go through with your plan?" },
+          { speaker: "Bilbo", text: "Yes, yes. It's all in hand." },
+          { speaker: "Gandalf", text: "Frodo suspects something." },
+          { speaker: "Bilbo", text: "Of course he does. He's a Baggins, not some blockheaded Bracegirdle from Hardbottle.", hide: ["not some blockheaded Bracegirdle from Hardbottle."] },
+          { speaker: "Gandalf", text: "You will tell him, won't you?" },
+          { speaker: "Bilbo", text: "Yes, yes.", pause: true },
+          { speaker: "Bilbo", text: "I am old, Gandalf.", pause: true },
+          { speaker: "Bilbo", text: "I know I don't look it, but I'm beginning to feel it in my heart.", hide: ["I'm beginning to feel it in my heart."] },
+          { speaker: "Bilbo", text: "I feel thin. Sort of stretched, like butter scraped over too much bread." },
+          { speaker: "Bilbo", text: "I need a holiday. A very long holiday. And I don't expect I shall return.", pause: true },
+          { speaker: "Bilbo", text: "In fact, I mean not to." },
+          { speaker: "", text: "(Bilbo lights his pipe)", shown: true },
+          { speaker: "Bilbo", text: "Old Toby. The finest weed in the Southfarthing." },
+          { speaker: "Bilbo", text: "Gandalf, my old friend, this will be a night to remember." }
+        ] }
+      ] },
+      { id: "c5", title: "Bilbo's Birthday Party", scenes: [
+        { id: "s38", bracket: "[Bilbo's Birthday Party — fireworks light up the evening]", beats: [
+          { speaker: "", text: "(fireworks burst overhead as the party gets underway)", shown: true },
+          { speaker: "Hobbit", text: "Bilbo, watch out for the dragon!" },
+          { speaker: "Bilbo", text: "Nonsense. There hasn't been a dragon in these parts for a thousand years.", pause: true },
+          { speaker: "", text: "(a dragon-shaped firework roars low over the party, scattering hobbits in delight and panic)", shown: true }
+        ] },
+        { id: "s39", bracket: "[Bilbo's Birthday Party — Sam is nudged toward Rosie]", beats: [
+          { speaker: "Bilbo", text: "Go on, Sam. Ask Rosie for a dance." },
+          { speaker: "Sam", text: "I think I'll just have another ale." }
+        ] }
+      ] },
       { id: "c6", title: "Bilbo's Speech", scenes: [
         { id: "s25", bracket: "[Bilbo's Birthday Party — Bilbo climbs up to address the crowd]", beats: [
           { speaker: "Bilbo", text: "My dear Bagginses and Boggins, Tooks and Brandybucks, Grubbs, Chubbs, Hornblowers, Bolgers, Bracegirdles, and Proudfoots." },
@@ -1158,8 +1186,39 @@ const FILMS = [
           { speaker: "Gandalf", text: "The ring is yours now. Put it somewhere out of sight." }
         ] }
       ] },
-      { id: "c9", title: "Gandalf Explains the History of the Ring", scenes: [] },
-      { id: "c10", title: "Frodo Learns Gollum's Story", scenes: [] },
+      { id: "c9", title: "Gandalf Explains the History of the Ring", scenes: [
+        { id: "s40", bracket: "[Bag End, years later — Gandalf returns and tests the Ring in the fire]", beats: [
+          { speaker: "", text: "(Gandalf arrives at Bag End, urgent and grim)", shown: true },
+          { speaker: "Frodo", text: "Gandalf?" },
+          { speaker: "", text: "(Gandalf snatches the Ring and throws it into the fireplace)", shown: true },
+          { speaker: "Frodo", text: "What did you do that for?", pause: true },
+          { speaker: "Gandalf", text: "Hold out your hand, Frodo. It's quite cool." },
+          { speaker: "", text: "(faint fiery letters glow across the surface of the Ring)", shown: true },
+          { speaker: "Frodo", text: "What can you see? Can you read it?" },
+          { speaker: "Gandalf", text: "This is the One Ring, forged by the Dark Lord Sauron in the fires of Mount Doom.", hide: ["forged by the Dark Lord Sauron in the fires of Mount Doom."] },
+          { speaker: "Gandalf", text: "Taken by Isildur from the hand of Sauron himself." }
+        ] },
+        { id: "s41", bracket: "[Bag End — Frodo learns what he must do]", beats: [
+          { speaker: "Frodo", text: "I wish the ring had never come to me. I wish none of this had happened.", pause: true },
+          { speaker: "Gandalf", text: "So do all who live to see such times. But that is not for them to decide.", pause: true },
+          { speaker: "Gandalf", text: "All we have to decide is what to do with the time that is given to us." },
+          { speaker: "Gandalf", text: "There are other forces at work in this world, Frodo, besides the will of evil. Bilbo was meant to find the Ring. In which case, you were also meant to have it.", hide: ["you were also meant to have it."] },
+          { speaker: "Gandalf", text: "And that is an encouraging thought.", pause: true },
+          { speaker: "Gandalf", text: "Keep it secret. Keep it safe." }
+        ] }
+      ] },
+      { id: "c10", title: "Frodo Learns Gollum's Story", scenes: [
+        { id: "s42", bracket: "[Bag End — Gandalf tells Frodo the truth about Gollum]", beats: [
+          { speaker: "Frodo", text: "It's a pity Bilbo didn't kill him when he had the chance.", pause: true },
+          { speaker: "Gandalf", text: "Pity?", pause: true },
+          { speaker: "Gandalf", text: "It is pity that stayed Bilbo's hand.", pause: true },
+          { speaker: "Gandalf", text: "Many that live deserve death. And some that die deserve life." },
+          { speaker: "Gandalf", text: "Can you give it to them, Frodo?" },
+          { speaker: "Gandalf", text: "Do not be too eager to deal out death in judgement. Even the very wise cannot see all ends.", hide: ["Even the very wise cannot see all ends."] },
+          { speaker: "Gandalf", text: "My heart tells me that Gollum has some part to play yet, for good or ill, before this is over.", pause: true },
+          { speaker: "Gandalf", text: "The pity of Bilbo may rule the fate of many." }
+        ] }
+      ] },
       { id: "c11", title: "Gandalf Sends Frodo Away From the Shire", scenes: [
         { id: "s31", bracket: "[Bag End — Gandalf tells Frodo he must leave the Shire at once]", beats: [
           { speaker: "Gandalf", text: "You must leave. And leave quickly." },
