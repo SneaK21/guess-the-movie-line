@@ -1886,12 +1886,21 @@ function startGuess(scene, beatIdx, idx, correctToken, span, line){
   input.placeholder = existingHint > 0
     ? maskWordWithHint(correctToken, existingHint)
     : "?".repeat(Math.max(1, normalize(correctToken).length));
+  // Size the input to roughly match the word's own length instead of a flat
+  // width, so short words don't suddenly claim a much wider box than what
+  // they replaced — that was shifting later words on the line around.
+  input.style.width = (Math.max(normalize(correctToken).length, 2) + 1) + "ch";
 
   const hintBtn = document.createElement("button");
   hintBtn.type = "button";
   hintBtn.className = "hint-btn";
   hintBtn.textContent = "Hint (-" + HINT_COST + ")";
   hintBtn.disabled = score < HINT_COST;
+  // Clicking the hint button would otherwise steal focus from the input,
+  // which fired a blur handler that could close the whole guess box out
+  // from under the click — preventDefault on mousedown keeps focus on the
+  // input the entire time, so the hint just applies in place, every time.
+  hintBtn.addEventListener("mousedown", (e) => e.preventDefault());
 
   box.appendChild(input);
   box.appendChild(hintBtn);
