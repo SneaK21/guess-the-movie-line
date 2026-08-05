@@ -1726,6 +1726,25 @@ function revealWord(scene, beatIdx, idx, token, span){
 // aren't something to target or type into. Checks the rest of the same
 // scene first, then subsequent scenes in the chapter. Returns null once
 // there's nothing guessable left.
+// Scans a chapter from the very start and returns the first (scene, beatIdx)
+// that still has unrevealed guessable words — i.e. where you'd naturally
+// pick up again. Used to auto-target a line when a chapter is opened, and
+// to jump into the box when it's clicked with nothing currently targeted.
+function findFirstUnrevealedLine(chapter){
+  if(!chapter) return null;
+  for(const scene of chapter.scenes){
+    if(!scene._beats) continue;
+    for(let i = 0; i < scene.beats.length; i++){
+      const beatData = scene._beats[i];
+      if(!beatData || !beatData.guessableCount) continue;
+      const sceneProgress = progress[scene.id] || {};
+      const revealedInBeat = Object.keys(sceneProgress).filter(k => k.split("-")[0] === String(i)).length;
+      if(revealedInBeat < beatData.guessableCount) return { scene, beatIdx: i };
+    }
+  }
+  return null;
+}
+
 function findNextLine(scene, beatIdx){
   for(let i = beatIdx + 1; i < scene.beats.length; i++){
     if(scene._beats[i] && scene._beats[i].guessableCount > 0) return { scene, beatIdx: i };
@@ -1844,6 +1863,7 @@ function setActiveTarget(scene, beatIdx, beatData, line, speakerName){
     const sceneProgress = progress[scene.id] || {};
     const anyRevealedYet = beatData.words.some((t, idx) => hasLetters(t) && sceneProgress[beatIdx + "-" + idx]);
     barInput.disabled = false;
+    barInput.readOnly = false;
     barInput.value = "";
     barInput.placeholder = anyRevealedYet
       ? "Type any words you remember, any order…"
@@ -1861,13 +1881,37 @@ function clearActiveTarget(){
   const targetLabel = document.getElementById("lineBarTarget");
   const barInput = document.getElementById("lineBarInput");
   const barBtn = document.getElementById("lineBarBtn");
-  if(targetLabel) targetLabel.textContent = "Click a line to select it";
+  const chapterOpen = !!currentChapter;
+
+  if(targetLabel){
+    targetLabel.textContent = chapterOpen ? "Click a line, or click here to jump to the next one" : "Click a line to select it";
+  }
   if(barInput){
     barInput.value = "";
-    barInput.placeholder = "Type the whole line…";
-    barInput.disabled = true;
+    // A chapter being open but nothing targeted (e.g. right after Escape)
+    // keeps the box clickable — clicking it jumps straight to the next
+    // unrevealed line — instead of fully disabling it like the landing page.
+    barInput.placeholder = chapterOpen ? "Click here to jump to the next unrevealed line…" : "Type the whole line…";
+    barInput.disabled = !chapterOpen;
+    barInput.readOnly = chapterOpen;
   }
   if(barBtn) barBtn.disabled = true;
+}
+
+// Fires when the bottom box is clicked/focused with nothing currently
+// targeted (but a chapter is open) — jumps straight to the first line that
+// still has unrevealed words, same as opening the chapter fresh would.
+function activateNextUnrevealedFromInput(){
+  if(activeTarget || !currentChapter) return;
+  const next = findFirstUnrevealedLine(currentChapter);
+  if(!next) return;
+  const { scene, beatIdx } = next;
+  const lineEl = document.getElementById("line-" + scene.id + "-" + beatIdx);
+  const beatData = scene._beats && scene._beats[beatIdx];
+  const speakerName = scene.beats[beatIdx].speaker;
+  if(!lineEl || !beatData) return;
+  setActiveTarget(scene, beatIdx, beatData, lineEl, speakerName);
+  lineEl.scrollIntoView({ behavior: "smooth", block: "center" });
 }
 
 function submitActiveGuess(){
@@ -2140,6 +2184,24 @@ function renderChapterScenes(){
     return;
   }
   currentChapter.scenes.forEach(scene => container.appendChild(buildScene(scene)));
+
+  // Jump straight into the first line that still needs guessing, so opening
+  // a chapter — fresh or partway through — puts the box right on it.
+  const firstUnrevealed = findFirstUnrevealedLine(currentChapter);
+  if(firstUnrevealed){
+    const { scene, beatIdx } = firstUnrevealed;
+    const lineEl = document.getElementById("line-" + scene.id + "-" + beatIdx);
+    const beatData = scene._beats[beatIdx];
+    const speakerName = scene.beats[beatIdx].speaker;
+    if(lineEl && beatData){
+      setActiveTarget(scene, beatIdx, beatData, lineEl, speakerName);
+    }
+  }else{
+    const targetLabel = document.getElementById("lineBarTarget");
+    const barInput = document.getElementById("lineBarInput");
+    if(targetLabel) targetLabel.textContent = "Chapter complete!";
+    if(barInput) barInput.placeholder = "Every line in this chapter is revealed.";
+  }
 }
 
 function selectChapter(chapterId){
@@ -2529,6 +2591,8 @@ function init(){
       clearActiveTarget();
     }
   });
+  barInput.addEventListener("focus", activateNextUnrevealedFromInput);
+  barInput.addEventListener("click", activateNextUnrevealedFromInput);
 
   document.getElementById("resetBtn").addEventListener("click", () => {
     if(confirm("Reset progress and score for " + currentFilm.title + "? This cannot be undone.")){
