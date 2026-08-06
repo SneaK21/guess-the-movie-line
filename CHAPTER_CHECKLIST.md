@@ -102,3 +102,11 @@ gone through this check yet.
   `pause: true` beat, right where the film has a beat of silence or action.
 - Keep the truly iconic, most-rewatched lines fully hidden even if long —
   that's the fun part to guess.
+- Refinement: even a short, iconic line usually still gets one `given` word,
+  as long as it's a supporting/context word rather than the line's punchline
+  (e.g. Saruman's "I gave you the chance of aiding me *willingly*, but you
+  have elected the way of pain!" gives "willingly," not "pain"). Reserve
+  fully-hidden treatment for the tightest, most-memed one-liners where any
+  reveal would blunt the punch — "You shall not pass!!", "Fly, you fools!",
+  the Fellowship's "You have my sword" / "And you have my bow" / "And my
+  axe!" triplet, and the Prologue as a whole.

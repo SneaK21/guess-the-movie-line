@@ -1103,7 +1103,7 @@ const FILMS = [
       ] },
       { id: "c4", title: "Gandalf and Bilbo Smoking", scenes: [
         { id: "s37", bracket: "[Bag End garden — Bilbo and Gandalf share a pipe before the party]", beats: [
-          { speaker: "Gandalf", text: "So, you mean to go through with your plan?" },
+          { speaker: "Gandalf", text: "So, you mean to go through with your plan?", given: ["mean"] },
           { speaker: "Bilbo", text: "Yes, yes. It's all in hand." },
           { speaker: "Gandalf", text: "Frodo suspects something." },
           { speaker: "Bilbo", text: "Of course he does. He's a Baggins, not some blockheaded Bracegirdle from Hardbottle.", hide: ["not some blockheaded Bracegirdle from Hardbottle."] },
@@ -1111,19 +1111,19 @@ const FILMS = [
           { speaker: "Bilbo", text: "Yes, yes.", pause: true },
           { speaker: "Bilbo", text: "I am old, Gandalf.", pause: true },
           { speaker: "Bilbo", text: "I know I don't look it, but I'm beginning to feel it in my heart.", hide: ["I'm beginning to feel it in my heart."] },
-          { speaker: "Bilbo", text: "I feel thin. Sort of stretched, like butter scraped over too much bread." },
-          { speaker: "Bilbo", text: "I need a holiday. A very long holiday. And I don't expect I shall return.", pause: true },
+          { speaker: "Bilbo", text: "I feel thin. Sort of stretched, like butter scraped over too much bread.", given: ["feel"] },
+          { speaker: "Bilbo", text: "I need a holiday. A very long holiday. And I don't expect I shall return.", given: ["holiday"], pause: true },
           { speaker: "Bilbo", text: "In fact, I mean not to." },
           { speaker: "", text: "(Bilbo lights his pipe)", shown: true },
-          { speaker: "Bilbo", text: "Old Toby. The finest weed in the Southfarthing." },
-          { speaker: "Bilbo", text: "Gandalf, my old friend, this will be a night to remember." }
+          { speaker: "Bilbo", text: "Old Toby. The finest weed in the Southfarthing.", given: ["finest"] },
+          { speaker: "Bilbo", text: "Gandalf, my old friend, this will be a night to remember.", given: ["night"] }
         ] }
       ] },
       { id: "c5", title: "Bilbo's Birthday Party", scenes: [
         { id: "s38", bracket: "[Bilbo's Birthday Party — fireworks light up the evening]", beats: [
           { speaker: "", text: "(fireworks burst overhead as the party gets underway)", shown: true },
           { speaker: "Hobbit", text: "Bilbo, watch out for the dragon!" },
-          { speaker: "Bilbo", text: "Nonsense. There hasn't been a dragon in these parts for a thousand years.", pause: true },
+          { speaker: "Bilbo", text: "Nonsense. There hasn't been a dragon in these parts for a thousand years.", given: ["thousand"], pause: true },
           { speaker: "", text: "(a dragon-shaped firework roars low over the party, scattering hobbits in delight and panic)", shown: true }
         ] },
         { id: "s39", bracket: "[Bilbo's Birthday Party — Sam is nudged toward Rosie]", beats: [
@@ -1138,14 +1138,14 @@ const FILMS = [
           { speaker: "Bilbo", text: "Proudfoots." },
           { speaker: "Bilbo", text: "Today is my 111th birthday!", pause: true },
           { speaker: "", text: "(the crowd cheers)", shown: true },
-          { speaker: "Bilbo", text: "Alas, eleventy-one years is far too short a time to live among such excellent and admirable hobbits." },
-          { speaker: "Bilbo", text: "I don't know half of you half as well as I should like, and I like less than half of you half as well as you deserve.", pause: true }
+          { speaker: "Bilbo", text: "Alas, eleventy-one years is far too short a time to live among such excellent and admirable hobbits.", given: ["time"] },
+          { speaker: "Bilbo", text: "I don't know half of you half as well as I should like, and I like less than half of you half as well as you deserve.", given: ["know"], pause: true }
         ] },
         { id: "s26", bracket: "[Bilbo's Birthday Party — Bilbo's farewell]", beats: [
-          { speaker: "Bilbo", text: "I have things to do. I've put this off for far too long." },
-          { speaker: "Bilbo", text: "I regret to announce this is the end.", pause: true },
+          { speaker: "Bilbo", text: "I have things to do. I've put this off for far too long.", given: ["things"] },
+          { speaker: "Bilbo", text: "I regret to announce this is the end.", given: ["regret"], pause: true },
           { speaker: "Bilbo", text: "I'm going now." },
-          { speaker: "Bilbo", text: "I bid you all a very fond farewell." },
+          { speaker: "Bilbo", text: "I bid you all a very fond farewell.", given: ["bid"] },
           { speaker: "Bilbo", text: "Goodbye.", pause: true },
           { speaker: "", text: "(Bilbo slips the Ring onto his finger and vanishes before the stunned crowd)", shown: true }
         ] }
@@ -1153,44 +1153,44 @@ const FILMS = [
       { id: "c7", title: "Gandalf and Bilbo Discuss the Ring", scenes: [
         { id: "s27", bracket: "[Bag End — Gandalf finds Bilbo packing, the Ring still in his pocket]", beats: [
           { speaker: "", text: "(Gandalf finds Bilbo at Bag End, gathering his things)", shown: true },
-          { speaker: "Gandalf", text: "Bilbo, the ring is still in your pocket." },
+          { speaker: "Gandalf", text: "Bilbo, the ring is still in your pocket.", given: ["still"] },
           { speaker: "Bilbo", text: "Oh. Oh, yes." },
-          { speaker: "Bilbo", text: "It's mine. I found it. It came to me." },
-          { speaker: "Gandalf", text: "Bilbo, all these years you've been wearing that ring, and never once did it enter your head to wonder if that were so?", pause: true },
-          { speaker: "Gandalf", text: "It isn't yours, Bilbo. It never was." }
+          { speaker: "Bilbo", text: "It's mine. I found it. It came to me.", given: ["found"] },
+          { speaker: "Gandalf", text: "Bilbo, all these years you've been wearing that ring, and never once did it enter your head to wonder if that were so?", given: ["years"], pause: true },
+          { speaker: "Gandalf", text: "It isn't yours, Bilbo. It never was.", given: ["never"] }
         ] },
         { id: "s28", bracket: "[Bag End — Bilbo's moment of fear, and Gandalf's warning]", beats: [
           { speaker: "Bilbo", text: "You want it for yourself!" },
           { speaker: "", text: "(Bilbo's shadow rears up, monstrous, and Gandalf's own shadow swells to meet it)", shown: true },
-          { speaker: "Gandalf", text: "Bilbo Baggins, do not take me for some conjuror of cheap tricks!", pause: true },
-          { speaker: "Gandalf", text: "I am not trying to rob you." },
+          { speaker: "Gandalf", text: "Bilbo Baggins, do not take me for some conjuror of cheap tricks!", given: ["take"], pause: true },
+          { speaker: "Gandalf", text: "I am not trying to rob you.", given: ["trying"] },
           { speaker: "Gandalf", text: "I'm trying to help you." },
           { speaker: "", text: "(the shadows fade; Bilbo softens, ashamed)", shown: true },
-          { speaker: "Gandalf", text: "All your long years, we've been friends." },
+          { speaker: "Gandalf", text: "All your long years, we've been friends.", given: ["years"] },
           { speaker: "Gandalf", text: "Trust me, as you once did." },
           { speaker: "Gandalf", text: "Let it go.", pause: true }
         ] },
         { id: "s29", bracket: "[Bag End — Bilbo lets go of the Ring and departs]", beats: [
           { speaker: "Bilbo", text: "You're right, Gandalf." },
-          { speaker: "Bilbo", text: "The ring should go to Frodo." },
+          { speaker: "Bilbo", text: "The ring should go to Frodo.", given: ["should"] },
           { speaker: "", text: "(Bilbo sets the Ring down on the floor by the door, hesitates, then steps away from it)", shown: true },
-          { speaker: "Bilbo", text: "I, I think I'm ready for another adventure." },
+          { speaker: "Bilbo", text: "I, I think I'm ready for another adventure.", given: ["ready"] },
           { speaker: "", text: "(Bilbo shoulders his pack and walks out the door, whistling)", shown: true }
         ] }
       ] },
       { id: "c8", title: "Frodo Arrives at Bag End", scenes: [
         { id: "s30", bracket: "[Bag End — Frodo returns and finds Gandalf still there]", beats: [
-          { speaker: "Frodo", text: "He talked for so long about leaving. I didn't think he'd really do it.", pause: true },
+          { speaker: "Frodo", text: "He talked for so long about leaving. I didn't think he'd really do it.", given: ["talked"], pause: true },
           { speaker: "Frodo", text: "Gandalf?" },
           { speaker: "Gandalf", text: "Bilbo's ring." },
           { speaker: "Gandalf", text: "He's gone to stay with the elves. He's left you Bag End, along with all his possessions.", hide: ["He's left you Bag End, along with all his possessions."] },
           { speaker: "Gandalf", text: "The ring is yours now." },
-          { speaker: "Gandalf", text: "Put it somewhere out of sight." },
+          { speaker: "Gandalf", text: "Put it somewhere out of sight.", given: ["somewhere"] },
           { speaker: "Frodo", text: "Where are you going?" },
-          { speaker: "Gandalf", text: "There are some things that I must see to." },
+          { speaker: "Gandalf", text: "There are some things that I must see to.", given: ["things"] },
           { speaker: "Frodo", text: "What things?" },
           { speaker: "Gandalf", text: "Questions. Questions that need answering." },
-          { speaker: "Frodo", text: "You've only just arrived. I don't understand." },
+          { speaker: "Frodo", text: "You've only just arrived. I don't understand.", given: ["arrived"] },
           { speaker: "Gandalf", text: "Neither do I.", pause: true },
           { speaker: "Gandalf", text: "Keep it secret." },
           { speaker: "Gandalf", text: "Keep it safe." }
@@ -1225,9 +1225,9 @@ const FILMS = [
       ] },
       { id: "c10", title: "Frodo Learns Gollum's Story", scenes: [
         { id: "s42", bracket: "[Bag End — Gandalf tells Frodo how the enemy found the Shire]", beats: [
-          { speaker: "Frodo", text: "No one knows it's here, do they? Do they, Gandalf?", pause: true },
-          { speaker: "Gandalf", text: "There is one other who knew that Bilbo had the ring." },
-          { speaker: "Gandalf", text: "I looked everywhere for the creature Gollum. But the enemy found him first.", pause: true },
+          { speaker: "Frodo", text: "No one knows it's here, do they? Do they, Gandalf?", given: ["knows"], pause: true },
+          { speaker: "Gandalf", text: "There is one other who knew that Bilbo had the ring.", given: ["knew"] },
+          { speaker: "Gandalf", text: "I looked everywhere for the creature Gollum. But the enemy found him first.", given: ["looked"], pause: true },
           { speaker: "Gandalf", text: "I don't know how long they tortured him. But amidst the endless screams and inane babble, they discerned two words:", hide: ["amidst the endless screams and inane babble"] },
           { speaker: "Gandalf", text: "Shire! Baggins!", pause: true },
           { speaker: "Frodo", text: "Shire. Baggins. But that would lead them here!" }
@@ -1298,16 +1298,16 @@ const FILMS = [
       ] },
       { id: "c13", title: "Saruman Reveals His Betrayal", scenes: [
         { id: "s35", bracket: "[Isengard — Saruman urges Gandalf to join with Sauron]", beats: [
-          { speaker: "Saruman", text: "You did not seriously think that a hobbit could contend with the will of Sauron? There are none who can.", pause: true },
-          { speaker: "Saruman", text: "Against the power of Mordor, there can be no victory.", pause: true },
-          { speaker: "Saruman", text: "We must join with him, Gandalf." },
+          { speaker: "Saruman", text: "You did not seriously think that a hobbit could contend with the will of Sauron? There are none who can.", given: ["contend"], pause: true },
+          { speaker: "Saruman", text: "Against the power of Mordor, there can be no victory.", given: ["power"], pause: true },
+          { speaker: "Saruman", text: "We must join with him, Gandalf.", given: ["join"] },
           { speaker: "Saruman", text: "We must join with Sauron.", pause: true },
-          { speaker: "Saruman", text: "It would be wise, my friend." },
-          { speaker: "Gandalf", text: "Tell me, friend, when did Saruman the Wise abandon reason for madness?" }
+          { speaker: "Saruman", text: "It would be wise, my friend.", given: ["wise"] },
+          { speaker: "Gandalf", text: "Tell me, friend, when did Saruman the Wise abandon reason for madness?", given: ["abandon"] }
         ] },
         { id: "s36", bracket: "[Isengard — Saruman overpowers Gandalf and imprisons him atop Orthanc]", beats: [
           { speaker: "", text: "(Saruman overpowers Gandalf with his staff and imprisons him atop the tower of Orthanc)", shown: true },
-          { speaker: "Saruman", text: "I gave you the chance of aiding me willingly, but you have elected the way of pain!" }
+          { speaker: "Saruman", text: "I gave you the chance of aiding me willingly, but you have elected the way of pain!", given: ["willingly"] }
         ] }
       ] },
       { id: "c14", title: "Frodo and Sam Leave Hobbiton", scenes: [] },
@@ -1329,12 +1329,12 @@ const FILMS = [
       { id: "c30", title: "Bilbo and Frodo Reunite", scenes: [] },
       { id: "c31", title: "The Council of Elrond", scenes: [
         { id: "s19", bracket: "[Council of Elrond — Boromir doubts the wisdom of walking into the enemy's land]", beats: [
-          { speaker: "Boromir", text: "One does not simply walk into Mordor." }
+          { speaker: "Boromir", text: "One does not simply walk into Mordor.", given: ["does"] }
         ] }
       ] },
       { id: "c32", title: "Frodo Volunteers to Take the Ring", scenes: [
         { id: "s20", bracket: "[Council of Elrond, Rivendell — the Fellowship's quest is decided]", beats: [
-          { speaker: "Frodo", text: "I will take it. I will take the Ring to Mordor, though I do not know the way." }
+          { speaker: "Frodo", text: "I will take it. I will take the Ring to Mordor, though I do not know the way.", given: ["though"] }
         ] }
       ] },
       { id: "c33", title: "The Fellowship of the Ring Is Formed", scenes: [
@@ -1352,16 +1352,16 @@ const FILMS = [
       { id: "c39", title: "The Watcher in the Water", scenes: [] },
       { id: "c40", title: "Frodo Confides in Gandalf", scenes: [
         { id: "s22", bracket: "[The Mines of Moria — Frodo confides in Gandalf about the weight of carrying the Ring]", beats: [
-          { speaker: "Frodo", text: "I wish the Ring had never come to me. I wish none of this had happened." },
-          { speaker: "Gandalf", text: "So do all who live to see such times, but that is not for them to decide. All we have to decide is what to do with the time that is given us." },
-          { speaker: "Frodo", text: "It's a pity Bilbo didn't kill him when he had the chance.", pause: true },
+          { speaker: "Frodo", text: "I wish the Ring had never come to me. I wish none of this had happened.", given: ["wish"] },
+          { speaker: "Gandalf", text: "So do all who live to see such times, but that is not for them to decide. All we have to decide is what to do with the time that is given us.", given: ["times", "decide"] },
+          { speaker: "Frodo", text: "It's a pity Bilbo didn't kill him when he had the chance.", given: ["chance"], pause: true },
           { speaker: "Gandalf", text: "Pity?", pause: true },
-          { speaker: "Gandalf", text: "It is pity that stayed Bilbo's hand." },
-          { speaker: "Gandalf", text: "Many that live deserve death. And some that die deserve life." },
+          { speaker: "Gandalf", text: "It is pity that stayed Bilbo's hand.", given: ["stayed"] },
+          { speaker: "Gandalf", text: "Many that live deserve death. And some that die deserve life.", given: ["some"] },
           { speaker: "Gandalf", text: "Can you give it to them, Frodo?" },
           { speaker: "Gandalf", text: "Do not be too eager to deal out death in judgement. Even the very wise cannot see all ends.", hide: ["Even the very wise cannot see all ends."] },
-          { speaker: "Gandalf", text: "My heart tells me that Gollum has some part to play yet, for good or ill, before this is over.", pause: true },
-          { speaker: "Gandalf", text: "The pity of Bilbo may rule the fate of many." }
+          { speaker: "Gandalf", text: "My heart tells me that Gollum has some part to play yet, for good or ill, before this is over.", given: ["part"], pause: true },
+          { speaker: "Gandalf", text: "The pity of Bilbo may rule the fate of many.", given: ["fate"] }
         ] }
       ] },
       { id: "c41", title: "Finding Balin's Tomb", scenes: [] },
@@ -1373,7 +1373,7 @@ const FILMS = [
         { id: "s23", bracket: "[The Mines of Moria — the Fellowship reaches the Bridge of Khazad-dûm and a Balrog appears]", beats: [
           { speaker: "Gandalf", text: "You cannot pass!" },
           { speaker: "Frodo", text: "Gandalf!" },
-          { speaker: "Gandalf", text: "I am a servant of the Secret Fire, wielder of the flame of Anor. The dark fire will not avail you, flame of Udûn!" },
+          { speaker: "Gandalf", text: "I am a servant of the Secret Fire, wielder of the flame of Anor. The dark fire will not avail you, flame of Udûn!", given: ["servant", "avail"] },
           { speaker: "Gandalf", text: "Go back to the Shadow! You shall not pass!!", pause: true }
         ] }
       ] },
