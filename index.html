@@ -185,12 +185,17 @@
     font-weight:700;
   }
   .chapter-list{
-    display:grid;
-    grid-template-columns:repeat(auto-fill, minmax(220px, 1fr));
-    gap:8px;
+    columns:220px;
+    column-gap:8px;
     margin-bottom:22px;
   }
   .chapter-btn{
+    display:block;
+    width:100%;
+    box-sizing:border-box;
+    break-inside:avoid;
+    -webkit-column-break-inside:avoid;
+    margin-bottom:8px;
     text-align:left;
     background:var(--bg);
     border:1px solid var(--border);
