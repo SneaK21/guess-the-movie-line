@@ -36,8 +36,8 @@ Legend: ✅ done · 🚧 needs revisit · ⬜ not started yet
 | 25 | The Witch-king Attacks Frodo at Weathertop | ✅ | Sourced from .srt |
 | 26 | Arwen Rescues Frodo | ✅ | Sourced from .srt |
 | 27 | The Ford of Bruinen | ✅ | Sourced from .srt |
-| 28 | Frodo Wakes in Rivendell | ⬜ | |
-| 29 | Bilbo and Frodo Reunite | ⬜ | |
+| 28 | Frodo Wakes in Rivendell | ✅ | Sourced from .srt; includes the Saruman-vision dream sequence |
+| 29 | Bilbo and Frodo Reunite | ✅ | Sourced from .srt |
 | 30 | The Council of Elrond | ✅ | |
 | 31 | Frodo Volunteers to Take the Ring | ✅ | |
 | 32 | The Fellowship of the Ring Is Formed | ✅ | |
