@@ -1257,7 +1257,7 @@ const FILMS = [
         ] },
         { id: "s32", bracket: "[Bag End garden — Sam is caught eavesdropping]", beats: [
           { speaker: "Gandalf", text: "Confound it all, Samwise Gamgee! Have you been eavesdropping?" },
-          { speaker: "Sam", text: "I haven't been dropping no eaves, honest! I was just cutting the grass under the window there, if you follow me.", hide: ["I haven't been dropping no eaves."] },
+          { speaker: "Sam", text: "I haven't been dropping no eaves, honest! I was just cutting the grass under the window there, if you follow me.", hide: ["I haven't been dropping no eaves, honest!"] },
           { speaker: "Gandalf", text: "A little late for trimming the verge, don't you think?" },
           { speaker: "Sam", text: "I heard raised voices." },
           { speaker: "Gandalf", text: "What did you hear? Speak!" },
@@ -1267,7 +1267,9 @@ const FILMS = [
           { speaker: "Gandalf", text: "I've thought of a better use for you.", pause: true },
           { speaker: "", text: "(Gandalf grabs Sam by the collar and pulls him along)", shown: true },
           { speaker: "Gandalf", text: "Come along, Samwise. Keep up." },
-          { speaker: "Gandalf", text: "Be careful, both of you. The enemy has many spies in his service: birds, beasts." }
+          { speaker: "Gandalf", text: "Be careful, both of you. The enemy has many spies in his service: birds, beasts." },
+          { speaker: "Frodo", text: "Is it safe?" },
+          { speaker: "Gandalf", text: "Never put it on, for the agents of the Dark Lord will be drawn to its power. Always remember, Frodo, the ring is trying to get back to its master. It wants to be found.", hide: ["the ring is trying to get back to its master. It wants to be found."] }
         ] }
       ] },
       { id: "c12", title: "Gandalf Confronts Saruman at Isengard", scenes: [
@@ -1316,11 +1318,111 @@ const FILMS = [
           { speaker: "Saruman", text: "I gave you the chance of aiding me willingly, but you have elected the way of pain!", given: ["willingly"] }
         ] }
       ] },
-      { id: "c14", title: "Frodo and Sam Leave Hobbiton", scenes: [] },
-      { id: "c15", title: "Merry and Pippin Join the Journey", scenes: [] },
-      { id: "c16", title: "Fleeing the Black Rider in the Cornfield", scenes: [] },
-      { id: "c17", title: "Hiding From the Nazgûl Under the Tree Roots", scenes: [] },
-      { id: "c18", title: "The Hobbits Reach the Ferry", scenes: [] },
+      { id: "c14", title: "Frodo and Sam Leave Hobbiton", scenes: [
+        { id: "s43", bracket: "[Bag End gate — Frodo and Sam step out onto the road]", beats: [
+          { speaker: "Frodo", text: "This is it." },
+          { speaker: "Sam", text: "This is what?" },
+          { speaker: "Frodo", text: "If I take one more step, it'll be the farthest away from home I've ever been.", given: ["step"] },
+          { speaker: "Frodo", text: "Come on, Sam." },
+          { speaker: "Sam", text: "Remember what Bilbo used to say: It's a dangerous business, Frodo, going out your door. You step onto the road, and if you don't keep your feet, there's no knowing where you might be swept off to.", hide: ["It's a dangerous business, Frodo, going out your door. You step onto the road, and if you don't keep your feet, there's no knowing where you might be swept off to."] }
+        ] },
+        { id: "s44", bracket: "[The road out of the Shire — Wood-elves pass in the distance]", beats: [
+          { speaker: "Frodo", text: "Sam." },
+          { speaker: "Frodo", text: "Wood-elves." },
+          { speaker: "Frodo", text: "They're going to the harbor beyond the White Towers.", given: ["harbor"] },
+          { speaker: "Frodo", text: "To the Grey Havens." },
+          { speaker: "Frodo", text: "They're leaving Middle-earth." },
+          { speaker: "Frodo", text: "Never to return.", pause: true },
+          { speaker: "Frodo", text: "I don't know why it makes me sad.", given: ["know"] }
+        ] },
+        { id: "s45", bracket: "[Woods outside the Shire — first night camping]", beats: [
+          { speaker: "Sam", text: "Everywhere I lie there's a dirty great root sticking into my back.", given: ["dirty"] },
+          { speaker: "Frodo", text: "Just shut your eyes and imagine you're back in your own bed, with a soft mattress and a lovely feather pillow.", given: ["imagine", "mattress"] },
+          { speaker: "Sam", text: "It's not working, Mr. Frodo." },
+          { speaker: "Sam", text: "I'm never going to be able to sleep out here.", given: ["able"] },
+          { speaker: "Frodo", text: "Me neither, Sam.", pause: true }
+        ] }
+      ] },
+      { id: "c15", title: "Merry and Pippin Join the Journey", scenes: [
+        { id: "s46", bracket: "[The road — Sam's worry, then Merry and Pippin come crashing out of the corn]", beats: [
+          { speaker: "Sam", text: "Mr. Frodo? Frodo? Frodo!" },
+          { speaker: "Sam", text: "I thought I'd lost you." },
+          { speaker: "Frodo", text: "What are you talking about?" },
+          { speaker: "Sam", text: "It's just something Gandalf said." },
+          { speaker: "Frodo", text: "What did he say?" },
+          { speaker: "Sam", text: "\"Don't you lose him, Samwise Gamgee.\" And I don't mean to.", given: ["mean"] },
+          { speaker: "Frodo", text: "Sam, we're still in the Shire. What could possibly happen?", given: ["possibly"], pause: true },
+          { speaker: "Pippin", text: "Merry, it's Frodo Baggins." },
+          { speaker: "Merry", text: "Hello, Frodo." }
+        ] },
+        { id: "s47", bracket: "[Farmer Maggot's field — the hobbits flee with stolen vegetables]", beats: [
+          { speaker: "Sam", text: "Get off him." },
+          { speaker: "Sam", text: "Come on, Frodo." },
+          { speaker: "Farmer Maggot (V.O.)", text: "What's the meaning of this? You've been into Farmer Maggot's crop!", given: ["meaning"] },
+          { speaker: "Farmer Maggot (V.O.)", text: "You get back here!" },
+          { speaker: "Farmer Maggot (V.O.)", text: "Get out of my field!" },
+          { speaker: "Farmer Maggot (V.O.)", text: "You'll know the devil if I catch up with you!", given: ["devil"], pause: true },
+          { speaker: "Pippin", text: "I don't know why he's so upset. It's only a couple of carrots.", given: ["upset"] },
+          { speaker: "Merry", text: "And some cabbages." },
+          { speaker: "Pippin", text: "And those three bags of potatoes that we lifted last week.", given: ["lifted"] },
+          { speaker: "Merry", text: "And then the mushrooms the week before." },
+          { speaker: "Merry", text: "Yes, Pippin. My point is... he's clearly overreacting.", given: ["point"] },
+          { speaker: "Merry", text: "Run!", pause: true }
+        ] },
+        { id: "s48", bracket: "[Safe in the woods — the hobbits catch their breath and share the mushrooms]", beats: [
+          { speaker: "Pippin", text: "Oh, that was close." },
+          { speaker: "Sam", text: "I think I've broken something." },
+          { speaker: "Frodo", text: "Trust a Brandybuck and a Took!", pause: true },
+          { speaker: "Merry", text: "What? That was just a detour. A short cut.", given: ["detour"] },
+          { speaker: "Frodo", text: "Short cut to what?" },
+          { speaker: "Pippin", text: "Mushrooms!", pause: true },
+          { speaker: "Merry", text: "That's mine." },
+          { speaker: "Sam", text: "That's nice, Merry." },
+          { speaker: "Merry", text: "Here's a nice one, Sam." }
+        ] }
+      ] },
+      { id: "c16", title: "Fleeing the Black Rider in the Cornfield", scenes: [
+        { id: "s49", bracket: "[The road — Frodo senses they should leave it, then a Black Rider passes]", beats: [
+          { speaker: "Frodo", text: "I think we should get off the road.", given: ["think"] },
+          { speaker: "Frodo", text: "Get off the road!", pause: true },
+          { speaker: "Merry", text: "Quick!" },
+          { speaker: "Frodo", text: "Be quiet!", pause: true },
+          { speaker: "Pippin", text: "What was that?" }
+        ] }
+      ] },
+      { id: "c17", title: "Hiding From the Nazgûl Under the Tree Roots", scenes: [
+        { id: "s50", bracket: "[Under the tree roots — the hobbits wait out a second Black Rider]", beats: [
+          { speaker: "Frodo", text: "Anything?" },
+          { speaker: "Sam", text: "Nothing.", pause: true },
+          { speaker: "Merry", text: "What is going on?" },
+          { speaker: "Frodo", text: "That Black Rider was looking for something. Or someone.", given: ["looking"], pause: true },
+          { speaker: "Sam", text: "Frodo?" },
+          { speaker: "Frodo", text: "Get down!" }
+        ] }
+      ] },
+      { id: "c18", title: "The Hobbits Reach the Ferry", scenes: [
+        { id: "s51", bracket: "[The road to the Brandywine — Frodo decides they must reach Bree]", beats: [
+          { speaker: "Frodo", text: "I have to leave the Shire." },
+          { speaker: "Frodo", text: "Sam and I must get to Bree.", given: ["must"] },
+          { speaker: "Merry", text: "Right.", pause: true },
+          { speaker: "Merry", text: "Bucklebury Ferry. Follow me." },
+          { speaker: "Pippin", text: "Run!", pause: true }
+        ] },
+        { id: "s52", bracket: "[Bucklebury Ferry — the hobbits race the Black Rider to the water]", beats: [
+          { speaker: "Merry", text: "This way! Follow me!" },
+          { speaker: "Pippin", text: "Run!" },
+          { speaker: "Frodo", text: "Get the rope, Sam!" },
+          { speaker: "Sam", text: "Frodo!" },
+          { speaker: "Merry", text: "Run, Frodo!" },
+          { speaker: "Pippin", text: "Go!" },
+          { speaker: "Merry", text: "Hurry!" },
+          { speaker: "Sam", text: "Frodo, come on!" },
+          { speaker: "Merry", text: "Come on! Faster!" },
+          { speaker: "Pippin", text: "Jump!", pause: true },
+          { speaker: "Frodo", text: "How far to the nearest crossing?" },
+          { speaker: "Merry", text: "The Brandywine Bridge. 20 miles." }
+        ] }
+      ] },
       { id: "c19", title: "Arriving at Bree", scenes: [] },
       { id: "c20", title: "The Prancing Pony Inn", scenes: [] },
       { id: "c21", title: "Meeting Strider", scenes: [] },

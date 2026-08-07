@@ -19,14 +19,14 @@ Legend: ✅ done · 🚧 needs revisit · ⬜ not started yet
 | 8 | Frodo Arrives at Bag End | ✅ | Corrected against the .srt |
 | 9 | Gandalf Explains the History of the Ring | ✅ | Rebuilt against the .srt (fire test + ring history; the "wish it never happened" bit was misplaced here, moved to ch. 40 where it belongs) |
 | 10 | Frodo Learns Gollum's Story | ✅ | Rebuilt against the .srt (the actual Bag End scene — Gollum's torture reveals the Shire; the "pity" conversation was misplaced here, moved to ch. 40 where it belongs) |
-| 11 | Gandalf Sends Frodo Away From the Shire | ✅ | Sourced from .srt |
+| 11 | Gandalf Sends Frodo Away From the Shire | ✅ | Sourced from .srt; also fixed a scene-order bug (the "amazing creatures" speech happens before "Get down," not after) and filled in a missing "Is it safe?" / "Never put it on..." exchange |
 | 12 | Gandalf Confronts Saruman at Isengard | ✅ | Sourced from .srt |
 | 13 | Saruman Reveals His Betrayal | ✅ | Sourced from .srt |
-| 14 | Frodo and Sam Leave Hobbiton | ⬜ | |
-| 15 | Merry and Pippin Join the Journey | ⬜ | |
-| 16 | Fleeing the Black Rider in the Cornfield | ⬜ | |
-| 17 | Hiding From the Nazgûl Under the Tree Roots | ⬜ | |
-| 18 | The Hobbits Reach the Ferry | ⬜ | |
+| 14 | Frodo and Sam Leave Hobbiton | ✅ | Sourced from .srt |
+| 15 | Merry and Pippin Join the Journey | ✅ | Sourced from .srt |
+| 16 | Fleeing the Black Rider in the Cornfield | ✅ | Sourced from .srt |
+| 17 | Hiding From the Nazgûl Under the Tree Roots | ✅ | Sourced from .srt |
+| 18 | The Hobbits Reach the Ferry | ✅ | Sourced from .srt |
 | 19 | Arriving at Bree | ⬜ | |
 | 20 | The Prancing Pony Inn | ⬜ | |
 | 21 | Meeting Strider | ⬜ | |
