@@ -1684,20 +1684,174 @@ const FILMS = [
         ] }
       ] },
       { id: "c31", title: "The Council of Elrond", scenes: [
-        { id: "s19", bracket: "[Council of Elrond — Boromir doubts the wisdom of walking into the enemy's land]", beats: [
-          { speaker: "Boromir", text: "One does not simply walk into Mordor.", given: ["does"] }
+        { id: "s77", bracket: "[Rivendell — Elrond and Gandalf speak privately of Frodo's wound and the gathering storm]", beats: [
+          { speaker: "Elrond", text: "The ring will be safe in Rivendell." },
+          { speaker: "Frodo", text: "I am ready to go home." },
+          { speaker: "Elrond", text: "His strength returns." },
+          { speaker: "Elrond", text: "That wound will never fully heal. He will carry it the rest of his life.", hide: ["He will carry it the rest of his life."] },
+          { speaker: "Elrond", text: "And yet to have come so far still bearing the ring, the Hobbit has shown extraordinary resilience to its evil.", given: ["resilience"] },
+          { speaker: "Elrond", text: "It is a burden he should never have had to bear.", given: ["burden"] },
+          { speaker: "Gandalf", text: "We can ask no more of Frodo." },
+          { speaker: "Elrond", text: "Gandalf, the enemy is moving." },
+          { speaker: "Elrond", text: "Sauron's forces are massing in the East. His eye is fixed on Rivendell.", hide: ["His eye is fixed on Rivendell."] },
+          { speaker: "Gandalf", text: "And Saruman, you tell me, has betrayed us." },
+          { speaker: "Elrond", text: "Our list of allies grows thin.", given: ["allies"], pause: true },
+          { speaker: "Gandalf", text: "His treachery runs deeper than you know." },
+          { speaker: "Gandalf", text: "By foul craft, Saruman has crossed orcs with goblin-men.", given: ["foul"] },
+          { speaker: "Gandalf", text: "He's breeding an army in the caverns of Isengard." },
+          { speaker: "Gandalf", text: "An army that can move in sunlight and cover great distance at speed.", given: ["sunlight"] },
+          { speaker: "Elrond", text: "Saruman is coming for the ring." },
+          { speaker: "Elrond", text: "This evil cannot be concealed by the power of the elves.", given: ["concealed"] },
+          { speaker: "Gandalf", text: "We do not have the strength to fight both Mordor and Isengard!", given: ["strength"], pause: true },
+          { speaker: "Elrond", text: "Gandalf... the ring cannot stay here.", pause: true }
+        ] },
+        { id: "s78", bracket: "[Rivendell — Elrond declares that all of Middle-earth must decide the Ring's fate]", beats: [
+          { speaker: "Elrond", text: "This peril belongs to all Middle-earth." },
+          { speaker: "Elrond", text: "They must decide now how to end it." },
+          { speaker: "Elrond", text: "The time of the elves is over. My people are leaving these shores.", hide: ["My people are leaving these shores."] },
+          { speaker: "Elrond", text: "Who will you look to when we've gone? The dwarves?", given: ["look"] },
+          { speaker: "Elrond", text: "They hide in mountains seeking riches. They care nothing for the troubles of others.", hide: ["They care nothing for the troubles of others."] },
+          { speaker: "Gandalf", text: "It is in men that we must place our hope.", given: ["hope"] },
+          { speaker: "Elrond", text: "Men?", pause: true },
+          { speaker: "Elrond", text: "Men are weak. The race of men is failing.", given: ["weak"] },
+          { speaker: "Elrond", text: "The blood of Numenor is all but spent, its pride and dignity forgotten.", given: ["spent"] },
+          { speaker: "Elrond", text: "It is because of men the ring survives.", given: ["survives"] },
+          { speaker: "Elrond", text: "I was there, Gandalf." },
+          { speaker: "Elrond", text: "I was there 3000 years ago... when Isildur took the ring.", given: ["years"], pause: true },
+          { speaker: "Elrond", text: "I was there the day the strength of men failed.", given: ["strength"] }
+        ] },
+        { id: "s79", bracket: "[Flashback — Mount Doom, 3000 years ago, as Isildur claims the Ring for himself]", beats: [
+          { speaker: "Elrond", text: "Isildur, hurry! Follow me." },
+          { speaker: "Elrond", text: "I led Isildur into the heart of Mount Doom, where the ring was forged, the one place it could be destroyed.", hide: ["the one place it could be destroyed."] },
+          { speaker: "Elrond", text: "Cast it into the fire!", pause: true },
+          { speaker: "Elrond", text: "Destroy it!" },
+          { speaker: "Isildur", text: "No.", pause: true },
+          { speaker: "Elrond", text: "Isildur!" },
+          { speaker: "Elrond", text: "It should have ended that day, but evil was allowed to endure.", given: ["ended"] },
+          { speaker: "Elrond", text: "Isildur kept the ring. The line of kings is broken.", given: ["kept"], pause: true }
+        ] },
+        { id: "s80", bracket: "[Rivendell — the world of men has grown weak, save for one who has chosen exile]", beats: [
+          { speaker: "Elrond", text: "There's no strength left in the world of men." },
+          { speaker: "Elrond", text: "They're scattered, divided, leaderless." },
+          { speaker: "Gandalf", text: "There is one who could unite them." },
+          { speaker: "Gandalf", text: "One who could reclaim the throne of Gondor.", given: ["reclaim"] },
+          { speaker: "Elrond", text: "He turned from that path a long time ago.", given: ["turned"] },
+          { speaker: "Elrond", text: "He has chosen exile.", pause: true }
+        ] },
+        { id: "s81", bracket: "[Rivendell — Boromir of Gondor meets Aragorn]", beats: [
+          { speaker: "Elrond", text: "You are no elf." },
+          { speaker: "Elrond", text: "Men of the South are welcome here." },
+          { speaker: "Boromir", text: "Who are you?" },
+          { speaker: "Aragorn", text: "I am a friend to Gandalf the Grey." },
+          { speaker: "Boromir", text: "Then we are here on common purpose... friend.", given: ["purpose"], pause: true }
+        ] },
+        { id: "s82", bracket: "[Rivendell — Aragorn studies the shards of Narsil]", beats: [
+          { speaker: "Aragorn", text: "The shards of Narsil." },
+          { speaker: "Elrond", text: "The blade that cut the ring from Sauron's hand.", given: ["blade"] },
+          { speaker: "Aragorn", text: "It's still sharp.", pause: true },
+          { speaker: "Aragorn", text: "But no more than a broken heirloom.", pause: true },
+          { speaker: "Elrond", text: "Why do you fear the past?" },
+          { speaker: "Elrond", text: "You are Isildur's heir, not Isildur himself.", given: ["heir"] },
+          { speaker: "Elrond", text: "You are not bound to his fate.", given: ["bound"] },
+          { speaker: "Aragorn", text: "The same blood flows in my veins.", pause: true },
+          { speaker: "Aragorn", text: "The same weakness.", pause: true },
+          { speaker: "Elrond", text: "Your time will come.", pause: true },
+          { speaker: "Elrond", text: "You will face the same evil. And you will defeat it.", given: ["face"] }
+        ] },
+        { id: "s83", bracket: "[The Council convenes — Elrond calls the ring forth]", beats: [
+          { speaker: "Elrond", text: "Strangers from distant lands, friends of old... you've been summoned here to answer the threat of Mordor.", hide: ["you've been summoned here to answer the threat of Mordor."] },
+          { speaker: "Elrond", text: "Middle-earth stands upon the brink of destruction. None can escape it.", given: ["brink"] },
+          { speaker: "Elrond", text: "You will unite, or you will fall.", pause: true },
+          { speaker: "Elrond", text: "Each race is bound to this fate, this one doom.", given: ["doom"], pause: true },
+          { speaker: "Elrond", text: "Bring forth the ring, Frodo.", pause: true }
+        ] },
+        { id: "s84", bracket: "[The Council — Boromir tells of his dream, and the ring is named Isildur's Bane]", beats: [
+          { speaker: "Boromir", text: "So it is true.", pause: true },
+          { speaker: "Boromir", text: "The ring of power... The doom of men...", pause: true },
+          { speaker: "Boromir", text: "In a dream... I saw the eastern sky grow dark, but in the West a pale light lingered.", hide: ["I saw the eastern sky grow dark, but in the West a pale light lingered."] },
+          { speaker: "Boromir", text: "A voice was crying: \"Your doom is near at hand. Isildur's bane is found.\"", given: ["voice"] },
+          { speaker: "Aragorn", text: "Isildur's bane.", pause: true },
+          { speaker: "Legolas", text: "Boromir!", pause: true }
+        ] },
+        { id: "s85", bracket: "[The Council — Legolas rebukes Boromir, who argues the ring could be used as a weapon]", beats: [
+          { speaker: "Legolas", text: "Never before has any voice uttered the words of that tongue here in Imladris.", given: ["voice"] },
+          { speaker: "Boromir", text: "I do not ask your pardon, Master Elrond, for the black speech of Mordor may yet be heard in every corner of the West!", hide: ["may yet be heard in every corner of the West!"] },
+          { speaker: "Elrond", text: "The ring is altogether evil.", pause: true },
+          { speaker: "Boromir", text: "It is a gift.", pause: true },
+          { speaker: "Boromir", text: "A gift to the foes of Mordor." },
+          { speaker: "Boromir", text: "Why not use this ring?", pause: true },
+          { speaker: "Boromir", text: "Long has my father, the Steward of Gondor, kept the forces of Mordor at bay.", hide: ["kept the forces of Mordor at bay."] },
+          { speaker: "Boromir", text: "Give Gondor the weapon of the enemy. Let us use it against him.", given: ["weapon"] }
+        ] },
+        { id: "s86", bracket: "[The Council — Aragorn is revealed as Isildur's heir]", beats: [
+          { speaker: "Aragorn", text: "You cannot wield it. None of us can.", pause: true },
+          { speaker: "Aragorn", text: "The One Ring answers to Sauron alone. It has no other master.", given: ["answers"] },
+          { speaker: "Boromir", text: "And what would a ranger know of this matter?", given: ["ranger"], pause: true },
+          { speaker: "Legolas", text: "This is no mere ranger.", pause: true },
+          { speaker: "Legolas", text: "He is Aragorn, son of Arathorn.", pause: true },
+          { speaker: "Legolas", text: "You owe him your allegiance.", given: ["owe"] },
+          { speaker: "Boromir", text: "Aragorn.", pause: true },
+          { speaker: "Boromir", text: "This is Isildur's heir?", pause: true },
+          { speaker: "Legolas", text: "And heir to the throne of Gondor.", pause: true },
+          { speaker: "Boromir", text: "Gondor has no king.", pause: true },
+          { speaker: "Boromir", text: "Gondor needs no king.", pause: true }
+        ] },
+        { id: "s87", bracket: "[The Council — the debate turns to how the ring can be destroyed, and the room descends into bickering]", beats: [
+          { speaker: "Gandalf", text: "Aragorn is right. We cannot use it.", pause: true },
+          { speaker: "Gandalf", text: "You have only one choice.", pause: true },
+          { speaker: "Gandalf", text: "The ring must be destroyed.", pause: true },
+          { speaker: "Gimli", text: "What are we waiting for?", pause: true },
+          { speaker: "Elrond", text: "The ring cannot be destroyed, Gimli, son of Glóin, by any craft that we here possess.", hide: ["by any craft that we here possess."] },
+          { speaker: "Elrond", text: "The ring was made in the fires of Mount Doom.", pause: true },
+          { speaker: "Elrond", text: "Only there can it be unmade.", pause: true },
+          { speaker: "Elrond", text: "It must be taken deep into Mordor, and cast back into the fiery chasm from whence it came.", hide: ["and cast back into the fiery chasm from whence it came."] },
+          { speaker: "Elrond", text: "One of you... must do this.", pause: true },
+          { speaker: "Boromir", text: "One does not simply walk into Mordor.", given: ["does"] },
+          { speaker: "Boromir", text: "Its black gates are guarded by more than just orcs.", given: ["gates"] },
+          { speaker: "Boromir", text: "There is evil there that does not sleep.", pause: true },
+          { speaker: "Boromir", text: "The great eye is ever-watchful.", pause: true },
+          { speaker: "Boromir", text: "It is a barren wasteland, riddled with fire, and ash and dust.", hide: ["riddled with fire, and ash and dust."] },
+          { speaker: "Boromir", text: "The very air you breathe is a poisonous fume.", given: ["breathe"] },
+          { speaker: "Boromir", text: "Not with 10,000 men could you do this. It is folly.", given: ["folly"] },
+          { speaker: "Legolas", text: "Have you heard nothing Lord Elrond has said? The ring must be destroyed.", given: ["heard"] },
+          { speaker: "Gimli", text: "And I suppose you think you are the one to do it!", given: ["suppose"], pause: true },
+          { speaker: "Boromir", text: "And if we fail, what then? What happens when Sauron takes back what is his?", hide: ["What happens when Sauron takes back what is his?"] },
+          { speaker: "Gimli", text: "I will be dead before I see the ring in the hands of an elf!", given: ["dead"] },
+          { speaker: "Gimli", text: "Never trust an elf!", pause: true },
+          { speaker: "Gandalf", text: "Do you not understand? While you bicker amongst yourselves, Sauron's power grows!", given: ["bicker"] },
+          { speaker: "Gandalf", text: "None can escape it! You'll all be destroyed!", pause: true }
         ] }
       ] },
       { id: "c32", title: "Frodo Volunteers to Take the Ring", scenes: [
-        { id: "s20", bracket: "[Council of Elrond, Rivendell — the Fellowship's quest is decided]", beats: [
-          { speaker: "Frodo", text: "I will take it. I will take the Ring to Mordor, though I do not know the way.", given: ["though"] }
+        { id: "s88", bracket: "[The Council — Frodo steps forward]", beats: [
+          { speaker: "Frodo", text: "I will take it.", pause: true },
+          { speaker: "Frodo", text: "I will take it.", pause: true },
+          { speaker: "Frodo", text: "I will take the ring to Mordor.", pause: true },
+          { speaker: "Frodo", text: "Though, I do not know the way.", given: ["Though"] },
+          { speaker: "Aragorn", text: "I will help you bear this burden, Frodo Baggins, as long as it is yours to bear.", hide: ["as long as it is yours to bear."] },
+          { speaker: "Aragorn", text: "If by my life or death I can protect you... I will.", given: ["protect"] }
         ] }
       ] },
       { id: "c33", title: "The Fellowship of the Ring Is Formed", scenes: [
-        { id: "s21", bracket: "[Council of Elrond — Aragorn, Legolas, and Gimli each pledge themselves to Frodo's quest]", beats: [
+        { id: "s89", bracket: "[The Council — Aragorn, Legolas, and Gimli pledge themselves, then Sam, Merry, and Pippin refuse to be left behind]", beats: [
           { speaker: "Aragorn", text: "You have my sword." },
           { speaker: "Legolas", text: "And you have my bow." },
-          { speaker: "Gimli", text: "And my axe!" }
+          { speaker: "Gimli", text: "And my axe!" },
+          { speaker: "Gandalf", text: "You carry the fates of us all, little one.", given: ["fates"] },
+          { speaker: "Boromir", text: "If this is indeed the will of the Council... then Gondor will see it done.", given: ["will"] },
+          { speaker: "Sam", text: "Mr. Frodo's not going anywhere without me.", pause: true },
+          { speaker: "Elrond", text: "No indeed it is hardly possible to separate you, even when he is summoned to a secret council and you are not.", hide: ["even when he is summoned to a secret council and you are not."] },
+          { speaker: "Merry", text: "Hey. We're coming too!", pause: true },
+          { speaker: "Merry", text: "You'll have to send us home tied up in a sack to stop us.", given: ["tied"] },
+          { speaker: "Pippin", text: "Anyway, you need people of intelligence on this sort of... mission.", given: ["intelligence"], pause: true },
+          { speaker: "Merry", text: "Quest." },
+          { speaker: "Pippin", text: "Thing.", pause: true },
+          { speaker: "Merry", text: "Well, that rules you out, Pip.", pause: true },
+          { speaker: "Elrond", text: "Nine companions.", pause: true },
+          { speaker: "Elrond", text: "So be it.", pause: true },
+          { speaker: "Elrond", text: "You shall be: The Fellowship of the Ring.", pause: true },
+          { speaker: "Pippin", text: "Great!" },
+          { speaker: "Pippin", text: "Where are we going?" }
         ] }
       ] },
       { id: "c34", title: "Leaving Rivendell", scenes: [] },
