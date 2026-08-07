@@ -1854,7 +1854,47 @@ const FILMS = [
           { speaker: "Pippin", text: "Where are we going?" }
         ] }
       ] },
-      { id: "c34", title: "Leaving Rivendell", scenes: [] },
+      { id: "c34", title: "Leaving Rivendell", scenes: [
+        { id: "s90", bracket: "[Rivendell — Elrond tells Aragorn the sword of kings could be reforged for him]", beats: [
+          { speaker: "Elrond", text: "In her heart, your mother knew you'd be hunted all your life. That you'd never escape your fate.", given: ["mother"] },
+          { speaker: "Elrond", text: "The skill of the elves can reforge the sword of kings, but only you have the power to wield it.", given: ["skill"] },
+          { speaker: "Aragorn", text: "I do not want that power.", pause: true },
+          { speaker: "Aragorn", text: "I have never wanted it." },
+          { speaker: "Elrond", text: "You are the last of that bloodline. There is no other.", given: ["bloodline"] }
+        ] },
+        { id: "s91", bracket: "[Rivendell — Bilbo gives Frodo his old sword and a mithril shirt]", beats: [
+          { speaker: "Bilbo", text: "My old sword! Sting." },
+          { speaker: "Bilbo", text: "Here, take it. Take it.", pause: true },
+          { speaker: "Frodo", text: "It's so light." },
+          { speaker: "Bilbo", text: "Yes, yeah. Made by the elves, you know." },
+          { speaker: "Bilbo", text: "The blade glows blue when orcs are close.", given: ["glows"] },
+          { speaker: "Bilbo", text: "And it's times like that, my lad, when you have to be extra careful.", given: ["extra"] },
+          { speaker: "Bilbo", text: "Here's a pretty thing." },
+          { speaker: "Bilbo", text: "Mithril.", pause: true },
+          { speaker: "Bilbo", text: "As light as a feather, and as hard as dragon scales.", given: ["feather"] },
+          { speaker: "Bilbo", text: "Let me see you put it on. Come on." }
+        ] },
+        { id: "s92", bracket: "[Rivendell — Bilbo asks to hold the Ring one last time]", beats: [
+          { speaker: "Bilbo", text: "My old ring.", pause: true },
+          { speaker: "Bilbo", text: "I should very much like to hold it again, one last time.", given: ["much"] },
+          { speaker: "", text: "(for a moment, Bilbo's kindly face twists into something hungry and monstrous — then it's gone)", shown: true },
+          { speaker: "Bilbo", text: "I'm sorry I brought this upon you, my boy.", given: ["brought"] },
+          { speaker: "Bilbo", text: "I'm sorry that you must carry this burden.", given: ["carry"], pause: true },
+          { speaker: "Bilbo", text: "I'm sorry for everything.", pause: true }
+        ] },
+        { id: "s93", bracket: "[Rivendell — Elrond bids farewell to the Fellowship as they set out]", beats: [
+          { speaker: "Elrond", text: "The ring-bearer is setting out on the quest of Mount Doom.", given: ["setting"] },
+          { speaker: "Elrond", text: "On you who travel with him, no oath nor bond is laid to go further than you will.", hide: ["no oath nor bond is laid to go further than you will."] },
+          { speaker: "Elrond", text: "Farewell. Hold to your purpose.", pause: true },
+          { speaker: "Elrond", text: "May the blessings of elves and men, and all free folk go with you.", given: ["blessings"] },
+          { speaker: "Elrond", text: "The fellowship awaits the ring-bearer.", pause: true }
+        ] },
+        { id: "s94", bracket: "[On the road — the Fellowship sets out, and Gandalf charts their course]", beats: [
+          { speaker: "Pippin", text: "Mordor, Gandalf, is it left or right?" },
+          { speaker: "Gandalf", text: "Left.", pause: true },
+          { speaker: "Gandalf", text: "We must hold to this course, west of the Misty Mountains, for 40 days. If our luck holds, the Gap of Rohan will still be open to us. From there, our road turns east to Mordor.", hide: ["If our luck holds, the Gap of Rohan will still be open to us."] }
+        ] }
+      ] },
       { id: "c35", title: "Boromir Trains Merry and Pippin", scenes: [] },
       { id: "c36", title: "The Attempt to Cross Caradhras", scenes: [] },
       { id: "c37", title: "Saruman's Storm on the Mountain", scenes: [] },

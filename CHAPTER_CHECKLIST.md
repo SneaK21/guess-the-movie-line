@@ -41,7 +41,7 @@ Legend: ✅ done · 🚧 needs revisit · ⬜ not started yet
 | 30 | The Council of Elrond | ✅ | Rebuilt from scratch, sourced from .srt — previously only had the single "One does not simply walk into Mordor" line. Now covers Elrond & Gandalf's private talk, the Isildur/Mount Doom flashback, Boromir meeting Aragorn, the Narsil shards, and the full council debate |
 | 31 | Frodo Volunteers to Take the Ring | ✅ | Rebuilt from scratch, sourced from .srt |
 | 32 | The Fellowship of the Ring Is Formed | ✅ | Rebuilt from scratch, sourced from .srt — now includes Sam/Merry/Pippin refusing to be left behind, not just the sword/bow/axe pledges |
-| 33 | Leaving Rivendell | ⬜ | |
+| 33 | Leaving Rivendell | ✅ | Sourced from .srt |
 | 34 | Boromir Trains Merry and Pippin | ⬜ | |
 | 35 | The Attempt to Cross Caradhras | ⬜ | |
 | 36 | Saruman's Storm on the Mountain | ⬜ | |
