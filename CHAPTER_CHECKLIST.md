@@ -27,11 +27,11 @@ Legend: ✅ done · 🚧 needs revisit · ⬜ not started yet
 | 16 | Fleeing the Black Rider in the Cornfield | ✅ | Sourced from .srt |
 | 17 | Hiding From the Nazgûl Under the Tree Roots | ✅ | Sourced from .srt |
 | 18 | The Hobbits Reach the Ferry | ✅ | Sourced from .srt |
-| 19 | Arriving at Bree | ⬜ | |
-| 20 | The Prancing Pony Inn | ⬜ | |
-| 21 | Meeting Strider | ⬜ | |
-| 22 | The Nazgûl Attack the Empty Room | ⬜ | |
-| 23 | Leaving Bree With Strider | ⬜ | |
+| 19 | Arriving at Bree | ✅ | Sourced from .srt |
+| 20 | The Prancing Pony Inn | ✅ | Sourced from .srt |
+| 21 | Meeting Strider | ✅ | Sourced from .srt |
+| 22 | The Nazgûl Attack the Empty Room | ✅ | No spoken dialogue exists in the .srt for this beat (it's a silent visual sequence) — represented as a single `shown` description instead of inventing lines |
+| 23 | Leaving Bree With Strider | ✅ | Sourced from .srt |
 | 24 | Camping at Weathertop | ⬜ | |
 | 25 | Aragorn's Tale of Beren and Lúthien | ⬜ | |
 | 26 | The Witch-king Attacks Frodo at Weathertop | ⬜ | |

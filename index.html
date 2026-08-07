@@ -1423,11 +1423,118 @@ const FILMS = [
           { speaker: "Merry", text: "The Brandywine Bridge. 20 miles." }
         ] }
       ] },
-      { id: "c19", title: "Arriving at Bree", scenes: [] },
-      { id: "c20", title: "The Prancing Pony Inn", scenes: [] },
-      { id: "c21", title: "Meeting Strider", scenes: [] },
-      { id: "c22", title: "The Nazgûl Attack the Empty Room", scenes: [] },
-      { id: "c23", title: "Leaving Bree With Strider", scenes: [] },
+      { id: "c19", title: "Arriving at Bree", scenes: [
+        { id: "s53", bracket: "[The gate of Bree — a gatekeeper questions the hobbits]", beats: [
+          { speaker: "Gatekeeper", text: "What do you want?" },
+          { speaker: "Merry", text: "We're heading for the Prancing Pony.", given: ["heading"] },
+          { speaker: "Gatekeeper", text: "Hobbits. Four hobbits!", pause: true },
+          { speaker: "Gatekeeper", text: "What's more, out of the Shire by your talk. What business brings you to Bree?", given: ["talk"] },
+          { speaker: "Merry", text: "We wish to stay at the inn. Our business is our own.", given: ["wish"] },
+          { speaker: "Gatekeeper", text: "All right young sir, I meant no offense.", given: ["meant"] },
+          { speaker: "Gatekeeper", text: "It's my job to ask questions after nightfall.", given: ["job"] },
+          { speaker: "Gatekeeper", text: "There's talk of strange folk abroad." },
+          { speaker: "Gatekeeper", text: "Can't be too careful." }
+        ] }
+      ] },
+      { id: "c20", title: "The Prancing Pony Inn", scenes: [
+        { id: "s54", bracket: "[The Prancing Pony — Barliman Butterbur greets the travelers]", beats: [
+          { speaker: "", text: "(Out of the way! Watch where you're walking.)", shown: true },
+          { speaker: "Frodo", text: "Excuse me." },
+          { speaker: "Butterbur", text: "Good evening, little masters. What can I do for you?", given: ["evening"] },
+          { speaker: "Butterbur", text: "If you're looking for accommodation, we got some nice cozy hobbit-sized rooms available.", given: ["accommodation"] },
+          { speaker: "Butterbur", text: "Always proud to cater to little folk, Mister...?", given: ["proud"] },
+          { speaker: "Frodo", text: "Underhill. My name's Underhill.", pause: true },
+          { speaker: "Butterbur", text: "Underhill, yeah." },
+          { speaker: "Merry", text: "We're friends of Gandalf the Grey." },
+          { speaker: "Frodo", text: "Can you tell him we've arrived?" },
+          { speaker: "Butterbur", text: "Gandalf?" },
+          { speaker: "Butterbur", text: "Gandalf.", pause: true },
+          { speaker: "Butterbur", text: "Oh, yes... I remember. Elderly chap." },
+          { speaker: "Butterbur", text: "Big grey beard, pointy hat." },
+          { speaker: "Butterbur", text: "Not seen him for six months.", pause: true },
+          { speaker: "Frodo", text: "What do we do now?" },
+          { speaker: "Frodo", text: "Sam... he'll be here. He'll come." }
+        ] },
+        { id: "s55", bracket: "[The common room — Merry and Pippin discover pints, while a hooded stranger watches Frodo]", beats: [
+          { speaker: "Pippin", text: "What's that?" },
+          { speaker: "Merry", text: "This, my friend, is a pint." },
+          { speaker: "Pippin", text: "It comes in pints?" },
+          { speaker: "Pippin", text: "I'm getting one." },
+          { speaker: "Sam", text: "You got a whole half already!", pause: true },
+          { speaker: "Sam", text: "That fellow's done nothing but stare at you since we arrived.", given: ["stare"] }
+        ] }
+      ] },
+      { id: "c21", title: "Meeting Strider", scenes: [
+        { id: "s56", bracket: "[The common room — Butterbur names the stranger in the corner: Strider]", beats: [
+          { speaker: "Frodo", text: "Excuse me." },
+          { speaker: "Frodo", text: "That man in the corner. Who is he?", given: ["corner"] },
+          { speaker: "Butterbur", text: "He's one of them Rangers. They're dangerous folk they are, wandering the wilds.", given: ["Rangers"] },
+          { speaker: "Butterbur", text: "What his right name is, I've never heard, but 'round here he's known as Strider.", hide: ["he's known as Strider."] },
+          { speaker: "Frodo", text: "Strider.", pause: true }
+        ] },
+        { id: "s57", bracket: "[The common room — Pippin's loose tongue nearly gives Frodo away]", beats: [
+          { speaker: "", text: "(the whispered word \"Baggins\" echoes through the room, calling to something unseen)", shown: true },
+          { speaker: "Pippin", text: "Baggins? Sure, I know a Baggins." },
+          { speaker: "Pippin", text: "He's over there. Frodo Baggins." },
+          { speaker: "Pippin", text: "He's my second cousin, once removed on his mother's side, and my third cousin, twice removed...", given: ["cousin"] },
+          { speaker: "Frodo", text: "Pippin!", pause: true },
+          { speaker: "Strider", text: "Steady on, Frodo." }
+        ] },
+        { id: "s58", bracket: "[The Ring-vision — a voice reaches for Frodo in the shadow world]", beats: [
+          { speaker: "(V.O.)", text: "You cannot hide." },
+          { speaker: "(V.O.)", text: "I see you.", pause: true },
+          { speaker: "(V.O.)", text: "There is no life in the void." },
+          { speaker: "(V.O.)", text: "Only death.", pause: true }
+        ] },
+        { id: "s59", bracket: "[A side room — Strider confronts Frodo about the Ring]", beats: [
+          { speaker: "Strider", text: "You draw far too much attention to yourself, \"Mr. Underhill.\"", given: ["attention"] },
+          { speaker: "Frodo", text: "What do you want?" },
+          { speaker: "Strider", text: "A little more caution from you. That is no trinket you carry.", given: ["caution"] },
+          { speaker: "Frodo", text: "I carry nothing." },
+          { speaker: "Strider", text: "Indeed.", pause: true },
+          { speaker: "Strider", text: "I can avoid being seen if I wish, but to disappear entirely, that is a rare gift.", given: ["avoid"] },
+          { speaker: "Frodo", text: "Who are you?" },
+          { speaker: "Strider", text: "Are you frightened?" },
+          { speaker: "Frodo", text: "Yes.", pause: true },
+          { speaker: "Strider", text: "Not nearly frightened enough. I know what hunts you.", given: ["nearly"], pause: true },
+          { speaker: "Sam", text: "Let him go! Or I'll have you, Longshanks.", given: ["have"] },
+          { speaker: "Strider", text: "You have a stout heart, little hobbit. But that will not save you.", given: ["stout"] },
+          { speaker: "Strider", text: "You can no longer wait for the wizard, Frodo. They're coming.", given: ["longer"] }
+        ] }
+      ] },
+      { id: "c22", title: "The Nazgûl Attack the Empty Room", scenes: [
+        { id: "s60", bracket: "[The Prancing Pony, that night — the Nazgûl tear the hobbits' room apart, but the beds hold only pillows]", beats: [
+          { speaker: "", text: "(the Nazgûl storm the inn in the night and shred the hobbits' beds — empty, save for pillows)", shown: true }
+        ] }
+      ] },
+      { id: "c23", title: "Leaving Bree With Strider", scenes: [
+        { id: "s61", bracket: "[The road into the wild — the hobbits question whether to trust Strider]", beats: [
+          { speaker: "Frodo", text: "Where are you taking us?" },
+          { speaker: "Strider", text: "Into the wild.", pause: true },
+          { speaker: "Sam", text: "How can we know this Strider is a friend of Gandalf?", given: ["know"] },
+          { speaker: "Frodo", text: "I think a servant of the enemy would look fairer and feel fouler.", given: ["fairer"] },
+          { speaker: "Sam", text: "He's foul enough.", pause: true },
+          { speaker: "Frodo", text: "We have no choice but to trust him.", given: ["choice"] },
+          { speaker: "Pippin", text: "But where is he leading us?" },
+          { speaker: "Strider", text: "To Rivendell, Master Gamgee." },
+          { speaker: "Strider", text: "To the house of Elrond." },
+          { speaker: "Sam", text: "Did you hear that? Rivendell." },
+          { speaker: "Sam", text: "We're going to see the elves." }
+        ] },
+        { id: "s62", bracket: "[The road — second breakfast, and Sam's dark joke]", beats: [
+          { speaker: "Strider", text: "Gentlemen, we do not stop till nightfall." },
+          { speaker: "Pippin", text: "What about breakfast?" },
+          { speaker: "Strider", text: "You've already had it." },
+          { speaker: "Sam", text: "We've had one, yes." },
+          { speaker: "Pippin", text: "What about second breakfast?", pause: true },
+          { speaker: "Merry", text: "Don't think he knows about second breakfast, Pip.", given: ["knows"] },
+          { speaker: "Pippin", text: "What about elevenses? Luncheon? Afternoon tea? Dinner? Supper?" },
+          { speaker: "Merry", text: "He knows about them, doesn't he?" },
+          { speaker: "Strider", text: "I wouldn't count on it.", pause: true },
+          { speaker: "Merry", text: "Pippin!" },
+          { speaker: "Sam", text: "What do they eat when they can't get Hobbit?", given: ["eat"] }
+        ] }
+      ] },
       { id: "c24", title: "Camping at Weathertop", scenes: [] },
       { id: "c25", title: "Aragorn's Tale of Beren and Lúthien", scenes: [] },
       { id: "c26", title: "The Witch-king Attacks Frodo at Weathertop", scenes: [] },
