@@ -1502,12 +1502,13 @@ const FILMS = [
           { speaker: "Strider", text: "You can no longer wait for the wizard, Frodo. They're coming.", given: ["longer"] }
         ] }
       ] },
-      { id: "c22", title: "The Nazgûl Attack the Empty Room", scenes: [
-        { id: "s60", bracket: "[The Prancing Pony, that night — the Nazgûl tear the hobbits' room apart, but the beds hold only pillows]", beats: [
-          { speaker: "", text: "(the Nazgûl storm the inn in the night and shred the hobbits' beds — empty, save for pillows)", shown: true }
-        ] }
-      ] },
       { id: "c23", title: "Leaving Bree With Strider", scenes: [
+        { id: "s63", bracket: "[The road out of Bree — Merry and Pippin ask what the Black Riders are]", beats: [
+          { speaker: "Pippin", text: "What are they?" },
+          { speaker: "Strider", text: "They were once men. Great kings of men. Then Sauron the Deceiver gave to them nine rings of power. Blinded by their greed, they took them without question. One by one, falling into darkness. Now they are slaves to his will.", hide: ["Then Sauron the Deceiver gave to them nine rings of power."] },
+          { speaker: "Strider", text: "They are the Nazgûl. Ringwraiths. Neither living nor dead.", pause: true },
+          { speaker: "Strider", text: "At all times they feel the presence of the ring, drawn to the power of the One. They will never stop hunting you.", hide: ["They will never stop hunting you."] }
+        ] },
         { id: "s61", bracket: "[The road into the wild — the hobbits question whether to trust Strider]", beats: [
           { speaker: "Frodo", text: "Where are you taking us?" },
           { speaker: "Strider", text: "Into the wild.", pause: true },
@@ -1535,11 +1536,100 @@ const FILMS = [
           { speaker: "Sam", text: "What do they eat when they can't get Hobbit?", given: ["eat"] }
         ] }
       ] },
-      { id: "c24", title: "Camping at Weathertop", scenes: [] },
-      { id: "c25", title: "Aragorn's Tale of Beren and Lúthien", scenes: [] },
-      { id: "c26", title: "The Witch-king Attacks Frodo at Weathertop", scenes: [] },
-      { id: "c27", title: "Arwen Rescues Frodo", scenes: [] },
-      { id: "c28", title: "The Ford of Bruinen", scenes: [] },
+      { id: "c24", title: "Camping at Weathertop", scenes: [
+        { id: "s64", bracket: "[Weathertop — Strider leads the hobbits to the ruined watchtower of Amon Sûl]", beats: [
+          { speaker: "Strider", text: "This was the great watchtower of Amon Sûl." },
+          { speaker: "Strider", text: "We shall rest here tonight.", pause: true },
+          { speaker: "Strider", text: "These are for you. Keep them close." },
+          { speaker: "Strider", text: "I'm going to have a look around." },
+          { speaker: "Strider", text: "Stay here.", pause: true }
+        ] },
+        { id: "s65", bracket: "[Weathertop — Sam tempts Frodo with dinner while Merry and Pippin light a fire]", beats: [
+          { speaker: "Pippin", text: "My tomato's burst." },
+          { speaker: "Pippin", text: "Could I have some bacon?" },
+          { speaker: "Merry", text: "Want a tomato, Sam?" },
+          { speaker: "Frodo", text: "What are you doing?!", pause: true },
+          { speaker: "Pippin", text: "Tomatoes, sausages, nice crispy bacon." },
+          { speaker: "Sam", text: "We saved some for you, Mr. Frodo." },
+          { speaker: "Strider", text: "Put it out, you fools!" },
+          { speaker: "Strider", text: "Put it out!" },
+          { speaker: "Pippin", text: "That's nice! Ash on my tomatoes!", pause: true },
+          { speaker: "Strider", text: "Go!" }
+        ] }
+      ] },
+      { id: "c25", title: "Aragorn's Tale of Beren and Lúthien", scenes: [
+        { id: "s66", bracket: "[Weathertop — while the hobbits sleep, Frodo asks about the song Strider was singing]", beats: [
+          { speaker: "Frodo", text: "Who is she? This woman you sing of.", given: ["woman"] },
+          { speaker: "Strider", text: "'Tis the lady of Lúthien." },
+          { speaker: "Strider", text: "The elf-maiden who gave her love to Beren, a mortal.", given: ["gave"] },
+          { speaker: "Frodo", text: "What happened to her?" },
+          { speaker: "Strider", text: "She died.", pause: true },
+          { speaker: "Strider", text: "Get some sleep, Frodo." }
+        ] }
+      ] },
+      { id: "c26", title: "The Witch-king Attacks Frodo at Weathertop", scenes: [
+        { id: "s67", bracket: "[Weathertop — the Nazgûl find the hobbits and Frodo is stabbed]", beats: [
+          { speaker: "Strider", text: "Back, you devils!" },
+          { speaker: "Sam", text: "Frodo!" },
+          { speaker: "Frodo", text: "Oh, Sam.", pause: true }
+        ] },
+        { id: "s68", bracket: "[Weathertop, moments later — Strider tends Frodo's wound]", beats: [
+          { speaker: "Sam", text: "Strider!" },
+          { speaker: "Sam", text: "Help him, Strider." },
+          { speaker: "Strider", text: "He's been stabbed by a Morgul blade.", pause: true },
+          { speaker: "Strider", text: "This is beyond my skill to heal. He needs elvish medicine.", hide: ["He needs elvish medicine."] },
+          { speaker: "Merry", text: "Hurry!" },
+          { speaker: "Merry", text: "We're six days from Rivendell! He'll never make it!", given: ["six"], pause: true },
+          { speaker: "Strider", text: "Hold on, Frodo." },
+          { speaker: "Frodo", text: "Gandalf!" }
+        ] }
+      ] },
+      { id: "c27", title: "Arwen Rescues Frodo", scenes: [
+        { id: "s69", bracket: "[On the road to Rivendell — Frodo weakens as the party pushes on]", beats: [
+          { speaker: "Pippin", text: "Look, Frodo. It's Mr. Bilbo's trolls." },
+          { speaker: "Sam", text: "Mr. Frodo? He's going cold.", pause: true },
+          { speaker: "Pippin", text: "Is he going to die?" },
+          { speaker: "Strider", text: "He's passing into the shadow world. He'll soon become a wraith like them.", hide: ["He'll soon become a wraith like them."] },
+          { speaker: "Sam", text: "They're close.", pause: true },
+          { speaker: "Strider", text: "Sam, do you know the Athelas plant?" },
+          { speaker: "Sam", text: "Athelas?" },
+          { speaker: "Strider", text: "Kingsfoil." },
+          { speaker: "Sam", text: "Kingsfoil, aye, it's a weed." },
+          { speaker: "Strider", text: "It may help to slow the poisoning. Hurry!" }
+        ] },
+        { id: "s70", bracket: "[Weathertop's shadow — Arwen finds them and takes Frodo]", beats: [
+          { speaker: "Arwen", text: "What's this, a ranger caught off his guard?", pause: true },
+          { speaker: "Arwen", text: "Frodo." },
+          { speaker: "Frodo", text: "Who is she?" },
+          { speaker: "Arwen", text: "Frodo." },
+          { speaker: "Sam", text: "She's an elf." },
+          { speaker: "Arwen", text: "He's fading." },
+          { speaker: "Arwen", text: "He's not going to last." },
+          { speaker: "Arwen", text: "We must get him to my father.", given: ["father"] },
+          { speaker: "Arwen", text: "I've been looking for you for two days.", given: ["looking"] },
+          { speaker: "Strider", text: "Where are you taking him?" },
+          { speaker: "Arwen", text: "There are five wraiths behind you. Where the other four are, I do not know.", hide: ["Where the other four are, I do not know."] },
+          { speaker: "Pippin", text: "What are they saying?" },
+          { speaker: "Arwen", text: "I do not fear them.", pause: true },
+          { speaker: "Strider", text: "Arwen... ride hard. Don't look back." },
+          { speaker: "Sam", text: "What are you doing?! Those wraiths are still out there!", given: ["still"] }
+        ] }
+      ] },
+      { id: "c28", title: "The Ford of Bruinen", scenes: [
+        { id: "s71", bracket: "[The Ford of Bruinen — the Nazgûl corner Arwen and Frodo at the river]", beats: [
+          { speaker: "Nazgûl", text: "Give up the halfling, She-elf.", pause: true },
+          { speaker: "Arwen", text: "If you want him, come and claim him.", given: ["claim"] }
+        ] },
+        { id: "s72", bracket: "[The Ford of Bruinen — Frodo slips toward the shadow world as the river rises]", beats: [
+          { speaker: "Arwen", text: "No. No!" },
+          { speaker: "Arwen", text: "Frodo, no." },
+          { speaker: "Arwen", text: "Frodo, don't give in." },
+          { speaker: "Arwen", text: "Not now.", pause: true },
+          { speaker: "Arwen", text: "What grace is given me, let it pass to him.", given: ["grace"] },
+          { speaker: "Arwen", text: "Let him be spared." },
+          { speaker: "Arwen", text: "Save him.", pause: true }
+        ] }
+      ] },
       { id: "c29", title: "Frodo Wakes in Rivendell", scenes: [] },
       { id: "c30", title: "Bilbo and Frodo Reunite", scenes: [] },
       { id: "c31", title: "The Council of Elrond", scenes: [

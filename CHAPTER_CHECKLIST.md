@@ -30,50 +30,56 @@ Legend: ✅ done · 🚧 needs revisit · ⬜ not started yet
 | 19 | Arriving at Bree | ✅ | Sourced from .srt |
 | 20 | The Prancing Pony Inn | ✅ | Sourced from .srt |
 | 21 | Meeting Strider | ✅ | Sourced from .srt |
-| 22 | The Nazgûl Attack the Empty Room | ✅ | No spoken dialogue exists in the .srt for this beat (it's a silent visual sequence) — represented as a single `shown` description instead of inventing lines |
-| 23 | Leaving Bree With Strider | ✅ | Sourced from .srt |
-| 24 | Camping at Weathertop | ⬜ | |
-| 25 | Aragorn's Tale of Beren and Lúthien | ⬜ | |
-| 26 | The Witch-king Attacks Frodo at Weathertop | ⬜ | |
-| 27 | Arwen Rescues Frodo | ⬜ | |
-| 28 | The Ford of Bruinen | ⬜ | |
-| 29 | Frodo Wakes in Rivendell | ⬜ | |
-| 30 | Bilbo and Frodo Reunite | ⬜ | |
-| 31 | The Council of Elrond | ✅ | |
-| 32 | Frodo Volunteers to Take the Ring | ✅ | |
-| 33 | The Fellowship of the Ring Is Formed | ✅ | |
-| 34 | Leaving Rivendell | ⬜ | |
-| 35 | Boromir Trains Merry and Pippin | ⬜ | |
-| 36 | The Attempt to Cross Caradhras | ⬜ | |
-| 37 | Saruman's Storm on the Mountain | ⬜ | |
-| 38 | The Decision to Enter Moria | ⬜ | |
-| 39 | The Watcher in the Water | ⬜ | |
-| 40 | Frodo Confides in Gandalf | ✅ | Now includes the full "pity" conversation about Gollum (was wrongly split into ch. 9/10 before) |
-| 41 | Finding Balin's Tomb | ⬜ | |
-| 42 | Reading the Book of Mazarbul | ⬜ | |
-| 43 | The Orc Ambush in the Chamber | ⬜ | |
-| 44 | Frodo's Mithril Shirt Saves Him | ⬜ | |
-| 45 | Fleeing Across the Bridge of Khazad-dûm | ⬜ | |
-| 46 | Gandalf and the Balrog — "You Shall Not Pass!" | ✅ | |
-| 47 | Gandalf Falls into the Chasm | ✅ | |
-| 48 | Mourning Gandalf | ⬜ | |
-| 49 | Arriving in Lothlórien | ⬜ | |
-| 50 | Galadriel's Warning to the Fellowship | ⬜ | |
-| 51 | Boromir and Aragorn Discuss the Ring's Temptation | ⬜ | |
-| 52 | Frodo and the Mirror of Galadriel | ⬜ | |
-| 53 | Frodo Offers Galadriel the Ring | ⬜ | |
-| 54 | Leaving Lothlórien by Boat | ⬜ | |
-| 55 | Passing the Argonath | ⬜ | |
-| 56 | Camp at Amon Hen | ⬜ | |
-| 57 | Boromir Tries to Take the Ring | ⬜ | |
-| 58 | Frodo Puts on the Ring to Escape | ⬜ | |
-| 59 | Aragorn Lets Frodo Go | ⬜ | |
-| 60 | The Uruk-hai Attack at Amon Hen | ⬜ | |
-| 61 | Boromir's Last Stand | ⬜ | |
-| 62 | Boromir's Death | ⬜ | |
-| 63 | Merry and Pippin Are Captured | ⬜ | |
-| 64 | Sam Catches Up to Frodo | ⬜ | |
-| 65 | The Fellowship Is Broken | ⬜ | |
+| 22 | Leaving Bree With Strider | ✅ | Sourced from .srt. Includes the Nazgûl-history speech ("They were once men...") as its opening scene — first pass had it misplaced/missing entirely. (Old ch. 22, "The Nazgûl Attack the Empty Room," was removed: the film has no dialogue at that beat, just a silent visual, so it didn't belong as its own guessable chapter. Everything below is renumbered up by one to fill the slot.) |
+| 23 | Camping at Weathertop | ✅ | Sourced from .srt |
+| 24 | Aragorn's Tale of Beren and Lúthien | ✅ | Sourced from .srt |
+| 25 | The Witch-king Attacks Frodo at Weathertop | ✅ | Sourced from .srt |
+| 26 | Arwen Rescues Frodo | ✅ | Sourced from .srt |
+| 27 | The Ford of Bruinen | ✅ | Sourced from .srt |
+| 28 | Frodo Wakes in Rivendell | ⬜ | |
+| 29 | Bilbo and Frodo Reunite | ⬜ | |
+| 30 | The Council of Elrond | ✅ | |
+| 31 | Frodo Volunteers to Take the Ring | ✅ | |
+| 32 | The Fellowship of the Ring Is Formed | ✅ | |
+| 33 | Leaving Rivendell | ⬜ | |
+| 34 | Boromir Trains Merry and Pippin | ⬜ | |
+| 35 | The Attempt to Cross Caradhras | ⬜ | |
+| 36 | Saruman's Storm on the Mountain | ⬜ | |
+| 37 | The Decision to Enter Moria | ⬜ | |
+| 38 | The Watcher in the Water | ⬜ | |
+| 39 | Frodo Confides in Gandalf | ✅ | Now includes the full "pity" conversation about Gollum (was wrongly split into ch. 9/10 before) |
+| 40 | Finding Balin's Tomb | ⬜ | |
+| 41 | Reading the Book of Mazarbul | ⬜ | |
+| 42 | The Orc Ambush in the Chamber | ⬜ | |
+| 43 | Frodo's Mithril Shirt Saves Him | ⬜ | |
+| 44 | Fleeing Across the Bridge of Khazad-dûm | ⬜ | |
+| 45 | Gandalf and the Balrog — "You Shall Not Pass!" | ✅ | |
+| 46 | Gandalf Falls into the Chasm | ✅ | |
+| 47 | Mourning Gandalf | ⬜ | |
+| 48 | Arriving in Lothlórien | ⬜ | |
+| 49 | Galadriel's Warning to the Fellowship | ⬜ | |
+| 50 | Boromir and Aragorn Discuss the Ring's Temptation | ⬜ | |
+| 51 | Frodo and the Mirror of Galadriel | ⬜ | |
+| 52 | Frodo Offers Galadriel the Ring | ⬜ | |
+| 53 | Leaving Lothlórien by Boat | ⬜ | |
+| 54 | Passing the Argonath | ⬜ | |
+| 55 | Camp at Amon Hen | ⬜ | |
+| 56 | Boromir Tries to Take the Ring | ⬜ | |
+| 57 | Frodo Puts on the Ring to Escape | ⬜ | |
+| 58 | Aragorn Lets Frodo Go | ⬜ | |
+| 59 | The Uruk-hai Attack at Amon Hen | ⬜ | |
+| 60 | Boromir's Last Stand | ⬜ | |
+| 61 | Boromir's Death | ⬜ | |
+| 62 | Merry and Pippin Are Captured | ⬜ | |
+| 63 | Sam Catches Up to Frodo | ⬜ | |
+| 64 | The Fellowship Is Broken | ⬜ | |
+
+Note: this "#" column tracks story order for planning purposes. It does not
+need to match the internal `id` strings in `index.html` (e.g. chapter 23
+above is coded as `c24`) — the number shown to players in the app is always
+just that chapter's position in the `chapters` array, computed
+automatically, so nothing needs renumbering in the code when a chapter is
+added or removed.
 
 ## Sourcing note
 
@@ -110,3 +116,15 @@ gone through this check yet.
   reveal would blunt the punch — "You shall not pass!!", "Fly, you fools!",
   the Fellowship's "You have my sword" / "And you have my bow" / "And my
   axe!" triplet, and the Prologue as a whole.
+- Newest refinement: for a longer speech (2+ sentences) that's mostly
+  expository or not individually quotable, combine it into one beat and
+  `hide` only the single most memorable sentence — let the rest of the
+  paragraph display as plain readable context. This is the same `hide`
+  mechanic, just applied more aggressively: the goal is that a player can
+  follow the whole speech at a glance and only has to actually type the one
+  line worth testing them on, instead of grinding through obscure
+  connective sentences word by word. Reach for this especially in chapters
+  that don't have a lot of famous/memorable material to begin with — e.g.
+  Strider's Nazgûl-history speech in ch. 22 only has its "They are the
+  Nazgûl. Ringwraiths. Neither living nor dead." held back; the rest of the
+  lecture is shown outright.
